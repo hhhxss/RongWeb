@@ -56,6 +56,35 @@ public class BuserServiceImpl implements IBuserService {
 
     @Override
     @DataSource(value = DataSourceType.SLAVE)
+    public List<Buser> selectProgramsType() {
+        List<Buser> res =buserMapper.selectProgramsType();
+        for(Buser buser:res){
+            switch (buser.getPtp()){
+                case "开启功放":
+                    buser.setType("开启功放");
+                    break;
+                case "关闭功放":
+                    buser.setType("关闭功放");
+                    break;
+                case "文件转播":
+                    buser.setType("文件转播");
+                    break;
+                case "电台播音":
+                    buser.setType("电台播音");
+                    break;
+                case "停止播放":
+                    buser.setType("停止播放");
+                    break;
+                case "2":
+                    buser.setType("操作总数");
+                    break;
+            }
+        }
+        return res;
+    }
+
+    @Override
+    @DataSource(value = DataSourceType.SLAVE)
     public List<Buser> selectProgramsPtp() {
         return buserMapper.selectProgramsPtp();
     }
