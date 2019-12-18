@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.village.mapper.FlandinfoMapper">
+
+    <resultMap type="Flandinfo" id="FlandinfoResult">
+        <result property="fid"    column="fid"    />
+        <result property="aid"    column="aid"    />
+        <result property="grouptype"    column="grouptype"    />
+        <result property="collective"    column="collective"    />
+        <result property="contracted"    column="contracted"    />
+    </resultMap>
+
+    <sql id="selectFlandinfoVo">
+        select fid, aid,grouptype,collective,contracted from forestland_info
+    </sql>
+
+    <select id="selectFlandinfoList" parameterType="Flandinfo" resultMap="FlandinfoResult">
+        <include refid="selectFlandinfoVo"/>
+        <where>
+            <if test="fid != null "> and fid = #{fid}</if>
+            <if test="aid != null "> and aid = #{aid}</if>
+            <if test="grouptype != null  and grouptype != '' "> and grouptype LIKE CONCAT(CONCAT('%', #{grouptype}),'%')</if>
+            <if test="collective != null  and collective != '' "> and collective = #{collective}</if>
+            <if test="contracted != null  and contracted != '' "> and contracted LIKE CONCAT(CONCAT('%', #{contracted}),'%')</if>
+        </where>
+        ORDER BY fid ASC
+    </select>
+
+    <select id="selectFlandinfoByfId" parameterType="Integer" resultMap="FlandinfoResult">
+        <include refid="selectFlandinfoVo"/>
+        where fid = #{fid}
+    </select>
+
+    <select id="selectFlandinfoListByfId" parameterType="pubObjApi" resultMap="FlandinfoResult">
+        <include refid="selectFlandinfoVo"/>
+        <where>
+            <if test="fid != null  and fid != '' ">fid in
+                <foreach collection="listaid" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach></if>
+            <if test="aid != null  and aid != '' "> and aid LIKE CONCAT(CONCAT('%', #{aid}),'%')</if>
+        </where>
+        ORDER BY aid ASC
+        limit #{pageSize} offset #{pageIndex}
+    </select>
+</mapper>
