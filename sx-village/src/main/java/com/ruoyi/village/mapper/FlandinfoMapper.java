@@ -26,6 +26,8 @@ public interface FlandinfoMapper {
      */
     public List<Flandinfo> selectFlandinfoList(Flandinfo flandinfo);
 
-
     public List<Flandinfo> selectFlandinfoListByfId(pubObjApi flandinfo);
+
+    public List<Flandinfo> selectFlandinfoGtype();
+
 }

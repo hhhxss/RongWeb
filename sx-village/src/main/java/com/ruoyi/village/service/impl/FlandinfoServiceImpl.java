@@ -51,4 +51,12 @@ public class FlandinfoServiceImpl implements IFlandinfoService{
     public List<Flandinfo> selectFlandinfoListByfId(pubObjApi flandinfo) {
         return flandinfoMapper.selectFlandinfoListByfId(flandinfo);
     }
+
+
+    @Override
+    @DataSource(value = DataSourceType.SXVILLAGE)
+    public List<Flandinfo> selectFlandinfoGtype() {
+        return flandinfoMapper.selectFlandinfoGtype();
+    }
+
 }

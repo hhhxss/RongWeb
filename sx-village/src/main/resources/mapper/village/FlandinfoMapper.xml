@@ -45,4 +45,13 @@
         ORDER BY aid ASC
         limit #{pageSize} offset #{pageIndex}
     </select>
+
+    <select id="selectFlandinfoGtype" resultMap="FlandinfoResult">
+        select grouptype,collective,contracted
+        from
+             forestland_info
+        group by
+            grouptype
+    </select>
+
 </mapper>

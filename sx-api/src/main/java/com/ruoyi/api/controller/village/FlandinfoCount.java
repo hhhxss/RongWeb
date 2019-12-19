@@ -1,6 +1,5 @@
 package com.ruoyi.api.controller.village;
 
-import com.ruoyi.framework.web.base.BaseController;
 import com.ruoyi.village.domain.Flandinfo;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,6 +11,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.ruoyi.village.service.IFlandinfoService;
+
+import java.util.List;
+
 /**
  * 林地信息 控制层
  *
@@ -23,7 +25,7 @@ import com.ruoyi.village.service.IFlandinfoService;
 @RequestMapping("/api/flandinfo")
 @CrossOrigin
 @Api(value = "林地信息")
-public class FlandinfoCount extends BaseController{
+public class FlandinfoCount{
     @Autowired
     public IFlandinfoService flandinfoService;
 
@@ -33,5 +35,15 @@ public class FlandinfoCount extends BaseController{
     public RongApiRes list(Flandinfo flandinfo)
     {
         return RongApiService.get_list(flandinfoService.selectFlandinfoList(flandinfo));
+    }
+
+
+    @CrossOrigin
+    @GetMapping("/gtype")
+    @ApiOperation(value = "根据分组对林地信息的统计")
+    public RongApiRes selectFlandinfoGtype(){
+        List pre=flandinfoService.selectFlandinfoGtype();
+        RongApiRes test=RongApiService.get_list(pre);
+        return test;
     }
 }
