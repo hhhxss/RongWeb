@@ -11,12 +11,61 @@ function bonLoad() {
     init_bd_terminlgroup();
     /*统计在线终端数，下线终端数，及百分比*/
     init_bd_terminalstate();
+    init_bd_terminalstate1();
     init_bl_terminalstate();
     init_bip_terminalstate();
     //首页图表 三维广播分布可视化
     init_3d_bt();
     //首页图表 二维广播分布可视化
     init_ec_bt();
+}
+function init_bd_terminalstate() {
+    var bd_terminalstate = echarts.init(document.getElementById('bd_terminalstate'));
+    $.ajax({
+        type: "GET",
+        url: "/api/bcount/bindex",
+        datatype: "JSON",
+        success: function (data) {
+            var bd_device = data.data.dev;
+            var bd_run = data.data.run;
+            var bd_stop = data.data.stop;
+            option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: ['终端总数', '在线终端数', '离线终端数']
+                },
+                series: [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '60%'],
+                        data: [
+                            {value: bd_device, name: '终端总数'},
+                            {value: bd_run, name: '在线终端数'},
+                            {value: bd_stop, name: '离线终端数'}
+                        ],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+
+            bd_terminalstate.setOption(option);
+        }
+
+    });
+
 }
 function init_bt_mbygroup() {
     var bt_mbygroup = echarts.init(document.getElementById('bt_mbygroup'));
@@ -389,53 +438,83 @@ function init_bd_terminlgroup() {
 
 }
 
-function init_bd_terminalstate() {
-    var bd_terminalstate = echarts.init(document.getElementById('bd_terminalstate'));
+function init_bd_terminalstate1(){
+    var bd_terminalstate1 = echarts.init(document.getElementById('bd_terminalstate1'));
     $.ajax({
-        type: "GET",
-        url: "/api/bcount/bindex",
-        datatype: "JSON",
-        success: function (data) {
+        type:"GET",
+        url:"/api/bcount/bindex",
+        datatype:"JSON",
+        success: function(data){
             var bd_device = data.data.dev;
             var bd_run = data.data.run;
             var bd_stop = data.data.stop;
+            // for(i in bd__data){
+            //     if(onl_data[i]==null){
+            //         x_data.push('未知');}
+            //     else{
+            //         x_data.push(onl_data[i].stop);
+            //         y_data.push(onl_data[i].run);
+            //         z_data.push(onl_data[i].dev)}
+            // }
             option = {
-                tooltip: {
-                    trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    },
+                    formatter: function (params) {
+                        var tar = params[1];
+                        return tar.name + '<br/>' + tar.seriesName + ' : ' + tar.value;
+                    }
                 },
-                legend: {
-                    orient: 'vertical',
-                    left: 'left',
-                    data: ['终端总数', '在线终端数', '离线终端数']
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type : 'category',
+                    splitLine: {show:false},
+                    data : ['终端总数','在线终端数','离线终端数']
+                },
+                yAxis: {
+                    type : 'value'
                 },
                 series: [
                     {
-                        name: '访问来源',
-                        type: 'pie',
-                        radius: '55%',
-                        center: ['50%', '60%'],
-                        data: [
-                            {value: bd_device, name: '终端总数'},
-                            {value: bd_run, name: '在线终端数'},
-                            {value: bd_stop, name: '离线终端数'}
-                        ],
+                        name: '辅助',
+                        type: 'bar',
+                        stack:  '总量',
                         itemStyle: {
+                            normal: {
+                                barBorderColor: 'rgba(0,0,0,0)',
+                                color: 'rgba(0,0,0,0)'
+                            },
                             emphasis: {
-                                shadowBlur: 10,
-                                shadowOffsetX: 0,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                barBorderColor: 'rgba(0,0,0,0)',
+                                color: 'rgba(0,0,0,0)'
                             }
-                        }
+                        },
+                        data: [0, bd_stop , 0]
+                    },
+                    {
+                        name: '终端总数',
+                        type: 'bar',
+                        stack: '总量',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'inside'
+                            }
+                        },
+                        data:[bd_device, bd_run,bd_stop]
                     }
                 ]
             };
-
-            bd_terminalstate.setOption(option);
+            bd_terminalstate1.setOption(option);
         }
-
-    });
-
+    })
 }
 
 function init_bl_terminalstate() {

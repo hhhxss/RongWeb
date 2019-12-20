@@ -119,13 +119,13 @@
                                 <i class="fa fa-superpowers"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-user">
-                                <li><a onclick="init_bd_terminalstate()">原始数据</a>
+                                <li><a onclick="init_bd_terminalstate1()">原始数据</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="ibox-content">
-                        <div class="echarts" id="bd_terminalstate"></div>
+                        <div class="echarts" id="bd_terminalstate1"></div>
                     </div>
                 </div>
             </div>
@@ -165,6 +165,25 @@
                     <div class="ibox-content">
                         <div class="echarts" id="bip_mygroup"></div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>终端数量以及在线状态统计(柱状图)</h5>
+                    <div class="ibox-tools">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-superpowers"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a onclick="init_bd_terminalstate()">原始数据</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="echarts" id="bd_terminalstate"></div>
                 </div>
             </div>
         </div>
