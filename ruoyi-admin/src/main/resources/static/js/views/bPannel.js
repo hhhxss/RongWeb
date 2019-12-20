@@ -18,6 +18,84 @@ function bonLoad() {
     init_3d_bt();
     //首页图表 二维广播分布可视化
     init_ec_bt();
+
+    init_type_cbygroup();
+    /*首页图表广播操作类型可视化*/
+}
+function init_type_cbygroup(){
+    var type_cgroup = echarts.init(document.getElementById('type_cgroup'));
+    $.ajax({
+        type:"GET",
+        url:"/api/bp/type",
+        datatype:"JSON",
+        success: function(data){
+            var op_data=data.data;
+            var x_data = new Array;
+            var y_data = new Array;
+            for(i in op_data){
+                if(op_data[i]==null){x_data.push('未知');}
+                else{x_data.push(op_data[i].count);
+                    y_data.push(op_data[i].type);}
+            }
+            init_type_option={
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    },
+                    formatter: function (params) {
+                        var tar = params[1];
+                        return tar.name + '<br/>' + tar.seriesName + ' : ' + tar.value;
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type : 'category',
+                    splitLine: {show:false},
+                    data : y_data
+                },
+                yAxis: {
+                    type : 'value'
+                },
+                series: [
+                    {
+                        name: '辅助',
+                        type: 'bar',
+                        stack:  '总量',
+                        itemStyle: {
+                            normal: {
+                                barBorderColor: 'rgba(0,0,0,0)',
+                                color: 'rgba(0,0,0,0)'
+                            },
+                            emphasis: {
+                                barBorderColor: 'rgba(0,0,0,0)',
+                                color: 'rgba(0,0,0,0)'
+                            }
+                        },
+                        data: [0, x_data[0]-x_data[1], x_data[0]-x_data[1]-x_data[2], x_data[0]-x_data[1]-x_data[2]-x_data[3], x_data[0]-x_data[1]-x_data[2]-x_data[3]-x_data[4], 0]
+                    },
+                    {
+                        name: '操作总数',
+                        type: 'bar',
+                        stack: '总量',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'inside'
+                            }
+                        },
+                        data: x_data
+                    }
+                ]
+            };
+            type_cgroup.setOption(init_type_option);
+        }
+    })
 }
 function init_bd_terminalstate() {
     var bd_terminalstate = echarts.init(document.getElementById('bd_terminalstate'));
