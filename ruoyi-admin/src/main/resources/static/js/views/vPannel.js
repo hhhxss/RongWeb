@@ -8,6 +8,65 @@ function v_onload() {
     init_3d_v_pm();
     //首页图标，村民林地信息可视化
     init_ec_gbygroup();
+    //首页图标，实时政事类型可视化
+    init_ss_tbygroup();
+}
+
+function init_ss_tbygroup(){
+    var ss_tbygroup = echarts.init(document.getElementById('ss_tbygroup'));
+    $.ajax({
+        type: "GET",
+        url: "/api/shishi/type",
+        datatype: "json",
+        success:function(data){
+            var ssgroup_data=data.data;
+            var x_data =new Array();
+            var y_data =new Array();
+            for( x in ssgroup_data){
+                if(ssgroup_data[x].type == ''){
+                    x_data.push('未知');
+                }else{
+                    x_data.push(ssgroup_data[x].type);
+
+                }
+            }
+            for( y in ssgroup_data){
+                y_data.push(ssgroup_data[y].vtype);
+            }
+    option = {
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: x_data
+        },
+        series : [
+            {
+                name: '访问来源',
+                type: 'pie',
+                radius : '55%',
+                center: ['50%', '60%'],
+                data:[
+                    {value:y_data[0], name:x_data[0]},
+                    {value:y_data[1], name:x_data[1]},
+                    {value:y_data[2], name:x_data[2]}
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    ss_tbygroup.setOption(option);
+        }
+    });
 }
 
 function init_ec_gbygroup(){
@@ -16,7 +75,6 @@ function init_ec_gbygroup(){
        url: "/api/flandinfo/gtype",
        dataType: "json",
        success: function (data) {
-           debugger;
             var gbygroup_data = data.data;
             var x_data = new Array();
             var y_data = new Array();

@@ -38,8 +38,17 @@ public class Shishi extends BaseEntity
 	private String remark;
 	/** 视频地址 */
 	private String video;
+	private String vtype;
 
-	public void setShiid(Integer shiid) 
+	public String getVtype() {
+		return vtype;
+	}
+
+	public void setVtype(String vtype) {
+		this.vtype = vtype;
+	}
+
+	public void setShiid(Integer shiid)
 	{
 		this.shiid = shiid;
 	}
