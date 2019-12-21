@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="iscancel"    column="iscancel"    />
         <result property="isreply"    column="isreply"    />
     </resultMap>
-	
+
 	<sql id="selectProreApplyVo">
         select paid, pname, userid, requires, isemergency, timelimit, filename, fileurl, submittime, iscancel, isread, isreply, replytime, replyperson, replyprogramid, islisten, nopassreason, listenpass, nopasstimes from prore_apply
     </sql>
@@ -69,6 +69,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              <if test="nopasstimes != null "> and nopasstimes = #{nopasstimes}</if>
          </where>
          order by submittime desc
+    </select>
+
+    <select id="selectProreApplyIsEmer" resultMap="ProApplyUserResult">
+        select isemergency,
+               count(isemergency) as paid
+            from prore_apply
+        group by isemergency
+        order by count(isemergency) DESC
     </select>
 
     <select id="selectProrApplyUserList" parameterType="ProApplyUser" resultMap="ProApplyUserResult">

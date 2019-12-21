@@ -21,6 +21,64 @@ function bonLoad() {
 
     init_type_cbygroup();
     /*首页图表广播操作类型可视化*/
+
+    /*首页图标节目申请是否紧急可视化*/
+    init_bp_proreapply();
+}
+
+function init_bp_proreapply() {
+    var bp_proreapply = echarts.init(document.getElementById('bp_proreapply'));
+    $.ajax({
+        type: "GET",
+        url: "/api/proreapply/isemer",
+        datatype: "JSON",
+        success: function (data) {
+            var bp_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (i in bp_data) {
+                if (bp_data[i].paid == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(bp_data[i].paid);
+                    y_data.push(bp_data[i].isemergency);
+                    /*var y = new Object();
+                     y.name = bdsygroup_data[i].scategory;
+                     y.value = parseInt(bdsygroup_data[i].bcount);
+                     y_data.push(y);*/
+                }
+            }
+            /*console.log(bdsygroup_data);*/
+            /*console.log(x_data);
+             console.log(y_data);*/
+            option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: y_data
+                },
+                calculable: true,
+                series: [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '60%'],
+                        data: [
+                            /*y_data*/
+                            {value: x_data[0], name: y_data[0]},
+                            {value: x_data[1], name: y_data[1]}
+                        ]
+                    }
+                ]
+            };
+            bp_proreapply.setOption(option);
+        }
+    });
 }
 function init_type_cbygroup(){
     var type_cgroup = echarts.init(document.getElementById('type_cgroup'));

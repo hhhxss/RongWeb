@@ -61,5 +61,7 @@ public interface IProreApplyService
 	 * @return java.util.List<com.ruoyi.broad.domain.ProApplyUser>
 	 */
 	public List<ProApplyUser> selectProrApplyUserList(ProApplyUser proApplyUser);
+
+	public List<ProreApply> selectProreApplyIsEmer();
 	
 }
