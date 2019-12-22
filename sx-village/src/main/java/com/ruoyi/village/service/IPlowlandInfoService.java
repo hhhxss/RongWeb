@@ -29,26 +29,27 @@ public interface IPlowlandInfoService
 	
 	/**
      * 新增耕地
-     * 
+     *
      * @param plowlandInfo 耕地信息
      * @return 结果
      */
 	public int insertPlowlandInfo(PlowlandInfo plowlandInfo);
-	
+
 	/**
      * 修改耕地
-     * 
+     *
      * @param plowlandInfo 耕地信息
      * @return 结果
      */
 	public int updatePlowlandInfo(PlowlandInfo plowlandInfo);
-		
+
 	/**
      * 删除耕地信息
-     * 
+     *
      * @param ids 需要删除的数据ID
      * @return 结果
      */
 	public int deletePlowlandInfoByIds(String ids);
-	
+
+	public List<PlowlandInfo> selectPlowlandInfoByType();
 }
