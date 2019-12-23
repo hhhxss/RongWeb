@@ -24,8 +24,77 @@ function bonLoad() {
 
     /*首页图标节目申请是否紧急可视化*/
     init_bp_proreapply();
+
+    /*首页图标节目申请是否回复可视化*/
+    init_pp_irgroup();
+
 }
 
+function init_pp_irgroup() {
+    var pp_irgroup = echarts.init(document.getElementById('pp_irgroup'));
+    $.ajax({
+        type: "GET",
+        url: "/api/proreapply/isreply",
+        datatype: "JSON",
+        success: function (data) {
+            var pp_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (i in pp_data) {
+                if (pp_data[i].paid == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(pp_data[i].paid);
+                    y_data.push(pp_data[i].isreply);
+                    /*var y = new Object();
+                     y.name = bdsygroup_data[i].scategory;
+                     y.value = parseInt(bdsygroup_data[i].bcount);
+                     y_data.push(y);*/
+                }
+            }
+            option = {
+                color: ['#3398DB'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : ['节目申请', y_data[0], y_data[1]],
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'直接访问',
+                        type:'bar',
+                        barWidth: '60%',
+                        data:[x_data[0]+x_data[1], x_data[0], x_data[1]]
+                    }
+                ]
+            };
+            pp_irgroup.setOption(option);
+        }
+    });
+
+
+}
 function init_bp_proreapply() {
     var bp_proreapply = echarts.init(document.getElementById('bp_proreapply'));
     $.ajax({

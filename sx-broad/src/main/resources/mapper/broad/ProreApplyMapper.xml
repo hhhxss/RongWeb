@@ -79,6 +79,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         order by count(isemergency) DESC
     </select>
 
+    <select id="selectProreApplyIsrely" resultMap="ProApplyUserResult">
+        select isreply,
+               count(isreply) as paid
+        from broad.prore_apply
+        group by isreply
+        order by count(isreply) DESC
+    </select>
+
     <select id="selectProrApplyUserList" parameterType="ProApplyUser" resultMap="ProApplyUserResult">
         select
         pa.paid as paid,

@@ -108,4 +108,9 @@ public class ProreApplyServiceImpl implements IProreApplyService
 		return proreApplyMapper.selectProreApplyIsEmer();
 	}
 
+	@Override
+	public List<ProreApply> selectProreApplyIsrely() {
+		return proreApplyMapper.selectProreApplyIsrely();
+	}
+
 }
