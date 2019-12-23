@@ -70,5 +70,7 @@ public interface ProreApplyMapper
 	public List<ProApplyUser> selectProrApplyUserList(ProApplyUser proApplyUser);
 
 	public List<ProreApply> selectProreApplyIsEmer();
+
+	public List<ProreApply> selectProreApplyIsrely();
 	
 }
