@@ -6,7 +6,7 @@ import com.ruoyi.common.base.BaseEntity;
 
 /**
  * 耕地表 plowland_info
- * 
+ *
  * @author 张鸿权
  * @date 2019-05-02
  */
@@ -25,48 +25,48 @@ public class PlowlandInfo extends BaseEntity
 	/** 承包到户 */
 	private String contracted;
 
-	public void setPid(Integer pid) 
+	public void setPid(Integer pid)
 	{
 		this.pid = pid;
 	}
 
-	public Integer getPid() 
+	public Integer getPid()
 	{
 		return pid;
 	}
-	public void setAid(String aid) 
+	public void setAid(String aid)
 	{
 		this.aid = aid;
 	}
 
-	public String getAid() 
+	public String getAid()
 	{
 		return aid;
 	}
-	public void setGrouptype(String grouptype) 
+	public void setGrouptype(String grouptype)
 	{
 		this.grouptype = grouptype;
 	}
 
-	public String getGrouptype() 
+	public String getGrouptype()
 	{
 		return grouptype;
 	}
-	public void setCollective(String collective) 
+	public void setCollective(String collective)
 	{
 		this.collective = collective;
 	}
 
-	public String getCollective() 
+	public String getCollective()
 	{
 		return collective;
 	}
-	public void setContracted(String contracted) 
+	public void setContracted(String contracted)
 	{
 		this.contracted = contracted;
 	}
 
-	public String getContracted() 
+	public String getContracted()
 	{
 		return contracted;
 	}
