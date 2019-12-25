@@ -49,4 +49,11 @@ public class terminalsdataCount extends BaseController{
     {
         return RongApiService.get_list(iterminalsdataService.selectterminalsdataBytemp());
     }
+
+    @CrossOrigin
+    @GetMapping("/ele")
+    @ApiOperation(value = "根据电压对终端数据的查询")
+    public RongApiRes listele(){
+        return RongApiService.get_list(iterminalsdataService.selectterminalsdataByele());
+    }
 }

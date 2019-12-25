@@ -29,4 +29,6 @@ public interface IterminalsdataService {
     public List<terminalsdata> selectterminalsdataByhum();
 
     public List<terminalsdata> selectterminalsdataBytemp();
+
+    public List<terminalsdata> selectterminalsdataByele();
 }
