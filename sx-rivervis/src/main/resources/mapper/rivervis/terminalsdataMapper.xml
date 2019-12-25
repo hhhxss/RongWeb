@@ -64,4 +64,10 @@
         from rivervis.terminalsdata
         order by id
     </select>
+
+    <select id="selectterminalsdataByele" resultMap="terminalsdataResult">
+        select id,ele
+        from rivervis.terminalsdata
+        order by id
+    </select>
 </mapper>

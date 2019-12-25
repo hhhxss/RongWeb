@@ -4,6 +4,49 @@ function te_onload(){
 
     //首页图表 终端数据温度可视化
     init_tel_tempbygroup();
+
+    //首页图表 终端数据电压可视化
+    init_tel_elebygroup();
+
+}
+function init_tel_elebygroup(){
+    $.ajax({
+        type: "GET",
+        url: "/api/terminalsdata/ele",
+        dataType: "json",
+        success:function(data) {
+            var e_bygroup_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (x in e_bygroup_data) {
+                if (e_bygroup_data[x].id == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(e_bygroup_data[x].id);
+                }
+            }
+            for (y in e_bygroup_data) {
+                y_data.push(e_bygroup_data[y].ele);
+            }
+            var tel_elebygroup = echarts.init(document.getElementById('tel_elebygroup'));
+            option = {
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: x_data
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: y_data,
+                    type: 'line',
+                    areaStyle: {}
+                }]
+            };
+            tel_elebygroup.setOption(option);
+        }
+        })
 }
 
 function init_tel_tempbygroup() {
