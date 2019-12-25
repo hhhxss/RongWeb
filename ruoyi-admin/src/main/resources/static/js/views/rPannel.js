@@ -1,6 +1,55 @@
 function r_onload() {
 //首页图表 山洪全部可视化
     init_rvis();
+
+   
+    init_area_rbygroup();
+}
+function init_area_rbygroup() {
+    var area_rbygroup = echarts.init(document.getElementById('area_rbygroup'));
+    $.ajax({
+        type: "GET",
+        url: "/api/rivervis/list",
+        datatype: "JSON",
+        success: function (data) {
+            var pp_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (i in pp_data) {
+                if (pp_data[i].aname == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(pp_data[i].aname);
+                    y_data.push(pp_data[i].data);
+                    /*var y = new Object();
+                     y.name = bdsygroup_data[i].scategory;
+                     y.value = parseInt(bdsygroup_data[i].bcount);
+                     y_data.push(y);*/
+                }
+            }
+            option = {
+                angleAxis: {},
+                radiusAxis: {
+                    type: 'category',
+                    data: x_data,
+                    z: 10
+                },
+                polar: {},
+                series: [{
+                    type: 'bar',
+                    data: y_data,
+                    coordinateSystem: 'polar',
+                    name: 'A',
+                    stack: 'a'
+                }],
+                legend: {
+                    show: true,
+                    data: ['山洪预警']
+                }
+            };
+            area_rbygroup.setOption(option);
+        }
+    });
 }
 
 
