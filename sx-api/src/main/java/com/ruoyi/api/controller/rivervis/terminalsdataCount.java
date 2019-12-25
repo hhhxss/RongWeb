@@ -41,4 +41,12 @@ public class terminalsdataCount extends BaseController{
     {
         return RongApiService.get_list(iterminalsdataService.selectterminalsdataByhum());
     }
+
+    @CrossOrigin
+    @GetMapping("/temp")
+    @ApiOperation(value = "根据温度对终端数据的查询-")
+    public RongApiRes listtemp()
+    {
+        return RongApiService.get_list(iterminalsdataService.selectterminalsdataBytemp());
+    }
 }
