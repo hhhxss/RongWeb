@@ -23,9 +23,9 @@ function init_io_vraindata() {
                     x_data.push(vrain_data[x].rname);
                 }
             }
-            // for (y in vrain_data){
-            //     y_data.push(vrain_data[y].rainavg);
-            // }
+            for (y in vrain_data){
+                y_data.push(vrain_data[y].aid);
+            }
 
             var io_vraindata = echarts.init(document.getElementById('io_vraindata'));
             io_vraindata_option = {
@@ -61,7 +61,7 @@ function init_io_vraindata() {
                         name:'村镇雨量',
                         type:'bar',
                         barWidth: '60%',
-                        data:[16.55, 17.06, 17.09, 16.30, 16.54, 16.46, 16.15,16.83,23.33,16.40,15.60,17.47,15.49,16.19,16.51,16.19,16.62,16.94,5.38]
+                        data:y_data
                     }
                 ]
             };
@@ -93,6 +93,7 @@ function init_io_jqrain() {
 
             var io_jqrain = echarts.init(document.getElementById('io_jqrain'));
             io_jqrain_option = {
+                color: ['#aee8e3'],
                 tooltip: {
                     trigger: 'axis',
                     axisPointer: {
@@ -104,10 +105,10 @@ function init_io_jqrain() {
                 },
                 toolbox: {
                     feature: {
-                        dataView: {show: true, readOnly: false},
+                        //dataView: {show: true, readOnly: false},
                         magicType: {show: true, type: ['line', 'bar']},
-                        restore: {show: true},
-                        saveAsImage: {show: true}
+                        //restore: {show: true},
+                        //saveAsImage: {show: true}
                     }
                 },
                 // legend: {
@@ -128,7 +129,7 @@ function init_io_jqrain() {
                         name: '水量',
                         min: 0,
                         max: 12,
-                        interval: 2,
+                        interval: 3,
                         axisLabel: {
                             formatter: '{value} ml'
                         }
