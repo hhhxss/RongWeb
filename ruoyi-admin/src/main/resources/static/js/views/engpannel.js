@@ -48,7 +48,7 @@ function init_io_engmana() {
             var io_engmana = echarts.init(document.getElementById('io_engmana'));
             io_engmana_option = {
                 title: {
-                    text: '折线图堆叠'
+                    text: '电能信息'
                 },
                 tooltip: {
                     trigger: 'axis'
