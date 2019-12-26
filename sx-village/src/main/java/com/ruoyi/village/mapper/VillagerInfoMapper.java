@@ -88,4 +88,6 @@ public interface VillagerInfoMapper
 	public Mcount countbydemob(pubObjApi per);
 
 	public Mcount countbyagePart(PersonApi per);
+
+	public List<VillagerInfo> selectVillagerInfoByedulevel();
 }

@@ -64,4 +64,13 @@ public class Bpuser {
         return test;
     }
 
+    @CrossOrigin
+    @GetMapping("/type")
+    @ApiOperation(value = "根据操作总数对广播操作类型的统计")
+    public RongApiRes selectProgramsType(){
+        List pre=buserService.selectProgramsType();
+        RongApiRes test = RongApiService.get_list(pre);
+        return test;
+    }
+
 }

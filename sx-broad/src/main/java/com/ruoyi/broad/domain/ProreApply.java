@@ -55,6 +55,15 @@ public class ProreApply extends BaseEntity
 	/** 审听未通过次数 */
 	private Integer nopasstimes;
 
+	private String isemer;
+
+	public String getIsemer() {
+		return isemer;
+	}
+
+	public void setIsemer(String isemer) {
+		this.isemer = isemer;
+	}
 
 	public String getRecunit() {
 		return recunit;

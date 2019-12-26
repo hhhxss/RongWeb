@@ -67,6 +67,7 @@ public interface IVillagerInfoService
 	public Mcount countpmBySex(PersonApi person);
 
 	public List<VillagerInfo> selectvillagerInfoListBytype(PersonApi person);
+
 	public List<VillagerInfo> selectGrouplist(PersonApi person);
 
 	public Mcount countNewPre(pubObjApi per);
@@ -78,4 +79,6 @@ public interface IVillagerInfoService
 	public Mcount countbydemob(pubObjApi per);
 
 	public Mcount countbyagePart(PersonApi per);
+
+	public List<VillagerInfo> selectVillagerInfoByedulevel();
 }

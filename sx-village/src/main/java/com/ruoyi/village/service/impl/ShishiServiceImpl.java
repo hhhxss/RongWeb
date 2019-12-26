@@ -87,5 +87,10 @@ public class ShishiServiceImpl implements IShishiService
 	{
 		return shishiMapper.deleteShishiByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	@DataSource(value = DataSourceType.SLAVE)
+	public List<Shishi> selectShishiBytype() {
+		return shishiMapper.selectShishiBytype();
+	}
 }
