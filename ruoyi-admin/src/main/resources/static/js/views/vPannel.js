@@ -6,12 +6,78 @@ function v_onload() {
     init_ec_pbygroup();
     //首页图表 三维村镇人口可视化
     init_3d_v_pm();
+
+    //首页图表 村镇耕地信息可视化
+    init_ec_obygroup();
+  
     //首页图标，村民林地信息可视化
     init_ec_gbygroup();
     //首页图标，实时政事类型可视化
     init_ss_tbygroup();
     //首页图表 村镇村民教育程度可视化
     init_ec_edulevel();
+}
+
+function init_ec_obygroup(){
+    $.ajax({
+        type: "GET",
+        url: "/api/plinfo/type",
+        dataType: "json",
+        success: function (data) {
+            var obygroup_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            var z_data = new Array();
+            for (x in obygroup_data) {
+                x_data.push(obygroup_data[x].grouptype);
+            }
+            for (y in obygroup_data) {
+                y_data.push(obygroup_data[y].collective);
+            }
+            for (z in obygroup_data) {
+                z_data.push(obygroup_data[z].contracted);
+            }
+            var ec_obygroup = echarts.init(document.getElementById('ec_obygroup'));
+            ec_obygroup_option = {
+                legend: {},
+                tooltip: {},
+                dataset: {
+                    source: [
+                        ['grouptype', '集体经营', '承包到户'],
+                        [x_data[0], y_data[0], z_data[0]],
+                        [x_data[1], y_data[1], z_data[1]],
+                        [x_data[2], y_data[2], z_data[2]],
+                        [x_data[3], y_data[3], z_data[3]],
+                        [x_data[4], y_data[4], z_data[4]],
+                        [x_data[5], y_data[5], z_data[5]],
+                        [x_data[6], y_data[6], z_data[6]],
+                        [x_data[7], y_data[7], z_data[7]],
+                        [x_data[8], y_data[8], z_data[8]],
+                        [x_data[9], y_data[9], z_data[9]],
+                        [x_data[10], y_data[10], z_data[10]],
+                        [x_data[11], y_data[11], z_data[11]],
+                        [x_data[12], y_data[12], z_data[12]],
+                        [x_data[13], y_data[13], z_data[13]],
+                        [x_data[14], y_data[14], z_data[14]],
+                        [x_data[15], y_data[15], z_data[15]],
+                        [x_data[16], y_data[16], z_data[16]],
+                        [x_data[17], y_data[17], z_data[17]]
+
+                    ]
+                },
+                xAxis: {type: 'category'},
+                yAxis: {},
+                // Declare several bar series, each will be mapped
+                // to a column of dataset.source by default.
+                series: [
+                    {type: 'bar'},
+                    {type: 'bar'}
+                ]
+            };
+            ec_obygroup.setOption(ec_obygroup_option);
+        }
+
+        })
 }
 
 function init_ec_edulevel() {
@@ -470,7 +536,7 @@ function sort_ec_pbygroup() {
             ec_pbygroup.setOption(ec_pbygroup_option);
 
         }
-    })
+    });
 }
 
 function init_3d_v_pm() {
