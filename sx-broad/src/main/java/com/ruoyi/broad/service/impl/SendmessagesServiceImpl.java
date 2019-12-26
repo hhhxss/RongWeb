@@ -86,5 +86,10 @@ public class SendmessagesServiceImpl implements ISendmessagesService
 	{
 		return sendmessagesMapper.deleteSendmessagesByIds(Convert.toStrArray(ids));
 	}
-	
+
+	@Override
+	public List<Sendmessages> selectSendByremark() {
+		return sendmessagesMapper.selectSendByremark();
+	}
+
 }
