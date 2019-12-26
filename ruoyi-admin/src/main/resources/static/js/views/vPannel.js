@@ -4,6 +4,8 @@ function v_onload() {
     init_ec_mbygroup();
     //首页图表 村镇党员地域分布可视化
     init_ec_pbygroup();
+    //首页图标 村组面积信息可视化
+    init_ec_vilgroup();
     //首页图表 三维村镇人口可视化
     init_3d_v_pm();
 
@@ -77,7 +79,7 @@ function init_ec_obygroup(){
             ec_obygroup.setOption(ec_obygroup_option);
         }
 
-        })
+        });
 }
 
 function init_ec_edulevel() {
@@ -539,6 +541,45 @@ function sort_ec_pbygroup() {
     });
 }
 
+function init_ec_vilgroup() {
+    $.ajax({
+        type: "GET",
+        url: "/api/vgsi/type",
+        dataType: "json",
+        success: function (data) {
+            var vilgroup_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (x in vilgroup_data) {
+                if (vilgroup_data[x].marea == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(vilgroup_data[x].grouptype);
+                }
+            }
+            for (y in vilgroup_data) {
+                y_data.push(vilgroup_data[y].area);
+            }
+            var ec_vilgroup = echarts.init(document.getElementById('ec_vilgroup'));
+            init_ec_vilgroup_option = {
+                color: ['#69ade8'],
+                xAxis: {
+                    type: 'category',
+                    data: x_data
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: y_data,
+                    type: 'bar'
+                }]
+            };
+            ec_vilgroup.setOption(init_ec_vilgroup_option);
+        }
+    });
+
+}
 function init_3d_v_pm() {
     var pre_data;
     var area_group = new Array();
@@ -693,4 +734,8 @@ function arrIndex(arr, value) {
         }
     }
     return false;
+
+
+
+
 }
