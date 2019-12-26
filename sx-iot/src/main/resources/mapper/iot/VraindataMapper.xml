@@ -49,9 +49,10 @@
 <!--    </select>-->
 
     <select id="selectVraindataByrname" resultMap="VraindataResult">
-        select distinct rname
+        select rname,avg(data) as id
         from
              iotdata.rain_data1
+        group by rname
     </select>
 
 </mapper>

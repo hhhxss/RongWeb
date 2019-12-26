@@ -132,7 +132,6 @@ public class VillagerInfoServiceImpl implements IVillagerInfoService
 	}
 
 
-
 	@Override
 	@DataSource(value = DataSourceType.SXVILLAGE)
 	public Mcount countNewPre(pubObjApi per)
@@ -167,5 +166,11 @@ public class VillagerInfoServiceImpl implements IVillagerInfoService
 	public Mcount countbyagePart(PersonApi per)
 	{
 		return villagerInfoMapper.countbyagePart(per);
+	}
+
+	@Override
+	@DataSource(value = DataSourceType.SXVILLAGE)
+	public List<VillagerInfo> selectVillagerInfoByedulevel(){
+		return villagerInfoMapper.selectVillagerInfoByedulevel();
 	}
 }
