@@ -28,6 +28,81 @@ function bonLoad() {
     /*首页图标节目申请是否回复可视化*/
     init_pp_irgroup();
 
+    /*首页图标 广播发送信息类型可视化*/
+    init_sm_bgroup();
+
+}
+
+function init_sm_bgroup(){
+    var sm_bgroup = echarts.init(document.getElementById('sm_bgroup'));
+    $.ajax({
+        type: "GET",
+        url: "/api/broad/remark",
+        datatype: "JSON",
+        success: function (data) {
+            var sm_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (i in sm_data) {
+                if (sm_data[i].smid == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(sm_data[i].smid);
+                    y_data.push(sm_data[i].remark);
+                    /*var y = new Object();
+                     y.name = bdsygroup_data[i].scategory;
+                     y.value = parseInt(bdsygroup_data[i].bcount);
+                     y_data.push(y);*/
+                }
+            }
+            option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b}: {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: y_data
+                },
+                series: [
+                    {
+                        name:'访问来源',
+                        type:'pie',
+                        radius: ['50%', '70%'],
+                        avoidLabelOverlap: false,
+                        label: {
+                            normal: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                show: true,
+                                textStyle: {
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
+                                }
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                show: false
+                            }
+                        },
+                        data:[
+                            {value:x_data[0], name:y_data[0]},
+                            {value:x_data[1], name:y_data[1]},
+                            {value:x_data[2], name:y_data[2]},
+                            {value:x_data[3], name:y_data[3]},
+                            {value:x_data[4], name:y_data[4]}
+                        ]
+                    }
+                ]
+            };
+
+            sm_bgroup.setOption(option);
+        }
+    });
 }
 
 function init_pp_irgroup() {
