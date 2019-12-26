@@ -6,18 +6,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * @author 张超 teavamc
- * @Description:TODO
- * @ClassName RiverPannelController
- * @date 2019/3/27 16:41
+ * @author xss
+ * @Description:
+ * @ClassName RiverTepannelController
+ * @date 2019/12/2
  **/
 @Controller
-@RequestMapping("/rivervis/pannel")
-public class RiverPannelController extends BaseController {
-    private String prefix = "rivervis/pannel";
+@RequestMapping("/rivervis/tepannel")
+public class RiverTepannelController extends BaseController{
+    private String prefix = "rivervis/tepannel";
 
     @GetMapping()
-    public String pannel() {
-        return prefix + "/pannel";
+    public String tepannel() {
+        return prefix + "/tepannel";
     }
 }
