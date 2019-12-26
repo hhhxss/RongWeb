@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.iot.mapper.EngmanaMapper">
+
+    <resultMap type="Engmana" id="EngmanaResult">
+        <result property="id"    column="id"    />
+        <result property="tid"    column="tid"    />
+        <result property="addrid"    column="addrid"    />
+        <result property="colltime"    column="colltime"    />
+        <result property="fvoltage"    column="fvoltage"    />
+        <result property="gvoltage"    column="gvoltage"    />
+        <result property="rechcurrent"    column="rechcurrent"    />
+        <result property="loadcurrent"    column="loadcurrent"    />
+        <result property="outvoltage"    column="outvoltage"    />
+        <result property="extvoltage"    column="extvoltage"    />
+        <result property="sunvoltage"    column="sunvoltage"    />
+        <result property="worktemp"    column="worktemp"    />
+        <result property="rechstatus"    column="rechstatus"    />
+        <result property="workstatus"    column="workstatus"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectEngmanaVo">
+        select
+        id,tid,addrid,colltime,fvoltage,gvoltage,rechcurrent,loadcurrent,
+        outvoltage,extvoltage,sunvoltage,worktemp,rechstatus,workstatus,remark
+        from tb_energy
+    </sql>
+
+    <select id="selectEngmanaById" resultMap="EngmanaResult">
+        select
+        fvoltage,gvoltage,rechcurrent,loadcurrent,outvoltage,extvoltage,sunvoltage,worktemp
+        from tb_energy
+    </select>
+
+</mapper>

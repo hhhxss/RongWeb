@@ -15,7 +15,7 @@ function init_io_vraindata() {
         success: function (data) {
             var vrain_data = data.data;
             var x_data = new Array();
-            //var y_data = new Array();
+            var y_data = new Array();
             for( x in vrain_data){
                 if(vrain_data[x].rname == ''){
                     x_data.push('未知');
@@ -24,7 +24,7 @@ function init_io_vraindata() {
                 }
             }
             for (y in vrain_data){
-                y_data.push(vrain_data[y].aid);
+                y_data.push(vrain_data[y].id);
             }
 
             var io_vraindata = echarts.init(document.getElementById('io_vraindata'));
@@ -61,7 +61,7 @@ function init_io_vraindata() {
                         name:'村镇雨量',
                         type:'bar',
                         barWidth: '60%',
-                        data:y_data
+                        data: y_data
                     }
                 ]
             };
