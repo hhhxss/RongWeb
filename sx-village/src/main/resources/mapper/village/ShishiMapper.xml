@@ -45,7 +45,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectShishiVo"/>
         where shiid = #{shiid}
     </select>
-        
+
+    <select id="selectShishiBytype" resultMap="ShishiResult">
+        select type,count(type) as vtype
+            from village.tb_shishi
+            group by type
+            order by count(type) desc
+    </select>
+
     <insert id="insertShishi" parameterType="Shishi">
         insert into tb_shishi
 		<trim prefix="(" suffix=")" suffixOverrides=",">

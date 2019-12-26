@@ -14,7 +14,15 @@ public class Buser {
     private String lenth;
     private String isPublic;
     private String Ptp;
+    private String Type;
 
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
+    }
     public String getUserid() {
         return userid;
     }

@@ -19,4 +19,6 @@ public interface IBuserService {
     public List<Buser> selectProgramsIfPublic();
 
     public List<Buser> selectProgramsPtp();
+
+    public List<Buser> selectProgramsType();
 }
