@@ -13,11 +13,6 @@ import java.util.List;
 public class DataAnalysisImpl implements IDataAnalysisService {
     @Autowired
     private  DataAnalysisMapper DataAnalysisMapper;
-    @Override
-    @DataSource(value = DataSourceType.SXRIVERVIS)
-    public DataAnalysis selectDataAnalysisById(Integer id) {
-        return DataAnalysisMapper.selectDataAnalysisById(id);
-    }
 
     @Override
     @DataSource(value = DataSourceType.SXRIVERVIS)

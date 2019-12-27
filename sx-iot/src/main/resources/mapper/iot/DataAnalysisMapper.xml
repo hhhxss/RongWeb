@@ -5,7 +5,6 @@
 <mapper namespace="com.ruoyi.iot.mapper.DataAnalysisMapper">
 
 <resultMap type="DataAnalysis" id="DataAnalysisResult">
-    <result property="id"    column="id"    />
     <result property="rname"    column="rname"    />
     <result property="type1"    column="type1"    />
     <result property="data1"    column="data1"    />
@@ -15,13 +14,12 @@
 </resultMap>
 
 <sql id="selectDataAnalysisVo">
-        select id,rname,type1,data1,type2,data2,time from iotdata.data_analysis
+        select rname,type1,data1,type2,data2,time from iotdata.data_analysis
     </sql>
 
 <select id="selectDataAnalysisList" parameterType="DataAnalysis" resultMap="DataAnalysisResult">
     <include refid="selectDataAnalysisVo"/>
     <where>
-        <if test="id != null "> and id = #{id}</if>
         <if test="rname != null "> and rname = #{rname}</if>
         <if test="type1 != null "> and type1 = #{type1}</if>
         <if test="data1 != null  and data1 != '' "> and data1 LIKE CONCAT(CONCAT('%', #{data1}),'%')</if>
@@ -33,12 +31,9 @@
 
 </select>
 
-<select id="selectDataAnalysisById" parameterType="Integer" resultMap="DataAnalysisResult">
-    <include refid="selectDataAnalysisVo"/>
-    where id = #{id}
-</select>
 
-<select id="selectDataAnalysisBytime" parameterType="Integer" resultMap="DataAnalysisResult">
+
+<select id="selectDataAnalysisBytime"  resultMap="DataAnalysisResult">
     <include refid="selectDataAnalysisVo"/>
     select data1,data2
     from iotdata.data_analysis
