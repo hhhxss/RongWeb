@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.rivervis.mapper.TerminalsDataMapper">
+
+    <resultMap type="TerminalsData" id="TerminalsDataResult">
+        <result property="id"    column="id"    />
+        <result property="hum"    column="hum"    />
+        <result property="temp"    column="temp"    />
+        <result property="ele"    column="ele"    />
+
+    </resultMap>
+
+    <sql id="selectTerminalsDataVo">
+        select id,temp,hum,ele from rivervis.terminalsdata
+    </sql>
+
+    <select id="selectTerminalsDataList" parameterType="TerminalsData" resultMap="TerminalsDataResult">
+        <include refid="selectTerminalsDataVo"/>
+        <where>
+            <if test="id != null "> and id = #{id}</if>
+            <if test="hum != null  and hum != '' "> and hum LIKE CONCAT(CONCAT('%', #{hum}),'%')</if>
+            <if test="temp != null  and temp != '' "> and temp LIKE CONCAT(CONCAT('%', #{temp}),'%')</if>
+            <if test="ele != null  and ele != '' "> and ele LIKE CONCAT(CONCAT('%', #{ele}),'%')</if>
+
+        </where>
+        ORDER BY id ASC
+    </select>
+
+    <select id="selectTerminalsDataById" parameterType="Integer" resultMap="TerminalsDataResult">
+        <include refid="selectTerminalsDataVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectTerminalsDataByhum" resultMap="TerminalsDataResult">
+
+        select hum,temp,ele
+        from rivervis.terminalsdata
+
+    </select>
+
+</mapper>

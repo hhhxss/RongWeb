@@ -3,8 +3,8 @@ package com.ruoyi.api.controller.iot;
 
 import com.ruoyi.api.domain.RongApiRes;
 import com.ruoyi.api.service.RongApiService;
-import com.ruoyi.iot.domain.FuLin;
-import com.ruoyi.iot.service.IFuLinService;
+import com.ruoyi.iot.domain.Lukou;
+import com.ruoyi.iot.service.ILukouService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,28 +14,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/fulin")
+@RequestMapping("/api/lukoudata")
 @CrossOrigin
-@Api(value = "福临街道河流水位走势 ")
-public class RiverCount {
+@Api(value = "路口镇温度走势 - 统计计数类接口")
+public class LukouCount {
 
     @Autowired
-    private IFuLinService fulinService;
+    private ILukouService lukouService;
 
     @CrossOrigin
-    @GetMapping("/st")
-    @ApiOperation(value = "查询水位走势列表")
-    public RongApiRes list(FuLin fulin)
+    @GetMapping("/list")
+    @ApiOperation(value = "查询路口镇温度列表")
+    public RongApiRes list(Lukou lukou)
     {
-        return RongApiService.get_list(fulinService.selectFuLinList(fulin));
+        return RongApiService.get_list(lukouService.selectLukouList(lukou));
     }
 
     @CrossOrigin
     @GetMapping("/time")
-    @ApiOperation(value = "查询福临村雨量走势列表")
+    @ApiOperation(value = "查询路口镇温度走势")
     public RongApiRes list()
     {
-        return RongApiService.get_list(fulinService.selectFuLinBytime());
+        return RongApiService.get_list(lukouService.selectLukouListBytime());
     }
-
 }

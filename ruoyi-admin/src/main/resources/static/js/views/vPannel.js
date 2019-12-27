@@ -16,6 +16,8 @@ function v_onload() {
     init_ec_gbygroup();
     //首页图标，实时政事类型可视化
     init_ss_tbygroup();
+    //首页图表，开慧村家庭类型变化可视化
+    init_kaihuijiating();
     //首页图表 村镇村民教育程度可视化
     init_ec_edulevel();
     //首页图表 反馈类型可视化
@@ -805,8 +807,52 @@ function arrIndex(arr, value) {
         }
     }
     return false;
+}
+function init_kaihuijiating (){
+    var kaihui = echarts.init(document.getElementById('kaihui'));
+    var option = {
+        legend: {},
+        tooltip: {},
+        dataset: {
+            source: [
+                ['product', '2000', '2006', '2012', '2019'],
+                ['独生子家庭', 158, 135, 120, 94],
+                ['独生女家庭', 94,97, 93, 90],
+                ['二胎家庭', 48, 68, 87, 116]
 
-
-
+            ]
+        },
+        series: [{
+            type: 'pie',
+            radius: 40,
+            center: ['25%', '30%']
+            // No encode specified, by default, it is '2012'.
+        }, {
+            type: 'pie',
+            radius: 40,
+            center: ['75%', '30%'],
+            encode: {
+                itemName: 'product',
+                value: '2006'
+            }
+        }, {
+            type: 'pie',
+            radius: 40,
+            center: ['25%', '75%'],
+            encode: {
+                itemName: 'product',
+                value: '2012'
+            }
+        }, {
+            type: 'pie',
+            radius: 40,
+            center: ['75%', '75%'],
+            encode: {
+                itemName: 'product',
+                value: '2019'
+            }
+        }]
+    };
+    kaihui.setOption(option);
 
 }

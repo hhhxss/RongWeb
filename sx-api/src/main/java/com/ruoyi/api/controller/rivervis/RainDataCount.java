@@ -1,10 +1,9 @@
-package com.ruoyi.api.controller.iot;
-
+package com.ruoyi.api.controller.rivervis;
 
 import com.ruoyi.api.domain.RongApiRes;
 import com.ruoyi.api.service.RongApiService;
-import com.ruoyi.iot.domain.FuLin;
-import com.ruoyi.iot.service.IFuLinService;
+import com.ruoyi.rivervis.domain.RainData;
+import com.ruoyi.rivervis.service.IRainDataService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,28 +13,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/fulin")
+@RequestMapping("/api/raindata")
 @CrossOrigin
-@Api(value = "福临街道河流水位走势 ")
-public class RiverCount {
+@Api(value = "开慧村雨量走势 - 统计计数类接口")
+public class RainDataCount {
 
     @Autowired
-    private IFuLinService fulinService;
+    private IRainDataService rainDataService;
 
     @CrossOrigin
     @GetMapping("/st")
-    @ApiOperation(value = "查询水位走势列表")
-    public RongApiRes list(FuLin fulin)
+    @ApiOperation(value = "查询开慧村雨量列表")
+    public RongApiRes list(RainData rainData)
     {
-        return RongApiService.get_list(fulinService.selectFuLinList(fulin));
+        return RongApiService.get_list(rainDataService.selectRainDataList(rainData));
     }
 
     @CrossOrigin
     @GetMapping("/time")
-    @ApiOperation(value = "查询福临村雨量走势列表")
+    @ApiOperation(value = "查询开慧村雨量走势列表")
     public RongApiRes list()
     {
-        return RongApiService.get_list(fulinService.selectFuLinBytime());
+        return RongApiService.get_list(rainDataService.selectRainDataBytime());
     }
-
 }
