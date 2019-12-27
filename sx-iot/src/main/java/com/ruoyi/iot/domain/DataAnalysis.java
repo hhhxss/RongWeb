@@ -3,7 +3,6 @@ package com.ruoyi.iot.domain;
 import com.ruoyi.common.base.BaseEntity;
 
 public class DataAnalysis extends BaseEntity {
-    private Integer id;
     private String rname;
     private String type1;
     private String data1;
@@ -11,13 +10,6 @@ public class DataAnalysis extends BaseEntity {
     private String data2;
     private String time;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getRname() {
         return rname;
@@ -70,8 +62,7 @@ public class DataAnalysis extends BaseEntity {
     @Override
     public String toString() {
         return "DataAnalysis{" +
-                "id=" + id +
-                ", rname='" + rname + '\'' +
+                "rname='" + rname + '\'' +
                 ", type1='" + type1 + '\'' +
                 ", data1='" + data1 + '\'' +
                 ", type2='" + type2 + '\'' +
