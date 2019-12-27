@@ -4,6 +4,8 @@ function m_onload(){
      init_fulin();
      //首页图表，金桥镇温度变化可视化
     init_jinqiao();
+    //榔梨街道河流水位可视化
+    init_langlijiedao();
 
 }
 function init_area_water() {
@@ -247,6 +249,99 @@ function init_jinqiao() {
             };
 
             jinqiao_data.setOption(option);
+        }
+    });
+}
+
+function init_langlijiedao() {
+    $.ajax({
+        type: "GET",
+        url: "/api/langlijiedao/st",
+        dataType: "json",
+        success: function (data) {
+            var lljdgroup_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (x in lljdgroup_data) {
+                x_data.push(lljdgroup_data[x].time);
+            }
+            for (y in lljdgroup_data) {
+                y_data.push(lljdgroup_data[y].data);
+            }
+            var langlijiedao_data = echarts.init(document.getElementById('langlijiedao_data'));
+            option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                xAxis: [{
+                    type: 'category',
+                    data: x_data,
+                    axisLine: {
+                        lineStyle: {
+                            color: "#999"
+                        }
+                    }
+                }],
+                yAxis: [{
+                    type: 'value',
+                    splitNumber: 4,
+                    splitLine: {
+                        lineStyle: {
+                            type: 'dashed',
+                            color: '#DDD'
+                        }
+                    },
+                    axisLine: {
+                        show: false,
+                        lineStyle: {
+                            color: "#333"
+                        },
+                    },
+                    nameTextStyle: {
+                        color: "#999"
+                    },
+                    splitArea: {
+                        show: false
+                    }
+                }],
+                series: [{
+                    name: '课时',
+                    type: 'line',
+                    data: y_data,
+                    lineStyle: {
+                        normal: {
+                            width: 8,
+                            color: {
+                                type: 'linear',
+
+                                colorStops: [{
+                                    offset: 0,
+                                    color: '#A9F387' // 0% 处的颜色
+                                }, {
+                                    offset: 1,
+                                    color: '#48D8BF' // 100% 处的颜色
+                                }],
+                                globalCoord: false // 缺省为 false
+                            },
+                            shadowColor: 'rgba(72,216,191, 0.3)',
+                            shadowBlur: 10,
+                            shadowOffsetY: 20
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#fff',
+                            borderWidth: 10,
+                            /*shadowColor: 'rgba(72,216,191, 0.3)',
+                            shadowBlur: 100,*/
+                            borderColor: "#A9F387"
+                        }
+                    },
+                    smooth: true
+                }]
+            };
+
+            langlijiedao_data.setOption(option);
         }
     });
 }

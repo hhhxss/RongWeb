@@ -53,50 +53,46 @@
                 </div>
             </div>
             <div class="col-sm-6">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>金桥镇温度可视化</h5>
-                        <div class="ibox-tools">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-superpowers"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>金桥镇温度可视化</h5>
+                    <div class="ibox-tools">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-superpowers"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
 
-                                <li><a onclick="init_jinqiao()">原始数据</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="echarts" id="jinqiao_data" ></div>
+                            <li><a onclick="init_jinqiao()">原始数据</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
+                <div class="ibox-content">
+                    <div class="echarts" id="jinqiao_data" ></div>
+                </div>
             </div>
-
+            </div>
         </div>
-                      
-            <div class="row">
-            <div class="col-sm-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <h5>各地区水量三维可视化</h5>
-                        <div class="ibox-tools">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-superpowers"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a onclick="init_area_water()">原始数据</a>
-                                </li>
-                            </ul>
-                        </div>
+        <div class="col-sm-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>榔梨街道河流水位走势可视化</h5>
+                    <div class="ibox-tools">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-superpowers"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+
+                            <li><a onclick="init_langlijiedao()">原始数据</a>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="ibox-content">
-                        <div class="echarts" id="area_water"></div>
-                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="echarts" id="langlijiedao_data" ></div>
                 </div>
             </div>
         </div>
-    </div>
 </div>
 
 <div th:include="include :: footer"></div>
