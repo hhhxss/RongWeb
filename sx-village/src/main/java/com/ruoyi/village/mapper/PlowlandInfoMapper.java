@@ -26,37 +26,39 @@ public interface PlowlandInfoMapper
      * @return 耕地集合
      */
 	public List<PlowlandInfo> selectPlowlandInfoList(PlowlandInfo plowlandInfo);
-	
+
 	/**
      * 新增耕地
-     * 
+     *
      * @param plowlandInfo 耕地信息
      * @return 结果
      */
 	public int insertPlowlandInfo(PlowlandInfo plowlandInfo);
-	
+
 	/**
      * 修改耕地
-     * 
+     *
      * @param plowlandInfo 耕地信息
      * @return 结果
      */
 	public int updatePlowlandInfo(PlowlandInfo plowlandInfo);
-	
+
 	/**
      * 删除耕地
-     * 
+     *
      * @param pid 耕地ID
      * @return 结果
      */
 	public int deletePlowlandInfoById(Integer pid);
-	
+
 	/**
      * 批量删除耕地
-     * 
+     *
      * @param pids 需要删除的数据ID
      * @return 结果
      */
 	public int deletePlowlandInfoByIds(String[] pids);
+
+	public List<PlowlandInfo> selectPlowlandInfoByType();
 	
 }

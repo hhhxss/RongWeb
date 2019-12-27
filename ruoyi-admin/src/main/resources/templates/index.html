@@ -12,17 +12,19 @@
     <![endif]-->
     <link th:href="@{favicon.ico}" rel="stylesheet"/>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/jquery.contextMenu.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/animate.css}" rel="stylesheet"/>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
-    <link th:href="@{/ruoyi/css/ry-ui.css?v=3.1.0}" rel="stylesheet"/>
+    <link th:href="@{/css/skins.css}" rel="stylesheet"/>
+    <link th:href="@{/ruoyi/css/ry-ui.css?v=4.1.0}" rel="stylesheet"/>
     <style type="text/css">
         .nav > li:hover .dropdown-menu {display: block;}
         #content-main.max { height: calc(100% - 110px); overflow: hidden; width: 100%; height: 100%; left: 0px; position: absolute; top: 0px; z-index: 9998; margin: 0; }
     </style>
 </head>
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden" th:classappend="${@config.getKey('sys.index.skinName')}">
-<div id="wrapper"> 
+<div id="wrapper">
 
     <!--左侧导航开始-->
     <nav class="navbar-default navbar-static-side" role="navigation">
@@ -36,10 +38,10 @@
 
                         <!--头像-->
                         <!--<span>-->
-                         <!--<img th:src="(${user.avatar} == '') ? @{/img/profile.jpg} : @{/profile/avatar/} + ${user.avatar}" alt="image" class="img-circle" height="60" width="60"/>
-                         </span>-->
+                        <!--<img th:src="(${user.avatar} == '') ? @{/img/profile.jpg} : @{/profile/avatar/} + ${user.avatar}" alt="image" class="img-circle" height="60" width="60"/>
+                        </span>-->
 
-                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                           <span class="clear">
                               <span class="block m-t-xs">
                                   <!--<strong class="font-bold" th:text="${user.userName}">用户</strong>-->
@@ -50,47 +52,61 @@
                                  <b class="caret"></b>
                              </span>
                           </span>
-                         </a>
+                        </a>
 
-                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                             <li><a class="menuItem" th:href="@{/system/user/profile}">个人信息</a></li>
-                             <li class="divider"></li>
-                             <li><a th:href="@{logout}">退出</a></li>
-                         </ul>
+                        <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li><a class="menuItem" th:href="@{/system/user/profile}">个人信息</a></li>
+                            <li class="divider"></li>
+                            <li><a th:href="@{logout}">退出</a></li>
+                        </ul>
                     </div>
                 </li>
-                 <li class="active">
-                    <a href="index.html"><i class="fa fa-home"></i> <span class="nav-label">控制台</span> <span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li ><a class="menuItem" th:href="@{/system/main}">核心</a></li>
-                        <li ><a class="menuItem" th:href="@{/broad/pannel}">广播数据</a></li>
-                        <li ><a class="menuItem" th:href="@{/village/pannel}">社区数据</a></li>
-                        <li ><a class="menuItem" th:href="@{/river/pannel}">山洪数据</a></li>
-                        <li ><a class="menuItem" th:href="@{/broad/camera}">摄像头测试</a></li>
-                        <!--<li ><a class="menuItem" th:href="@{/broad/chat}">聊天窗口</a></li>-->
-                    </ul>
-                </li>
+                <!--                <li class="active">-->
+                <!--                    <a href="index.html"><i class="fa fa-home"></i> <span class="nav-label">控制台</span> <span class="fa arrow"></span></a>-->
+                <!--                    <ul class="nav nav-second-level">-->
+                <!--                        <li ><a class="menuItem" th:href="@{/system/main}">核心</a></li>-->
+                <!--                        <li ><a class="menuItem" th:href="@{/broad/pannel}">广播数据</a></li>-->
+                <!--                        <li ><a class="menuItem" th:href="@{/village/pannel}">社区数据</a></li>-->
+                <!--                        <li ><a class="menuItem" th:href="@{/river/pannel}">山洪数据</a></li>-->
+                <!--                        <li ><a class="menuItem" th:href="@{/broad/camera}">摄像头测试</a></li>-->
+                <!--                        &lt;!&ndash;<li ><a class="menuItem" th:href="@{/broad/chat}">聊天窗口</a></li>&ndash;&gt;-->
+                <!--                    </ul>-->
+                <!--                </li>-->
                 <li th:each="menu : ${menus}">
-                	<a href="#">
-                		<i class="fa fa fa-bar-chart-o" th:class="${menu.icon}"></i>
-                    	<span class="nav-label" th:text="${menu.menuName}">一级菜单</span> 
-                    	<span class="fa arrow"></span>
-                	</a>
-                   <ul class="nav nav-second-level collapse">
-						<li th:each="cmenu : ${menu.children}">
-							<a th:if="${#lists.isEmpty(cmenu.children)}" class="menuItem" th:utext="${cmenu.menuName}" th:href="@{${cmenu.url}}">二级菜单</a>
-							<a th:if="${not #lists.isEmpty(cmenu.children)}" href="#">[[${cmenu.menuName}]]<span class="fa arrow"></span></a>
-							<ul th:if="${not #lists.isEmpty(cmenu.children)}" class="nav nav-third-level">
-								<li th:each="emenu : ${cmenu.children}"><a class="menuItem" th:text="${emenu.menuName}" th:href="@{${emenu.url}}">三级菜单</a></li>
-							</ul>
-						</li>
-					</ul>
+                    <a th:class="@{${menu.url != '' && menu.url != '#'} ? ${menu.target}}" th:href="@{${menu.url == ''} ? |#| : ${menu.url}}">
+                        <i class="fa fa-bar-chart-o" th:class="${menu.icon}"></i>
+                        <span class="nav-label" th:text="${menu.menuName}">一级菜单</span>
+                        <span th:class="${menu.url == '' || menu.url == '#'} ? |fa arrow|"></span>
+                    </a>
+                    <ul class="nav nav-second-level collapse">
+                        <li th:each="cmenu : ${menu.children}">
+                            <a th:if="${#lists.isEmpty(cmenu.children)}" th:class="${cmenu.target == ''} ? |menuItem| : ${cmenu.target}" th:utext="${cmenu.menuName}" th:href="@{${cmenu.url}}">二级菜单</a>
+                            <a th:if="${not #lists.isEmpty(cmenu.children)}" href="#">[[${cmenu.menuName}]]<span class="fa arrow"></span></a>
+                            <ul th:if="${not #lists.isEmpty(cmenu.children)}" class="nav nav-third-level">
+                                <li th:each="emenu : ${cmenu.children}">
+                                    <a th:if="${#lists.isEmpty(emenu.children)}" th:class="${emenu.target == ''} ? |menuItem| : ${emenu.target}" th:text="${emenu.menuName}" th:href="@{${emenu.url}}">三级菜单</a>
+                                    <a th:if="${not #lists.isEmpty(emenu.children)}" href="#">[[${emenu.menuName}]]<span class="fa arrow"></span></a>
+                                    <ul th:if="${not #lists.isEmpty(emenu.children)}" class="nav nav-fourth-level">
+                                        <li th:each="fmenu : ${emenu.children}">
+                                            <a th:if="${#lists.isEmpty(fmenu.children)}" th:class="${fmenu.target == ''} ? |menuItem| : ${fmenu.target}"  th:text="${fmenu.menuName}" th:href="@{${fmenu.url}}">四级菜单</a>
+                                            <a th:if="${not #lists.isEmpty(fmenu.children)}" href="#">[[${fmenu.menuName}]]<span class="fa arrow"></span></a>
+                                            <ul th:if="${not #lists.isEmpty(fmenu.children)}" class="nav nav-fifth-level">
+                                                <li th:each="smenu : ${fmenu.children}">
+                                                    <a th:if="${#lists.isEmpty(smenu.children)}" th:class="${smenu.target == ''} ? |menuItem| : ${smenu.target}" th:text="${smenu.menuName}" th:href="@{${smenu.url}}" style="font-style: italic">五级菜单</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>
     </nav>
     <!--左侧导航结束-->
-    
+
     <!--右侧部分开始-->
     <div id="page-wrapper" class="gray-bg dashbard-1">
         <div class="row border-bottom">
@@ -99,14 +115,14 @@
                 <div class="navbar-header">
 
                     <a class="navbar-minimalize minimalize-styl-2 btn btn-default " href="#" title="收起菜单">
-                    	<i class="fa fa-bars"></i>
+                        <i class="fa fa-bars"></i>
                     </a>
                 </div>
                 <ul class="nav navbar-top-links navbar-right welcome-message">
-	                <li>
-	                    <span class="m-r-sm text-muted">欢迎来到融媒体平台管理首页.</span>
-	                </li>
-	                <li><a id="fullScreen"><i class="fa fa-arrows-alt"></i>全屏</a></li>
+                    <li>
+                        <span class="m-r-sm text-muted">欢迎来到融媒体平台管理首页.</span>
+                    </li>
+                    <li><a id="fullScreen"><i class="fa fa-arrows-alt"></i>全屏</a></li>
                     <li><a th:href="@{logout}"><i class="fa fa-sign-out"></i>退出</a></li>
                 </ul>
             </nav>
@@ -125,20 +141,20 @@
             </button>
             <div class="btn-group roll-nav roll-right">
                 <button class="dropdown J_tabClose" data-toggle="dropdown">
-                                                                          页签操作<span class="caret"></span>
+                    页签操作<span class="caret"></span>
                 </button>
                 <ul role="menu" class="dropdown-menu dropdown-menu-right">
-                     <li><a class="tabCloseCurrent" href="javascript:void();">关闭当前</a></li>
-                     <li><a class="tabCloseOther" href="javascript:void();">关闭其他</a></li>
-					 <li><a class="tabCloseAll" href="javascript:void();">全部关闭</a></li>
-					 <li><a class="tabMaxCurrent" href="javascript:void();">全屏显示</a></li>
+                    <li><a class="tabCloseCurrent" href="javascript:void();">关闭当前</a></li>
+                    <li><a class="tabCloseOther" href="javascript:void();">关闭其他</a></li>
+                    <li><a class="tabCloseAll" href="javascript:void();">全部关闭</a></li>
+                    <li><a class="tabMaxCurrent" href="javascript:void();">全屏显示</a></li>
                 </ul>
             </div>
             <a href="#" class="roll-nav roll-right tabReload"><i class="fa fa-refresh"></i> 刷新</a>
         </div>
-        
+
         <a id="ax_close_max" class="ax_close_max" href="#" title="关闭全屏"> <i class="fa fa-times-circle-o"></i> </a>
-                    
+
         <div class="row mainContent" id="content-main">
             <iframe class="RuoYi_iframe" name="iframe0" width="100%" height="100%" data-id="/system/main"
                     th:src="@{/system/main}" frameborder="0" seamless></iframe>
