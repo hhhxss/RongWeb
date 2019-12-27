@@ -28,6 +28,14 @@ public interface VillagegroupStatisticsInfoMapper
 	public List<VillagegroupStatisticsInfo> selectVillagegroupStatisticsInfoList(VillagegroupStatisticsInfo villagegroupStatisticsInfo);
 	public List<VillagegroupStatisticsInfo> selectVillagegrouparea();
 	public List<VillagegroupStatisticsInfo> selectVillagegroupGtype();
+	public List<VillagegroupStatisticsInfo> selectVillagegroupfarmland();
+	public List<VillagegroupStatisticsInfo> selectVillagegroupplowland();
+	public List<VillagegroupStatisticsInfo> selectVillagegrouporchard();
+	public List<VillagegroupStatisticsInfo> selectVillagegroupforest();
+	public List<VillagegroupStatisticsInfo> selectVillagegroupfland();
+	public List<VillagegroupStatisticsInfo> selectVillagegroupaqarea();
+	public List<VillagegroupStatisticsInfo> selectVillagegroupotherland();
+
 	/**
      * 新增村组统计
      * 

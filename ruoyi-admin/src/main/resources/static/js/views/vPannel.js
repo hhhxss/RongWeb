@@ -4,8 +4,12 @@ function v_onload() {
     init_ec_mbygroup();
     //首页图表 村镇党员地域分布可视化
     init_ec_pbygroup();
-    //首页图标 村组面积信息可视化
+    //首页图表 村组面积信息可视化
     init_ec_vilgroup();
+    //首页图表 各村组农用地小计可视化
+    init_ec_farmland();
+    //首页图表 村组其他农用地可视化
+    init_ec_otherland();
     //首页图表 三维村镇人口可视化
     init_3d_v_pm();
 
@@ -139,13 +143,13 @@ function sort_ec_mbygroup() {
 }
 
 function init_ec_pbygroup() {
-    $.ajax({
-        type: "GET",
-        url: "/api/count/pm",
-        dataType: "json",
-        success: function (data) {
-            var mbygroup_data = data.data;
-            var x_data = new Array();
+                $.ajax({
+                    type: "GET",
+                    url: "/api/count/pm",
+                    dataType: "json",
+                    success: function (data) {
+                        var mbygroup_data = data.data;
+                        var x_data = new Array();
             var y_data = new Array();
             for( x in mbygroup_data){
                 if(mbygroup_data[x].parea == ''){
@@ -278,7 +282,7 @@ function init_ec_vilgroup() {
             var x_data = new Array();
             var y_data = new Array();
             for (x in vilgroup_data) {
-                if (vilgroup_data[x].marea == '') {
+                if (vilgroup_data[x].grouptype == '') {
                     x_data.push('未知');
                 } else {
                     x_data.push(vilgroup_data[x].grouptype);
@@ -306,6 +310,158 @@ function init_ec_vilgroup() {
         }
     });
 
+}
+function init_ec_farmland() {
+    $.ajax({
+        type: "GET",
+        url: "/api/vgsi/farmland",
+        dataType: "json",
+        success: function (data) {
+            var farmland_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (x in farmland_data) {
+                if (farmland_data[x].grouptype == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(farmland_data[x].grouptype);
+                }
+            }
+            for (y in farmland_data) {
+                y_data.push(farmland_data[y].farmland);
+            }
+            var ec_farmland = echarts.init(document.getElementById('ec_farmland'));
+            init_ec_farmland_option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b}: {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data:x_data
+                },
+                series: [
+                    {
+                        name:'村组名称',
+                        type:'pie',
+                        radius: ['50%', '70%'],
+                        avoidLabelOverlap: false,
+                        label: {
+                            normal: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                show: true,
+                                textStyle: {
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
+                                }
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                show: false
+                            }
+                        },
+                        data:[
+                            {value:y_data[0], name:x_data[0]},
+                            {value:y_data[1], name:x_data[1]},
+                            {value:y_data[2], name:x_data[2]},
+                            {value:y_data[3], name:x_data[3]},
+                            {value:y_data[4], name:x_data[4]},
+                            {value:y_data[5], name:x_data[5]},
+                            {value:y_data[6], name:x_data[6]},
+                            {value:y_data[7], name:x_data[7]},
+                            {value:y_data[8], name:x_data[8]},
+                            {value:y_data[9], name:x_data[9]},
+                            {value:y_data[10], name:x_data[10]},
+                            {value:y_data[11], name:x_data[11]},
+                            {value:y_data[12], name:x_data[12]},
+                            {value:y_data[13], name:x_data[13]},
+                            {value:y_data[14], name:x_data[14]},
+                            {value:y_data[15], name:x_data[15]},
+                            {value:y_data[16], name:x_data[16]},
+                            {value:y_data[17], name:x_data[17]}
+                        ]
+                    }
+                ]
+            };ec_farmland.setOption(init_ec_farmland_option);
+        }
+    })
+}
+function init_ec_otherland() {
+    $.ajax({
+        type: "GET",
+        url: "/api/vgsi/otherland",
+        dataType: "json",
+        success: function (data) {
+            var otherland_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (x in otherland_data) {
+                if (otherland_data[x].grouptype == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(otherland_data[x].grouptype);
+                }
+            }
+            for (y in otherland_data) {
+                y_data.push(otherland_data[y].otherland);
+            }
+            var ec_otherland = echarts.init(document.getElementById('ec_otherland'));
+            init_ec_otherland_option = {
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: x_data
+                },
+                series : [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius : '55%',
+                        center: ['70%', '60%'],
+                        data:[{value: y_data[0], name: x_data[0]},
+                            {value: y_data[1], name: x_data[1]},
+                            {value: y_data[2], name: x_data[2]},
+                            {value: y_data[3], name: x_data[3]},
+                            {value: y_data[4], name: x_data[4]},
+                            {value: y_data[5], name: x_data[5]},
+                            {value: y_data[6], name: x_data[6]},
+                            {value: y_data[7], name: x_data[7]},
+                            {value: y_data[8], name: x_data[8]},
+                            {value: y_data[9], name: x_data[9]},
+                            {value: y_data[10], name: x_data[10]},
+                            {value: y_data[11], name: x_data[11]},
+                            {value: y_data[12], name: x_data[12]},
+                            {value: y_data[13], name: x_data[13]},
+                            {value: y_data[14], name: x_data[14]},
+                            {value: y_data[15], name: x_data[15]},
+                            {value: y_data[16], name: x_data[16]},
+                            {value: y_data[17], name: x_data[17]}
+
+                        ],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+
+
+            ec_otherland.setOption(init_ec_otherland_option);
+        }
+    })
 }
 function init_3d_v_pm() {
     var pre_data;

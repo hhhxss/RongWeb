@@ -106,4 +106,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     select grouptype,area
     from village.villagegroup_statistics_info
     </select>
+    <select id="selectVillagegroupfarmland" resultMap="VillagegroupStatisticsInfoResult">
+    select farmland,grouptype
+    from village.villagegroup_statistics_info
+    </select>
+    <select id="selectVillagegroupotherland" resultMap="VillagegroupStatisticsInfoResult">
+    select grouptype,otherland
+    from village.villagegroup_statistics_info
+    </select>
+
 </mapper>

@@ -98,8 +98,48 @@
                 </div>
             </div>
         </div>
-    </div>
 
+        <div class="col-sm-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>各村组农用地小计可视化</h5>
+                    <div class="ibox-tools">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-superpowers"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a onclick="init_ec_farmland()">原始数据</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="echarts" id="ec_farmland" ></div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>村组其他农用地可视化</h5>
+                        <div class="ibox-tools">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-superpowers"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a onclick="init_ec_otherland()">原始数据</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="ec_otherland"></div>
+                    </div>
+                </div>
+            </div>
 
         <div class="row">
             <div class="col-sm-12">

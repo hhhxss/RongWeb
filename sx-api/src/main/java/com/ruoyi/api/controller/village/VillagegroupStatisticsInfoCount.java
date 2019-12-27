@@ -48,5 +48,20 @@ public class VillagegroupStatisticsInfoCount {
         RongApiRes test=RongApiService.get_list(pre);
         return test;
     }
-
+    @CrossOrigin
+    @GetMapping("/farmland")
+    @ApiOperation(value = "查询村组农用地小计" )
+    public RongApiRes selectVillagegroupStatisticsInfofarmland(){
+        List pre=villagegroupStatisticsInfoService.selectVillagegroupfarmland();
+        RongApiRes test=RongApiService.get_list(pre);
+        return test;
+    }
+    @CrossOrigin
+    @GetMapping("/otherland")
+    @ApiOperation(value = "查询村组其他农用地" )
+    public RongApiRes selectVillagegroupStatisticsInfootherland(){
+        List pre=villagegroupStatisticsInfoService.selectVillagegroupotherland();
+        RongApiRes test=RongApiService.get_list(pre);
+        return test;
+    }
 }

@@ -58,7 +58,34 @@ public class VillagegroupStatisticsInfoServiceImpl implements IVillagegroupStati
 	public List<VillagegroupStatisticsInfo> selectVillagegroupGtype() {
 		return villagegroupStatisticsInfoMapper.selectVillagegroupGtype();
 	}
-
+	@Override
+	public List<VillagegroupStatisticsInfo> selectVillagegroupfarmland() {
+		return villagegroupStatisticsInfoMapper.selectVillagegroupfarmland();
+	}
+	@Override
+	public List<VillagegroupStatisticsInfo> selectVillagegroupplowland() {
+		return villagegroupStatisticsInfoMapper.selectVillagegroupplowland();
+	}
+	@Override
+	public List<VillagegroupStatisticsInfo> selectVillagegrouporchard() {
+		return villagegroupStatisticsInfoMapper.selectVillagegrouporchard();
+	}
+	@Override
+	public List<VillagegroupStatisticsInfo> selectVillagegroupforest() {
+		return villagegroupStatisticsInfoMapper.selectVillagegroupforest();
+	}
+	@Override
+	public List<VillagegroupStatisticsInfo> selectVillagegroupfland() {
+		return villagegroupStatisticsInfoMapper.selectVillagegroupfland();
+	}
+	@Override
+	public List<VillagegroupStatisticsInfo> selectVillagegroupaqarea() {
+		return villagegroupStatisticsInfoMapper.selectVillagegroupaqarea();
+	}
+	@Override
+	public List<VillagegroupStatisticsInfo> selectVillagegroupotherland() {
+		return villagegroupStatisticsInfoMapper.selectVillagegroupotherland();
+	}
 	/**
     /**
      * 新增村组统计
@@ -94,9 +121,7 @@ public class VillagegroupStatisticsInfoServiceImpl implements IVillagegroupStati
      */
 	@Override
 	@DataSource(value = DataSourceType.SXBAODIAN)
-	public int deleteVillagegroupStatisticsInfoByIds(String ids)
-	{
+	public int deleteVillagegroupStatisticsInfoByIds(String ids) {
 		return villagegroupStatisticsInfoMapper.deleteVillagegroupStatisticsInfoByIds(Convert.toStrArray(ids));
 	}
-	
 }
