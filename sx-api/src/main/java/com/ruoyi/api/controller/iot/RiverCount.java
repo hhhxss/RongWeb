@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/fulin")
 @CrossOrigin
-@Api(value = "福临街道河流水位走势 - 统计计数类接口")
+@Api(value = "福临街道河流水位走势 ")
 public class RiverCount {
 
     @Autowired
