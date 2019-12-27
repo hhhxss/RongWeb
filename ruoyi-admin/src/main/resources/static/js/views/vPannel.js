@@ -20,6 +20,8 @@ function v_onload() {
     init_kaihuijiating();
     //首页图表 村镇村民教育程度可视化
     init_ec_edulevel();
+    //首页图表 村长竞选票数统计
+    init_cunzhangc();
 }
 
 function init_ec_obygroup(){
@@ -784,4 +786,87 @@ function init_kaihuijiating (){
     };
     kaihui.setOption(option);
 
+}
+function init_cunzhangc() {
+    $.ajax({
+        type: "GET",
+        url: "/api/CunZhangC/st",
+        dataType: "json",
+        success: function (data) {
+            var czcgroup_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+
+            for (x in czcgroup_data) {
+                x_data.push(czcgroup_data[x].uname);
+            }
+            for (y in czcgroup_data) {
+                y_data.push(czcgroup_data[y].id);
+            }
+            var cunzhangc_data = echarts.init(document.getElementById('cunzhangc_data'));
+            option = {
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+
+                visualMap: {
+                    show: false,
+                    min: 80,
+                    max: 600,
+                    inRange: {
+                        colorLightness: [0.5, 1]
+                    }
+                },
+                series : [
+                    {
+                        name:'访问来源',
+                        type:'pie',
+                        radius : '55%',
+                        center: ['50%', '50%'],
+                        data:[
+                            {value:y_data[0], name:x_data[0]},
+                            {value:y_data[1], name:x_data[1]},
+                            {value:y_data[2], name:x_data[2]},
+                            {value:y_data[3], name:x_data[3]},
+                            {value:y_data[4], name:x_data[4]},
+                            {value:y_data[5], name:x_data[5]}
+                        ].sort(function (a, b) { return a.value - b.value; }),
+                        roseType: 'radius',
+                        label: {
+                            normal: {
+                                textStyle: {
+                                    color: 'rgba(24,15,58,0.85)'
+                                }
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                lineStyle: {
+                                    color: 'rgba(255,133,53,0.72)'
+                                },
+                                smooth: 0.2,
+                                length: 10,
+                                length2: 20
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: '#c23531',
+                                shadowBlur: 200,
+                                shadowColor: 'rgba(17,20,49,0.83)'
+                            }
+                        },
+
+                        animationType: 'scale',
+                        animationEasing: 'elasticOut',
+                        animationDelay: function (idx) {
+                            return Math.random() * 200;
+                        }
+                    }
+                ]
+            };
+            cunzhangc_data.setOption(option);
+        }
+    });
 }
