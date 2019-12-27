@@ -10,6 +10,71 @@ function m_onload(){
     init_quantang();
     //首页图表 安山镇温度走势可视化
     init_anshan();
+    //首页图表 路口镇温度走势可视化
+    init_lukou();
+}
+
+function init_lukou() {
+    $.ajax({
+        type: "GET",
+        url: "/api/lukoudata/time",
+        dataType: "json",
+        success: function (data) {
+            var lukou_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (x in lukou_data) {
+                x_data.push(lukou_data[x].time);
+            }
+            for (y in lukou_data) {
+                y_data.push(lukou_data[y].data);
+            }
+            var lukou_data = echarts.init(document.getElementById('lukou_data'));
+            init_lukou_option = {
+                color: ['#675bba'],
+                tooltip: {
+                    trigger: 'axis'
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        magicType: {show: true, type: ['line','bar']},
+                    }
+                },
+                calculable: true,
+                grid: {
+                    left: '3%',
+                    right: '3%',
+                    top: '5%',
+                    bottom: '0%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: x_data
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        axisLabel: {
+                            formatter: '{value} °C'
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        type: 'line',
+                        data: y_data,
+
+                    }
+                ]
+            };
+            lukou_data.setOption(init_lukou_option);
+        }
+    });
 }
 function init_anshan() {
     $.ajax({

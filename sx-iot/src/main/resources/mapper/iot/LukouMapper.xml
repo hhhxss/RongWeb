@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.iot.mapper.LukouMapper">
+
+    <resultMap type="Lukou" id="LukouResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="rid"    column="rid"    />
+        <result property="rname"    column="rname"    />
+        <result property="data"    column="data"    />
+        <result property="time"    column="time"    />
+    </resultMap>
+
+    <sql id="selectLukouVo">
+        select id, type, rid, rname, data, time from iotdata.temp_data
+    </sql>
+
+    <select id="selectLukouList" parameterType="Lukou" resultMap="LukouResult">
+        <include refid="selectLukouVo"/>
+        <where>
+            <if test="id != null "> and id = #{id}</if>
+            <if test="type != null  and type != '' "> and type LIKE CONCAT(CONCAT('%', #{type}),'%')</if>
+            <if test="rid != null "> and rid = #{rid}</if>
+            <if test="rname != null  and rname != '' "> and rname = #{rname}</if>
+            <if test="data != null  and data != '' "> and data LIKE CONCAT(CONCAT('%', #{data}),'%')</if>
+            <if test="time != null  and time != '' "> and time LIKE CONCAT(CONCAT('%', #{time}),'%')</if>
+            ORDER BY id ASC
+        </where>
+    </select>
+
+    <select id="selectLukouById" parameterType="Integer" resultMap="LukouResult">
+        <include refid="selectLukouVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectLukouListBytime" resultMap="LukouResult">
+        select data,time
+        from iotdata.temp_data where rname='路口镇'
+        order by time ASC
+    </select>
+
+</mapper>
