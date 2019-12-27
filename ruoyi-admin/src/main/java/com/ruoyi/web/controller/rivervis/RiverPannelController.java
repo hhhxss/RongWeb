@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @date 2019/3/27 16:41
  **/
 @Controller
-@RequestMapping("/river/pannel")
+@RequestMapping("/rivervis/pannel")
 public class RiverPannelController extends BaseController {
     private String prefix = "rivervis/pannel";
 

@@ -61,5 +61,7 @@ public interface SendmessagesMapper
      * @return 结果
      */
 	public int deleteSendmessagesByIds(String[] smids);
+
+	public List<Sendmessages> selectSendByremark();
 	
 }
