@@ -73,6 +73,7 @@
             </div>
             </div>
         </div>
+        <div class="row">
         <div class="col-sm-6">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -93,7 +94,6 @@
                 </div>
             </div>
         </div>
-        <div class="row">
             <div class="col-sm-6">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
@@ -114,7 +114,47 @@
                 </div>
             </div>
         </div>
-</div>
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>安山镇温度走势可视化 </h5>
+                        <div class="ibox-tools">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-superpowers"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a onclick="init_anshan()">原始数据</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="anshan_data" ></div>
+                    </div>
+                </div>
+            </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>各地区水量三维可视化</h5>
+                        <div class="ibox-tools">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-superpowers"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a onclick="init_area_water()">原始数据</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="area_water" ></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div th:include="include :: footer"></div>
 <script th:src="@{/ajax/libs/jquery-layout/jquery.layout-latest.js}"></script>

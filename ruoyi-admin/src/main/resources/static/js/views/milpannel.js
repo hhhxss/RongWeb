@@ -8,6 +8,70 @@ function m_onload(){
     init_langlijiedao();
     //首页图表 泉塘街道水位走势可视化
     init_quantang();
+    //首页图表 安山镇温度走势可视化
+    init_anshan();
+}
+function init_anshan() {
+    $.ajax({
+        type: "GET",
+        url: "/api/anshandata/time",
+        dataType: "json",
+        success: function (data) {
+            var anshan_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (x in anshan_data) {
+                x_data.push(anshan_data[x].time);
+            }
+            for (y in anshan_data) {
+                y_data.push(anshan_data[y].data);
+            }
+            var anshan_data = echarts.init(document.getElementById('anshan_data'));
+            init_anshan_option = {
+                color: ['#00fc1a'],
+                tooltip: {
+                    trigger: 'axis'
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        magicType: {show: true, type: ['line','bar']},
+                    }
+                },
+                calculable: true,
+                grid: {
+                    left: '3%',
+                    right: '3%',
+                    top: '5%',
+                    bottom: '0%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: x_data
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        axisLabel: {
+                            formatter: '{value} °C'
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        type: 'line',
+                        data: y_data,
+
+                    }
+                ]
+            };
+            anshan_data.setOption(init_anshan_option);
+        }
+    });
 }
 function init_quantang(){
     $.ajax({
