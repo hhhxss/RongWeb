@@ -23,8 +23,8 @@ public class RiverCount {
     private IFuLinService fulinService;
 
     @CrossOrigin
-    @GetMapping("st")
-    @ApiOperation(value = "查询泉塘水位走势列表")
+    @GetMapping("/st")
+    @ApiOperation(value = "查询水位走势列表")
     public RongApiRes list(FuLin fulin)
     {
         return RongApiService.get_list(fulinService.selectFuLinList(fulin));
