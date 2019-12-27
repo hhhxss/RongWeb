@@ -57,7 +57,7 @@ public interface IProreApplyService
 	 * 该方法只提供节目申请表中的目录
 	 * @author 张超 teavamc
 	 * @date 2019/3/2
-	 * @param []
+	 * @param
 	 * @return java.util.List<com.ruoyi.broad.domain.ProApplyUser>
 	 */
 	public List<ProApplyUser> selectProrApplyUserList(ProApplyUser proApplyUser);
@@ -65,5 +65,11 @@ public interface IProreApplyService
 	public List<ProreApply> selectProreApplyIsEmer();
 
 	public List<ProreApply> selectProreApplyIsrely();
-	
+
+	/**
+	 * 节目是否审听以及是否通过
+	 * @author xcl
+	 * @date 2019/12/27
+	 */
+	public List<ProreApply> selectProreApplyListen();
 }

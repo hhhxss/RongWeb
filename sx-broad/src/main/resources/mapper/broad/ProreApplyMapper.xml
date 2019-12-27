@@ -215,5 +215,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{paid}
         </foreach>
     </delete>
-    
+
+    <select id="selectProreApplyListen" resultMap="ProreApplyResult">
+        select
+        count(islisten) as recunit,
+        count(islisten= 1 or null) as paid,
+        count(islisten= 0 or null) as pname,
+        count(listenpass= 1 or null) as userid,
+        count(listenpass= 0 or null) as requires
+        from broad.prore_apply
+    </select>
 </mapper>
