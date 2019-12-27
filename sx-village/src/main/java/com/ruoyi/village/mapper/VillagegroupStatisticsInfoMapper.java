@@ -2,7 +2,7 @@ package com.ruoyi.village.mapper;
 
 import com.ruoyi.village.domain.VillagegroupStatisticsInfo;
 import java.util.List;	
-
+import com.ruoyi.village.domain.pubObjApi;
 /**
  * 村组统计 数据层
  * 
@@ -26,7 +26,8 @@ public interface VillagegroupStatisticsInfoMapper
      * @return 村组统计集合
      */
 	public List<VillagegroupStatisticsInfo> selectVillagegroupStatisticsInfoList(VillagegroupStatisticsInfo villagegroupStatisticsInfo);
-	
+	public List<VillagegroupStatisticsInfo> selectVillagegrouparea();
+	public List<VillagegroupStatisticsInfo> selectVillagegroupGtype();
 	/**
      * 新增村组统计
      * 
@@ -42,6 +43,7 @@ public interface VillagegroupStatisticsInfoMapper
      * @return 结果
      */
 	public int updateVillagegroupStatisticsInfo(VillagegroupStatisticsInfo villagegroupStatisticsInfo);
+
 	
 	/**
      * 删除村组统计

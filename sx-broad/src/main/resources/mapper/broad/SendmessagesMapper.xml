@@ -91,4 +91,10 @@
         </foreach>
     </delete>
 
+    <select id="selectSendByremark" resultMap="SendmessagesResult">
+        select remark,count(remark) as smid
+        from broad.sendmessages
+        group by remark
+    </select>
+
 </mapper>

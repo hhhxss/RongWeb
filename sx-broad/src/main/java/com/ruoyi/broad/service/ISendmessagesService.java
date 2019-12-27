@@ -51,5 +51,6 @@ public interface ISendmessagesService
      * @return 结果
      */
 	public int deleteSendmessagesByIds(String ids);
-	
+
+	public List<Sendmessages> selectSendByremark();
 }

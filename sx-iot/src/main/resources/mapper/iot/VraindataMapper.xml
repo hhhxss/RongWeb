@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.iot.mapper.VraindataMapper">
+
+    <resultMap type="Vraindata" id="VraindataResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="rid"    column="rid"    />
+        <result property="rname"    column="rname"    />
+        <result property="data"    column="data"    />
+        <result property="time"    column="time"    />
+    </resultMap>
+
+    <sql id="selectVraindataVo">
+        select id,type,rid,rname,data,time from iotdata.rain_data1
+    </sql>
+
+    <select id="selectVraindataList" parameterType="Vraindata" resultMap="VraindataResult">
+        <include refid="selectVraindataVo"/>
+        <where>
+            <if test="id != null "> and id = #{id}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="rid != null "> and rid = #{rid}</if>
+            <if test="rname != null  and rname != '' "> and rname = #{rname}</if>
+            <if test="data != null  and data != '' "> and data = #{data}</if>
+            <if test="time != null "> and time = #{time}</if>
+        </where>
+        ORDER BY id ASC
+    </select>
+
+<!--    <select id="selectVraindataById" parameterType="String" resultMap="VraindataResult">-->
+<!--        <include refid="selectVraindataVo"/>-->
+<!--        where id = #{id}-->
+<!--    </select>-->
+
+<!--    <select id="selectVraindataListById" parameterType="pubObjApi" resultMap="VraindataResult">-->
+<!--        <include refid="selectVraindataVo"/>-->
+<!--        <where>-->
+<!--            <if test="id != null  and id != '' "> id in-->
+<!--                <foreach collection="listrid" item="item" separator="," open="(" close=")">-->
+<!--                    #{item}-->
+<!--                </foreach></if>-->
+<!--            <if test="rid != null  and rid != '' "> and rid LIKE CONCAT(CONCAT('%', #{rid}),'%')</if>-->
+<!--        </where>-->
+<!--        ORDER BY rid ASC-->
+<!--        limit #{pageSize} offset #{pageIndex}-->
+<!--    </select>-->
+
+    <select id="selectVraindataByrname" resultMap="VraindataResult">
+        select rname,avg(data) as id
+        from
+             iotdata.rain_data1
+        group by rname
+    </select>
+
+</mapper>

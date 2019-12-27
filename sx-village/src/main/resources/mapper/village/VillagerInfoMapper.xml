@@ -708,4 +708,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 </foreach></if>
         </where>
     </select>
+
+    <select id="selectVillagerInfoByedulevel" resultMap="VillagerInfoResult">
+        select edulevel,
+               count(edulevel) as aid
+            from villager_info
+        group by edulevel
+        order by count(edulevel) asc
+    </select>
+
 </mapper>
