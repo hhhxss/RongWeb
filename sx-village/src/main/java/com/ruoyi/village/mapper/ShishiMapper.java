@@ -58,5 +58,7 @@ public interface ShishiMapper
      * @return 结果
      */
 	public int deleteShishiByIds(String[] shiids);
+
+	public List<Shishi> selectShishiBytype();
 	
 }

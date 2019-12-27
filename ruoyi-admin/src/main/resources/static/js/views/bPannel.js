@@ -11,12 +11,341 @@ function bonLoad() {
     init_bd_terminlgroup();
     /*统计在线终端数，下线终端数，及百分比*/
     init_bd_terminalstate();
+    init_bd_terminalstate1();
     init_bl_terminalstate();
     init_bip_terminalstate();
     //首页图表 三维广播分布可视化
     init_3d_bt();
     //首页图表 二维广播分布可视化
     init_ec_bt();
+
+    init_type_cbygroup();
+    /*首页图表广播操作类型可视化*/
+
+    /*首页图标节目申请是否紧急可视化*/
+    init_bp_proreapply();
+
+    /*首页图标节目申请是否回复可视化*/
+    init_pp_irgroup();
+
+    /*首页图标 广播发送信息类型可视化*/
+    init_sm_bgroup();
+
+}
+
+function init_sm_bgroup(){
+    var sm_bgroup = echarts.init(document.getElementById('sm_bgroup'));
+    $.ajax({
+        type: "GET",
+        url: "/api/broad/remark",
+        datatype: "JSON",
+        success: function (data) {
+            var sm_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (i in sm_data) {
+                if (sm_data[i].smid == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(sm_data[i].smid);
+                    y_data.push(sm_data[i].remark);
+                    /*var y = new Object();
+                     y.name = bdsygroup_data[i].scategory;
+                     y.value = parseInt(bdsygroup_data[i].bcount);
+                     y_data.push(y);*/
+                }
+            }
+            option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b}: {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: y_data
+                },
+                series: [
+                    {
+                        name:'访问来源',
+                        type:'pie',
+                        radius: ['50%', '70%'],
+                        avoidLabelOverlap: false,
+                        label: {
+                            normal: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                show: true,
+                                textStyle: {
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
+                                }
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                show: false
+                            }
+                        },
+                        data:[
+                            {value:x_data[0], name:y_data[0]},
+                            {value:x_data[1], name:y_data[1]},
+                            {value:x_data[2], name:y_data[2]},
+                            {value:x_data[3], name:y_data[3]},
+                            {value:x_data[4], name:y_data[4]}
+                        ]
+                    }
+                ]
+            };
+
+            sm_bgroup.setOption(option);
+        }
+    });
+}
+
+function init_pp_irgroup() {
+    var pp_irgroup = echarts.init(document.getElementById('pp_irgroup'));
+    $.ajax({
+        type: "GET",
+        url: "/api/proreapply/isreply",
+        datatype: "JSON",
+        success: function (data) {
+            var pp_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (i in pp_data) {
+                if (pp_data[i].paid == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(pp_data[i].paid);
+                    y_data.push(pp_data[i].isreply);
+                    /*var y = new Object();
+                     y.name = bdsygroup_data[i].scategory;
+                     y.value = parseInt(bdsygroup_data[i].bcount);
+                     y_data.push(y);*/
+                }
+            }
+            option = {
+                color: ['#3398DB'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : ['节目申请', y_data[0], y_data[1]],
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'直接访问',
+                        type:'bar',
+                        barWidth: '60%',
+                        data:[x_data[0]+x_data[1], x_data[0], x_data[1]]
+                    }
+                ]
+            };
+            pp_irgroup.setOption(option);
+        }
+    });
+
+
+}
+function init_bp_proreapply() {
+    var bp_proreapply = echarts.init(document.getElementById('bp_proreapply'));
+    $.ajax({
+        type: "GET",
+        url: "/api/proreapply/isemer",
+        datatype: "JSON",
+        success: function (data) {
+            var bp_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (i in bp_data) {
+                if (bp_data[i].paid == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(bp_data[i].paid);
+                    y_data.push(bp_data[i].isemergency);
+                    /*var y = new Object();
+                     y.name = bdsygroup_data[i].scategory;
+                     y.value = parseInt(bdsygroup_data[i].bcount);
+                     y_data.push(y);*/
+                }
+            }
+            /*console.log(bdsygroup_data);*/
+            /*console.log(x_data);
+             console.log(y_data);*/
+            option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: y_data
+                },
+                calculable: true,
+                series: [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '60%'],
+                        data: [
+                            /*y_data*/
+                            {value: x_data[0], name: y_data[0]},
+                            {value: x_data[1], name: y_data[1]}
+                        ]
+                    }
+                ]
+            };
+            bp_proreapply.setOption(option);
+        }
+    });
+}
+function init_type_cbygroup(){
+    var type_cgroup = echarts.init(document.getElementById('type_cgroup'));
+    $.ajax({
+        type:"GET",
+        url:"/api/bp/type",
+        datatype:"JSON",
+        success: function(data){
+            var op_data=data.data;
+            var x_data = new Array;
+            var y_data = new Array;
+            for(i in op_data){
+                if(op_data[i]==null){x_data.push('未知');}
+                else{x_data.push(op_data[i].count);
+                    y_data.push(op_data[i].type);}
+            }
+            init_type_option={
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    },
+                    formatter: function (params) {
+                        var tar = params[1];
+                        return tar.name + '<br/>' + tar.seriesName + ' : ' + tar.value;
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type : 'category',
+                    splitLine: {show:false},
+                    data : y_data
+                },
+                yAxis: {
+                    type : 'value'
+                },
+                series: [
+                    {
+                        name: '辅助',
+                        type: 'bar',
+                        stack:  '总量',
+                        itemStyle: {
+                            normal: {
+                                barBorderColor: 'rgba(0,0,0,0)',
+                                color: 'rgba(0,0,0,0)'
+                            },
+                            emphasis: {
+                                barBorderColor: 'rgba(0,0,0,0)',
+                                color: 'rgba(0,0,0,0)'
+                            }
+                        },
+                        data: [0, x_data[0]-x_data[1], x_data[0]-x_data[1]-x_data[2], x_data[0]-x_data[1]-x_data[2]-x_data[3], x_data[0]-x_data[1]-x_data[2]-x_data[3]-x_data[4], 0]
+                    },
+                    {
+                        name: '操作总数',
+                        type: 'bar',
+                        stack: '总量',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'inside'
+                            }
+                        },
+                        data: x_data
+                    }
+                ]
+            };
+            type_cgroup.setOption(init_type_option);
+        }
+    })
+}
+function init_bd_terminalstate() {
+    var bd_terminalstate = echarts.init(document.getElementById('bd_terminalstate'));
+    $.ajax({
+        type: "GET",
+        url: "/api/bcount/bindex",
+        datatype: "JSON",
+        success: function (data) {
+            var bd_device = data.data.dev;
+            var bd_run = data.data.run;
+            var bd_stop = data.data.stop;
+            option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: ['终端总数', '在线终端数', '离线终端数']
+                },
+                series: [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '60%'],
+                        data: [
+                            {value: bd_device, name: '终端总数'},
+                            {value: bd_run, name: '在线终端数'},
+                            {value: bd_stop, name: '离线终端数'}
+                        ],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+
+            bd_terminalstate.setOption(option);
+        }
+
+    });
+
 }
 function init_bt_mbygroup() {
     var bt_mbygroup = echarts.init(document.getElementById('bt_mbygroup'));
@@ -389,53 +718,83 @@ function init_bd_terminlgroup() {
 
 }
 
-function init_bd_terminalstate() {
-    var bd_terminalstate = echarts.init(document.getElementById('bd_terminalstate'));
+function init_bd_terminalstate1(){
+    var bd_terminalstate1 = echarts.init(document.getElementById('bd_terminalstate1'));
     $.ajax({
-        type: "GET",
-        url: "/api/bcount/bindex",
-        datatype: "JSON",
-        success: function (data) {
+        type:"GET",
+        url:"/api/bcount/bindex",
+        datatype:"JSON",
+        success: function(data){
             var bd_device = data.data.dev;
             var bd_run = data.data.run;
             var bd_stop = data.data.stop;
+            // for(i in bd__data){
+            //     if(onl_data[i]==null){
+            //         x_data.push('未知');}
+            //     else{
+            //         x_data.push(onl_data[i].stop);
+            //         y_data.push(onl_data[i].run);
+            //         z_data.push(onl_data[i].dev)}
+            // }
             option = {
-                tooltip: {
-                    trigger: 'item',
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    },
+                    formatter: function (params) {
+                        var tar = params[1];
+                        return tar.name + '<br/>' + tar.seriesName + ' : ' + tar.value;
+                    }
                 },
-                legend: {
-                    orient: 'vertical',
-                    left: 'left',
-                    data: ['终端总数', '在线终端数', '离线终端数']
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type : 'category',
+                    splitLine: {show:false},
+                    data : ['终端总数','在线终端数','离线终端数']
+                },
+                yAxis: {
+                    type : 'value'
                 },
                 series: [
                     {
-                        name: '访问来源',
-                        type: 'pie',
-                        radius: '55%',
-                        center: ['50%', '60%'],
-                        data: [
-                            {value: bd_device, name: '终端总数'},
-                            {value: bd_run, name: '在线终端数'},
-                            {value: bd_stop, name: '离线终端数'}
-                        ],
+                        name: '辅助',
+                        type: 'bar',
+                        stack:  '总量',
                         itemStyle: {
+                            normal: {
+                                barBorderColor: 'rgba(0,0,0,0)',
+                                color: 'rgba(0,0,0,0)'
+                            },
                             emphasis: {
-                                shadowBlur: 10,
-                                shadowOffsetX: 0,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                barBorderColor: 'rgba(0,0,0,0)',
+                                color: 'rgba(0,0,0,0)'
                             }
-                        }
+                        },
+                        data: [0, bd_stop , 0]
+                    },
+                    {
+                        name: '终端总数',
+                        type: 'bar',
+                        stack: '总量',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'inside'
+                            }
+                        },
+                        data:[bd_device, bd_run,bd_stop]
                     }
                 ]
             };
-
-            bd_terminalstate.setOption(option);
+            bd_terminalstate1.setOption(option);
         }
-
-    });
-
+    })
 }
 
 function init_bl_terminalstate() {
