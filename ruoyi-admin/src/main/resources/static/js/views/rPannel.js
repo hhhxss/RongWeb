@@ -2,8 +2,46 @@ function r_onload() {
 //首页图表 山洪全部可视化
     init_rvis();
 
-   
     init_area_rbygroup();
+    //首页图表 开慧村雨水走势可视化
+    init_rain();
+}
+function init_rain(){
+    $.ajax({
+        type: "GET",
+        url: "/api/raindata/time",
+        dataType: "json",
+        success: function (data) {
+            var rain_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (x in rain_data) {
+                x_data.push(rain_data[x].time);
+            }
+            for (y in rain_data) {
+                y_data.push(rain_data[y].data);
+            }
+            var rain_data = echarts.init(document.getElementById('rain_data'));
+            init_rain_option = {
+
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: x_data
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: y_data,
+                    type: 'line',
+                    areaStyle: {}
+                }]
+            };
+
+            rain_data.setOption(init_rain_option);
+        }
+    })
 }
 function init_area_rbygroup() {
     var area_rbygroup = echarts.init(document.getElementById('area_rbygroup'));
