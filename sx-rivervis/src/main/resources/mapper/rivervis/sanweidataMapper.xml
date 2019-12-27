@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.rivervis.mapper.sanweidataMapper">
+
+    <resultMap type="sanweidata" id="sanweidataResult">
+        <result property="id"    column="wid"    />
+        <result property="waterlevel"    column="waterlevel"    />
+        <result property="flow"    column="flow"    />
+        <result property="terraindata"    column="terraindata"    />
+        <result property="address"    column="address"    />
+        <result property="time"    column="time"    />
+    </resultMap>
+
+    <sql id="selectsanweidataVo">
+        select id,waterlevel,flow,terraindata,address,time from rivervis.sanweidata
+    </sql>
+
+    <select id="selectsanweidataList" parameterType="sanweidata" resultMap="sanweidataResult">
+        <include refid="selectsanweidataVo"/>
+        <where>
+            <if test="id != null "> and id = #{id}</if>
+            <if test="waterlevel != null "> and waterlevel = #{waterlevel}</if>
+            <if test="flow != null  and flow != '' "> and flow LIKE CONCAT(CONCAT('%', #{flow}),'%')</if>
+            <if test="terraindata != null  and terraindata != '' "> and terraindata = #{terraindata}</if>
+            <if test="address != null  and address != '' "> and address LIKE CONCAT(CONCAT('%', #{address}),'%')</if>
+            <if test="time != null  and time != '' "> and time LIKE CONCAT(CONCAT('%', #{time}),'%')</if>
+
+        </where>
+        ORDER BY id ASC limit 2500
+    </select>
+
+    <select id="selectsanweidataById" parameterType="Integer" resultMap="sanweidataResult">
+        <include refid="selectsanweidataVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectsanweidataByaname" resultMap="sanweidataResult">
+
+        select waterlevel,time,flow
+        from rivervis.sanweidata
+
+    </select>
+
+</mapper>
