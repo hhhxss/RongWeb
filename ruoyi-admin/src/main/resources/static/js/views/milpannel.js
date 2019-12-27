@@ -6,6 +6,75 @@ function m_onload(){
     init_jinqiao();
     //榔梨街道河流水位可视化
     init_langlijiedao();
+    //首页图表 泉塘街道水位走势可视化
+    init_quantang();
+}
+function init_quantang(){
+    $.ajax({
+        type: "GET",
+        url: "/api/qtdata/time",
+        dataType: "json",
+        success: function (data) {
+            var quantang_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (x in quantang_data) {
+                x_data.push(quantang_data[x].time);
+            }
+            for (y in quantang_data) {
+                y_data.push(quantang_data[y].data);
+            }
+            var quantang_data = echarts.init(document.getElementById('quantang_data'));
+            init_quantang_option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data:['泉塘街道','湘龙街道','星沙街道']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data:x_data
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        name:'泉塘街道',
+                        type:'line',
+                        stack: '总量',
+                        data:y_data
+                    },
+                    {
+                        name:'湘龙街道',
+                        type:'line',
+                        stack: '总量',
+                        data:y_data
+                    },
+                    {
+                        name:'星沙街道',
+                        type:'line',
+                        stack: '总量',
+                        data:y_data
+                    },
+                ]
+            };
+            quantang_data.setOption(init_quantang_option);
+        }
+    })
 
 }
 function init_area_water() {
