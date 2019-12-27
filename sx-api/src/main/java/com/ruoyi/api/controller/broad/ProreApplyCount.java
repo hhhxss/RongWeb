@@ -46,5 +46,17 @@ public class ProreApplyCount extends BaseController{
         RongApiRes test = RongApiService.get_list(pre);
         return test;
     }
-
+    /**
+     * 节目是否审听以及是否通过
+     * @author xcl
+     * @date 2019/12/27
+     */
+    @CrossOrigin
+    @GetMapping("/listen")
+    @ApiOperation(value ="节目是否审听以及是否通过")
+    public RongApiRes selectProreApplyListen() {
+        List pre = proreApplyService.selectProreApplyListen();
+        RongApiRes test = RongApiService.get_list(pre);
+        return test;
+    }
 }

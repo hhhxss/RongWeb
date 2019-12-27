@@ -31,6 +31,90 @@ function bonLoad() {
     /*首页图标 广播发送信息类型可视化*/
     init_sm_bgroup();
 
+    /*首页图标 节目是否审听以及是否通过可视化*/
+    init_pr_listen();
+}
+
+function init_pr_listen(){
+    var pr_listen = echarts.init(document.getElementById('pr_listen'));
+    $.ajax({
+        type: "GET",
+        url: "/api/proreapply/listen",
+        datatype: "JSON",
+        success: function (data) {
+            var pr_data = data.data;
+            var l_data = new Array();
+            var l1_data = new Array();
+            var l2_data = new Array();
+            var p1_data = new Array();
+            var p2_data = new Array();
+            for ( l in pr_data){
+                l_data.push(pr_data[l].recunit);
+            }
+            for ( l1 in pr_data){
+                l1_data.push(pr_data[l1].paid);
+            }
+            for ( l2 in pr_data){
+                l2_data.push(pr_data[l2].pname);
+            }
+            for ( p1 in pr_data){
+                p1_data.push(pr_data[p1].userid);
+            }
+            for ( p2 in pr_data){
+                p2_data.push(pr_data[p2].requires);
+            }
+            var labelRight = {
+                normal: {
+                    position: 'right'
+                }
+            };
+            option = {
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                grid: {
+                    top: 80,
+                    bottom: 30
+                },
+                xAxis: {
+                    type : 'value',
+                    position: 'top',
+                    splitLine: {lineStyle:{type:'dashed'}},
+                },
+                yAxis: {
+                    type : 'category',
+                    axisLine: {show: false},
+                    axisLabel: {show: false},
+                    axisTick: {show: false},
+                    splitLine: {show: false},
+                    data : ['审听未通过', '审听通过', '未审听', '已审听', '审听总量']
+                },
+                series : [
+                    {
+                        name:'节目数量',
+                        type:'bar',
+                        stack: '总量',
+                        label: {
+                            normal: {
+                                show: true,
+                                formatter: '{b}'
+                            }
+                        },
+                        data:[
+                            {value: -p2_data},
+                            p1_data,
+                            {value: -l2_data},
+                            l1_data,l_data
+                        ]
+                    }
+                ]
+            };
+            pr_listen.setOption(option);
+        }
+    });
 }
 
 function init_sm_bgroup(){

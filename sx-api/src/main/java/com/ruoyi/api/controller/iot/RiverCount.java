@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/fulin")
 @CrossOrigin
-@Api(value = "福临街道河流水位走势 - 统计计数类接口")
+@Api(value = "福临街道河流水位走势 ")
 public class RiverCount {
 
     @Autowired
     private IFuLinService fulinService;
 
     @CrossOrigin
-    @GetMapping("st")
-    @ApiOperation(value = "查询泉塘水位走势列表")
+    @GetMapping("/st")
+    @ApiOperation(value = "查询水位走势列表")
     public RongApiRes list(FuLin fulin)
     {
         return RongApiService.get_list(fulinService.selectFuLinList(fulin));
