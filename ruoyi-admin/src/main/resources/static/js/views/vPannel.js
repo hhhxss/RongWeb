@@ -26,8 +26,78 @@ function v_onload() {
     init_ec_edulevel();
     //首页图表 反馈类型可视化
     init_fd_ftype();
+
     //首页图表 村长竞选票数统计
     init_cunzhangc();
+
+}
+
+function init_fd_ftype(){
+    $.ajax({
+        type: "GET",
+        url: "/api/fdtype/type",
+        dataType: "json",
+        success: function (data) {
+            var ftype_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            var z_data = new Array();
+            for (x in ftype_data) {
+                x_data.push(ftype_data[x].fbid);
+            }
+            for (y in ftype_data) {
+                y_data.push(ftype_data[y].fbuid);
+            }
+            for (z in ftype_data) {
+                z_data.push(ftype_data[z].title);
+            }
+            var fd_ftype = echarts.init(document.getElementById('fd_ftype'));
+            fd_ftype_option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b}: {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data:['反馈','咨询']
+                },
+                series: [
+                    {
+                        name:'反馈信息',
+                        type:'pie',
+                        selectedMode: 'single',
+                        radius: [0, '40%'],
+
+                        label: {
+                            normal: {
+                                position: 'inner'
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                show: false
+                            }
+                        },
+                        data:[
+                            {value:z_data, name:'反馈信息总数'}
+                        ]
+                    },
+                    {
+                        name:'反馈信息',
+                        type:'pie',
+                        radius: ['50%', '65%'],
+                        data:[
+                            {value:x_data, name:'反馈'},
+                            {value:y_data, name:'咨询'}
+                        ]
+                    }
+                ]
+            };
+            fd_ftype.setOption(fd_ftype_option);
+        }
+
+    });
 }
 function init_ec_farmland() {
     $.ajax({
@@ -449,6 +519,7 @@ function init_ec_edulevel() {
                             }
                         },
                         data:[
+
                             {value:y_data[1], name:x_data[1]},
                             {value:y_data[2], name:x_data[2]},
                             {value:y_data[3], name:x_data[3]},
