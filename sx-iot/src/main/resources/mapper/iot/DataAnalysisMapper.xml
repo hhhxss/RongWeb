@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.iot.mapper.DataAnalysisMapper">
+
+<resultMap type="DataAnalysis" id="DataAnalysisResult">
+    <result property="rname"    column="rname"    />
+    <result property="type1"    column="type1"    />
+    <result property="data1"    column="data1"    />
+    <result property="type2"    column="type2"    />
+    <result property="data2"    column="data2"    />
+    <result property="time"    column="time"    />
+</resultMap>
+
+<sql id="selectDataAnalysisVo">
+        select rname,type1,data1,type2,data2,time from iotdata.data_analysis
+    </sql>
+
+<select id="selectDataAnalysisList" parameterType="DataAnalysis" resultMap="DataAnalysisResult">
+    <include refid="selectDataAnalysisVo"/>
+    <where>
+        <if test="rname != null "> and rname = #{rname}</if>
+        <if test="type1 != null "> and type1 = #{type1}</if>
+        <if test="data1 != null  and data1 != '' "> and data1 LIKE CONCAT(CONCAT('%', #{data1}),'%')</if>
+        <if test="type2 != null  and type2 != '' "> and type2 = #{type2}</if>
+        <if test="data2 != null  and data2 != '' "> and data2 LIKE CONCAT(CONCAT('%', #{data2}),'%')</if>
+        <if test="time != null  and time != '' "> and time LIKE CONCAT(CONCAT('%', #{time}),'%')</if>
+
+    </where>
+
+</select>
+
+
+
+<select id="selectDataAnalysisBytime"  resultMap="DataAnalysisResult">
+    <include refid="selectDataAnalysisVo"/>
+    select data1,data2
+    from iotdata.data_analysis
+
+</select>
+
+</mapper>

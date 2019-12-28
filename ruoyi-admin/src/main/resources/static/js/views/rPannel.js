@@ -1,8 +1,200 @@
 function r_onload() {
 //首页图表 山洪全部可视化
     init_rvis();
+    init_termi_dt()
+   
+    init_area_rbygroup();
+    //首页图表 开慧村雨水走势可视化
+    init_rain();
 }
+function init_rain(){
+    $.ajax({
+        type: "GET",
+        url: "/api/raindata/time",
+        dataType: "json",
+        success: function (data) {
+            var rain_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (x in rain_data) {
+                x_data.push(rain_data[x].time);
+            }
+            for (y in rain_data) {
+                y_data.push(rain_data[y].data);
+            }
+            var rain_data = echarts.init(document.getElementById('rain_data'));
+            init_rain_option = {
 
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: x_data
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: y_data,
+                    type: 'line',
+                    areaStyle: {}
+                }]
+            };
+
+            rain_data.setOption(init_rain_option);
+        }
+    })
+}
+function init_area_rbygroup() {
+    var area_rbygroup = echarts.init(document.getElementById('area_rbygroup'));
+    $.ajax({
+        type: "GET",
+        url: "/api/rivervis/list",
+        datatype: "JSON",
+        success: function (data) {
+            var pp_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (i in pp_data) {
+                if (pp_data[i].aname == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(pp_data[i].aname);
+                    y_data.push(pp_data[i].data);
+                    /*var y = new Object();
+                     y.name = bdsygroup_data[i].scategory;
+                     y.value = parseInt(bdsygroup_data[i].bcount);
+                     y_data.push(y);*/
+                }
+            }
+            option = {
+                angleAxis: {},
+                radiusAxis: {
+                    type: 'category',
+                    data: x_data,
+                    z: 10
+                },
+                polar: {},
+                series: [{
+                    type: 'bar',
+                    data: y_data,
+                    coordinateSystem: 'polar',
+                    name: 'A',
+                    stack: 'a'
+                }],
+                legend: {
+                    show: true,
+                    data: ['山洪预警']
+                }
+            };
+            area_rbygroup.setOption(option);
+        }
+    });
+}
+function init_termi_dt(){
+    var termi_dt = echarts.init(document.getElementById('termi_dt'));
+    $.ajax({
+        type: "GET",
+        url: "/api/rivervis/all",
+        datatype: "JSON",
+        success: function (data_ter) {
+            var pp_data = data_ter.data;
+            var x_data = new Array();
+            var y_data1 = new Array();
+            var y_data2 = new Array();
+            for (i in pp_data) {
+                if (pp_data[i].time == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(pp_data[i].hum);
+                    y_data1.push(pp_data[i].temp);
+                    y_data2.push(pp_data[i].ele);
+
+                    /*var y = new Object();
+                     y.name = bdsygroup_data[i].scategory;
+                     y.value = parseInt(bdsygroup_data[i].bcount);
+                     y_data.push(y);*/
+                }
+            }
+
+
+            termioption = {
+                title: {
+                    text: '三维可旋转图'
+                },
+                tooltip: {
+                    axisPointer :{
+                        label:{
+                            show: true
+
+                        }
+                    }
+                },
+                visualMap: {
+                    max: 25,
+                    inRange: {
+                        color: ['#CD3333','#FF3030', '#FF7F50', '#FFB90F','#FFF68F','#FFFF00']
+                    }
+                },
+                xAxis3D: {
+                    type : 'value'
+                },
+                yAxis3D: {
+                    type : 'value'
+                },
+                zAxis3D: {
+                    type: 'value'
+                },
+                grid3D: {
+                    boxWidth: 200,
+                    boxDepth: 80,
+                    axisLabel: {
+                        interval: 0
+                    },
+                    viewControl: {
+                        // projection: 'orthographic'
+                        autoRotate: true
+                    },
+                    light: {
+                        main: {
+                            intensity: 1.2,
+                            shadow: true
+                        },
+                        ambient: {
+                            intensity: 0.3
+                        }
+                    }
+                },
+                series: [{
+                    type: 'bar3D',
+                    data: [y_data2,x_data,y_data1],
+                    shading: 'lambert',
+
+                    label: {
+                        textStyle: {
+                            fontSize: 12,
+                            borderWidth: 1
+                        }
+                    },
+
+                    emphasis: {
+                        label: {
+                            textStyle: {
+                                fontSize: 20,
+                                color: '#1210ff'
+                            }
+                        },
+                        itemStyle: {
+                            color: '#17ff6a'
+                        }
+                    }
+                }]
+            };
+            termi_dt.setOption(termioption);
+
+        }
+    });
+
+}
 
 function init_rvis() {
     $.ajax({

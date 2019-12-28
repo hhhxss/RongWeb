@@ -29,11 +29,33 @@ import java.util.List;
 public class ProreApplyCount extends BaseController{
     @Autowired
     private IProreApplyService proreApplyService;
+
     @CrossOrigin
     @GetMapping("/isemer")
-    @ApiOperation(value ="节目单播出列表")
+    @ApiOperation(value ="节目申请是否紧急")
     public RongApiRes selectListByScategory() {
         List pre = proreApplyService.selectProreApplyIsEmer();
+        RongApiRes test = RongApiService.get_list(pre);
+        return test;
+    }
+    @CrossOrigin
+    @GetMapping("/isreply")
+    @ApiOperation(value ="节目申请是否回复")
+    public RongApiRes selectListByIsreply() {
+        List pre = proreApplyService.selectProreApplyIsrely();
+        RongApiRes test = RongApiService.get_list(pre);
+        return test;
+    }
+    /**
+     * 节目是否审听以及是否通过
+     * @author xcl
+     * @date 2019/12/27
+     */
+    @CrossOrigin
+    @GetMapping("/listen")
+    @ApiOperation(value ="节目是否审听以及是否通过")
+    public RongApiRes selectProreApplyListen() {
+        List pre = proreApplyService.selectProreApplyListen();
         RongApiRes test = RongApiService.get_list(pre);
         return test;
     }

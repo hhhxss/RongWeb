@@ -18,10 +18,10 @@ import com.ruoyi.common.support.Convert;
  * @date 2019-05-02
  */
 @Service
-public class VillagegroupStatisticsInfoServiceImpl implements IVillagegroupStatisticsInfoService 
+public class VillagegroupStatisticsInfoServiceImpl implements IVillagegroupStatisticsInfoService
 {
 	@Autowired
-	private VillagegroupStatisticsInfoMapper villagegroupStatisticsInfoMapper;
+	public VillagegroupStatisticsInfoMapper villagegroupStatisticsInfoMapper;
 
 	/**
      * 查询村组统计信息
@@ -48,7 +48,18 @@ public class VillagegroupStatisticsInfoServiceImpl implements IVillagegroupStati
 	{
 	    return villagegroupStatisticsInfoMapper.selectVillagegroupStatisticsInfoList(villagegroupStatisticsInfo);
 	}
-	
+
+	@Override
+	public List<VillagegroupStatisticsInfo> selectVillagegrouparea() {
+		return villagegroupStatisticsInfoMapper.selectVillagegrouparea();
+	}
+
+	@Override
+	public List<VillagegroupStatisticsInfo> selectVillagegroupGtype() {
+		return villagegroupStatisticsInfoMapper.selectVillagegroupGtype();
+	}
+
+	/**
     /**
      * 新增村组统计
      * 

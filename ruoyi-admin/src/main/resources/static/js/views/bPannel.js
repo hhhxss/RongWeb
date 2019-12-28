@@ -24,8 +24,236 @@ function bonLoad() {
 
     /*首页图标节目申请是否紧急可视化*/
     init_bp_proreapply();
+
+    /*首页图标节目申请是否回复可视化*/
+    init_pp_irgroup();
+
+    /*首页图标 广播发送信息类型可视化*/
+    init_sm_bgroup();
+
+    /*首页图标 节目是否审听以及是否通过可视化*/
+    init_pr_listen();
 }
 
+function init_pr_listen(){
+    var pr_listen = echarts.init(document.getElementById('pr_listen'));
+    $.ajax({
+        type: "GET",
+        url: "/api/proreapply/listen",
+        datatype: "JSON",
+        success: function (data) {
+            var pr_data = data.data;
+            var l_data = new Array();
+            var l1_data = new Array();
+            var l2_data = new Array();
+            var p1_data = new Array();
+            var p2_data = new Array();
+            for ( l in pr_data){
+                l_data.push(pr_data[l].recunit);
+            }
+            for ( l1 in pr_data){
+                l1_data.push(pr_data[l1].paid);
+            }
+            for ( l2 in pr_data){
+                l2_data.push(pr_data[l2].pname);
+            }
+            for ( p1 in pr_data){
+                p1_data.push(pr_data[p1].userid);
+            }
+            for ( p2 in pr_data){
+                p2_data.push(pr_data[p2].requires);
+            }
+            var labelRight = {
+                normal: {
+                    position: 'right'
+                }
+            };
+            option = {
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                grid: {
+                    top: 80,
+                    bottom: 30
+                },
+                xAxis: {
+                    type : 'value',
+                    position: 'top',
+                    splitLine: {lineStyle:{type:'dashed'}},
+                },
+                yAxis: {
+                    type : 'category',
+                    axisLine: {show: false},
+                    axisLabel: {show: false},
+                    axisTick: {show: false},
+                    splitLine: {show: false},
+                    data : ['审听未通过', '审听通过', '未审听', '已审听', '审听总量']
+                },
+                series : [
+                    {
+                        name:'节目数量',
+                        type:'bar',
+                        stack: '总量',
+                        label: {
+                            normal: {
+                                show: true,
+                                formatter: '{b}'
+                            }
+                        },
+                        data:[
+                            {value: -p2_data},
+                            p1_data,
+                            {value: -l2_data},
+                            l1_data,l_data
+                        ]
+                    }
+                ]
+            };
+            pr_listen.setOption(option);
+        }
+    });
+}
+
+function init_sm_bgroup(){
+    var sm_bgroup = echarts.init(document.getElementById('sm_bgroup'));
+    $.ajax({
+        type: "GET",
+        url: "/api/broad/remark",
+        datatype: "JSON",
+        success: function (data) {
+            var sm_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (i in sm_data) {
+                if (sm_data[i].smid == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(sm_data[i].smid);
+                    y_data.push(sm_data[i].remark);
+                    /*var y = new Object();
+                     y.name = bdsygroup_data[i].scategory;
+                     y.value = parseInt(bdsygroup_data[i].bcount);
+                     y_data.push(y);*/
+                }
+            }
+            option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b}: {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: y_data
+                },
+                series: [
+                    {
+                        name:'访问来源',
+                        type:'pie',
+                        radius: ['50%', '70%'],
+                        avoidLabelOverlap: false,
+                        label: {
+                            normal: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                show: true,
+                                textStyle: {
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
+                                }
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                show: false
+                            }
+                        },
+                        data:[
+                            {value:x_data[0], name:y_data[0]},
+                            {value:x_data[1], name:y_data[1]},
+                            {value:x_data[2], name:y_data[2]},
+                            {value:x_data[3], name:y_data[3]},
+                            {value:x_data[4], name:y_data[4]}
+                        ]
+                    }
+                ]
+            };
+
+            sm_bgroup.setOption(option);
+        }
+    });
+}
+
+function init_pp_irgroup() {
+    var pp_irgroup = echarts.init(document.getElementById('pp_irgroup'));
+    $.ajax({
+        type: "GET",
+        url: "/api/proreapply/isreply",
+        datatype: "JSON",
+        success: function (data) {
+            var pp_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (i in pp_data) {
+                if (pp_data[i].paid == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(pp_data[i].paid);
+                    y_data.push(pp_data[i].isreply);
+                    /*var y = new Object();
+                     y.name = bdsygroup_data[i].scategory;
+                     y.value = parseInt(bdsygroup_data[i].bcount);
+                     y_data.push(y);*/
+                }
+            }
+            option = {
+                color: ['#3398DB'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : ['节目申请', y_data[0], y_data[1]],
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'直接访问',
+                        type:'bar',
+                        barWidth: '60%',
+                        data:[x_data[0]+x_data[1], x_data[0], x_data[1]]
+                    }
+                ]
+            };
+            pp_irgroup.setOption(option);
+        }
+    });
+
+
+}
 function init_bp_proreapply() {
     var bp_proreapply = echarts.init(document.getElementById('bp_proreapply'));
     $.ajax({
