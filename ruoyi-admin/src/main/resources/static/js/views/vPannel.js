@@ -6,8 +6,135 @@ function v_onload() {
     init_ec_pbygroup();
     //首页图表 三维村镇人口可视化
     init_3d_v_pm();
+    //首页图标，村民林地信息可视化
+    init_ec_gbygroup();
+    //首页图标，实时政事类型可视化
+    init_ss_tbygroup();
 }
 
+function init_ss_tbygroup(){
+    var ss_tbygroup = echarts.init(document.getElementById('ss_tbygroup'));
+    $.ajax({
+        type: "GET",
+        url: "/api/shishi/type",
+        datatype: "json",
+        success:function(data){
+            var ssgroup_data=data.data;
+            var x_data =new Array();
+            var y_data =new Array();
+            for( x in ssgroup_data){
+                if(ssgroup_data[x].type == ''){
+                    x_data.push('未知');
+                }else{
+                    x_data.push(ssgroup_data[x].type);
+
+                }
+            }
+            for( y in ssgroup_data){
+                y_data.push(ssgroup_data[y].vtype);
+            }
+    option = {
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: x_data
+        },
+        series : [
+            {
+                name: '访问来源',
+                type: 'pie',
+                radius : '55%',
+                center: ['50%', '60%'],
+                data:[
+                    {value:y_data[0], name:x_data[0]},
+                    {value:y_data[1], name:x_data[1]},
+                    {value:y_data[2], name:x_data[2]}
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    ss_tbygroup.setOption(option);
+        }
+    });
+}
+
+function init_ec_gbygroup(){
+   $.ajax({
+       type: "GET",
+       url: "/api/flandinfo/gtype",
+       dataType: "json",
+       success: function (data) {
+            var gbygroup_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            var z_data = new Array();
+            for( x in gbygroup_data){
+                if(gbygroup_data[x].grouptype == ''){
+                    x_data.push('未知');
+                }else{
+                    x_data.push(gbygroup_data[x].grouptype);
+
+                }
+            }
+            for( y in gbygroup_data){
+               y_data.push(gbygroup_data[y].collective);
+            }
+           for( z in gbygroup_data){
+                   z_data.push(gbygroup_data[z].contracted);
+           }
+           var ec_gbygroup = echarts.init(document.getElementById('ec_gbygroup'));
+
+           option = {
+               legend: {},
+               tooltip: {},
+               dataset: {
+                   source: [
+                       //还没找到更好的写法，暂时写成这样
+                       ['product', '集体经营面积', '承包到户面积'],
+                       [x_data[0], y_data[0], z_data[0]],
+                       [x_data[1], y_data[1], z_data[1]],
+                       [x_data[2], y_data[2], z_data[2]],
+                       [x_data[3], y_data[3], z_data[3]],
+                       [x_data[4], y_data[4], z_data[4]],
+                       [x_data[5], y_data[5], z_data[5]],
+                       [x_data[6], y_data[6], z_data[6]],
+                       [x_data[7], y_data[7], z_data[7]],
+                       [x_data[8], y_data[8], z_data[8]],
+                       [x_data[9], y_data[9], z_data[9]],
+                       [x_data[10], y_data[10], z_data[10]],
+                       [x_data[11], y_data[11], z_data[11]],
+                       [x_data[12], y_data[12], z_data[12]],
+                       [x_data[13], y_data[13], z_data[13]],
+                       [x_data[14], y_data[14], z_data[14]],
+                       [x_data[15], y_data[15], z_data[15]],
+                       [x_data[16], y_data[16], z_data[16]],
+                       [x_data[17], y_data[17], z_data[17]]
+                   ]
+               },
+               xAxis: {type: 'category'},
+               yAxis: {},
+               // Declare several bar series, each will be mapped
+               // to a column of dataset.source by default.
+               series: [
+                   {type: 'bar'},
+                   {type: 'bar'}
+               ]
+           };
+           ec_gbygroup.setOption(option);
+       }
+   })
+}
 
 function init_ec_mbygroup() {
     $.ajax({

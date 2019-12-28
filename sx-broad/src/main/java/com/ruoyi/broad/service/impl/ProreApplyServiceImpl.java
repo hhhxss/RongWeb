@@ -93,7 +93,7 @@ public class ProreApplyServiceImpl implements IProreApplyService
 	 * 该方法只提供节目申请表中的目录
 	 * @author 张超 teavamc
 	 * @date 2019/3/2
-	 * @param []
+	 * @param
 	 * @return java.util.List<com.ruoyi.broad.domain.ProApplyUser>
 	 */
 	@Override
@@ -101,5 +101,11 @@ public class ProreApplyServiceImpl implements IProreApplyService
 	public List<ProApplyUser> selectProrApplyUserList(ProApplyUser proApplyUser){
 		return proreApplyMapper.selectProrApplyUserList(proApplyUser);
 	}
-	
+
+	@Override
+	@DataSource(value = DataSourceType.SLAVE)
+	public List<ProreApply> selectProreApplyIsEmer() {
+		return proreApplyMapper.selectProreApplyIsEmer();
+	}
+
 }

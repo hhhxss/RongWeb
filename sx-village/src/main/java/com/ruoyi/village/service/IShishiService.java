@@ -50,5 +50,7 @@ public interface IShishiService
      * @return 结果
      */
 	public int deleteShishiByIds(String ids);
-	
+
+	public List<Shishi> selectShishiBytype();
+
 }

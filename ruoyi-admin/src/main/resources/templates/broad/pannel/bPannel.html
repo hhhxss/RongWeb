@@ -113,7 +113,7 @@
             <div class="col-sm-3">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>终端数量以及在线状态统计</h5>
+                        <h5>终端数量以及在线状态统计(圆饼图）</h5>
                         <div class="ibox-tools">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <i class="fa fa-superpowers"></i>
@@ -167,7 +167,67 @@
                     </div>
                 </div>
             </div>
-        </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>广播操作类型可视化</h5>
+                            <div class="ibox-tools">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-superpowers"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a onclick="init_type_cbygroup()">原始数据</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="echarts" id="type_cgroup"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>终端数量以及在线状态统计(柱状图)</h5>
+                            <div class="ibox-tools">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-superpowers"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a onclick="init_bd_terminalstate1()">原始数据</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="echarts" id="bd_terminalstate1"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>节目申请是否紧急可视化</h5>
+                            <div class="ibox-tools">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-superpowers"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a onclick="init_bp_proreapply()">原始数据</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="echarts" id="bp_proreapply"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <div class="row">
             <div class="col-xs-12">
                 <div class="ibox float-e-margins">
