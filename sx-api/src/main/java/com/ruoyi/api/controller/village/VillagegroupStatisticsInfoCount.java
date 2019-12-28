@@ -64,4 +64,13 @@ public class VillagegroupStatisticsInfoCount {
         RongApiRes test=RongApiService.get_list(pre);
         return test;
     }
+    @CrossOrigin
+    @GetMapping("/forest")
+    @ApiOperation(value = "查询村组林地" )
+    public RongApiRes selectVillagegroupStatisticsInfoforest(){
+        List pre=villagegroupStatisticsInfoService.selectVillagegroupforest();
+        RongApiRes test=RongApiService.get_list(pre);
+        return test;
+    }
+
 }

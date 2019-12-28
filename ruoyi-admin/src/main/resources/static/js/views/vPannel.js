@@ -10,6 +10,8 @@ function v_onload() {
     init_ec_farmland();
     //首页图表 村组其他农用地可视化
     init_ec_otherland();
+    //首页图表 村组林地信息可视化
+    init_ec_forest();
     //首页图表 三维村镇人口可视化
     init_3d_v_pm();
 
@@ -696,7 +698,7 @@ function init_ec_otherland() {
                 },
                 series : [
                     {
-                        name: '访问来源',
+                        name: '村组名称',
                         type: 'pie',
                         radius : '55%',
                         center: ['70%', '60%'],
@@ -730,12 +732,64 @@ function init_ec_otherland() {
                     }
                 ]
             };
-
-
             ec_otherland.setOption(init_ec_otherland_option);
         }
     })
 }
+function init_ec_forest() {
+    $.ajax({
+        type: "GET",
+        url: "/api/vgsi/forest",
+        dataType: "json",
+        success: function (data) {
+            var forest_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (x in forest_data) {
+                if (forest_data[x].grouptype == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(forest_data[x].grouptype);
+                }
+            }
+            for (y in forest_data) {
+                y_data.push(forest_data[y].forest);
+            }
+            var ec_forest = echarts.init(document.getElementById('ec_forest'));
+            init_ec_forest_option = {
+                xAxis: {
+                    type: 'category',
+                    data:x_data
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: y_data,
+                    type: 'line',
+                    symbol: 'triangle',
+                    symbolSize: 20,
+                    lineStyle: {
+                        normal: {
+                            color: 'green',
+                            width: 4,
+                            type: 'dashed'
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            borderWidth: 3,
+                            borderColor: 'yellow',
+                            color: 'blue'
+                        }
+                    }
+                }]
+            };
+            ec_forest.setOption(init_ec_forest_option);
+        }
+    })
+}
+
 function init_3d_v_pm() {
     var pre_data;
     var area_group = new Array();

@@ -19,7 +19,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 	
 	<sql id="selectVillagegroupStatisticsInfoVo">
-        select vgsid, aid, grouptype, area, farmland, plowland, orchard, forest, fland, aqarea, otherland from villagegroup_statistics_info
+        select vgsid, aid, grouptype, area, farmland, plowland, orchard, forest, fland, aqarea, otherland
+        from villagegroup_statistics_info
     </sql>
 	
     <select id="selectVillagegroupStatisticsInfoList" parameterType="VillagegroupStatisticsInfo" resultMap="VillagegroupStatisticsInfoResult">
@@ -112,6 +113,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     <select id="selectVillagegroupotherland" resultMap="VillagegroupStatisticsInfoResult">
     select grouptype,otherland
+    from village.villagegroup_statistics_info
+    </select>
+    <select id="selectVillagegroupforest" resultMap="VillagegroupStatisticsInfoResult">
+    select grouptype,forest
     from village.villagegroup_statistics_info
     </select>
 
