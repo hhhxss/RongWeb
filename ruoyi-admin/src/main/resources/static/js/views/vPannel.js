@@ -6,6 +6,10 @@ function v_onload() {
     init_ec_pbygroup();
     //首页图标 村组面积信息可视化
     init_ec_vilgroup();
+    //首页图表 各村组农用地小计可视化
+    init_ec_farmland();
+    //首页图表 村组其他农用地可视化
+    init_ec_otherland();
     //首页图表 三维村镇人口可视化
     init_3d_v_pm();
 
@@ -20,8 +24,313 @@ function v_onload() {
     init_kaihuijiating();
     //首页图表 村镇村民教育程度可视化
     init_ec_edulevel();
+    //首页图表 反馈类型可视化
+    init_fd_ftype();
+    //首页图表 村长竞选票数统计
+    init_cunzhangc();
 }
+function init_ec_farmland() {
+    $.ajax({
+        type: "GET",
+        url: "/api/vgsi/farmland",
+        dataType: "json",
+        success: function (data) {
+            var farmland_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (x in farmland_data) {
+                if (farmland_data[x].grouptype == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(farmland_data[x].grouptype);
+                }
+            }
+            for (y in farmland_data) {
+                y_data.push(farmland_data[y].farmland);
+            }
+            var ec_farmland = echarts.init(document.getElementById('ec_farmland'));
+            init_ec_farmland_option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b}: {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data:x_data
+                },
+                series: [
+                    {
+                        name:'村组名称',
+                        type:'pie',
+                        radius: ['50%', '70%'],
+                        avoidLabelOverlap: false,
+                        label: {
+                            normal: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                show: true,
+                                textStyle: {
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
+                                }
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                show: false
+                            }
+                        },
+                        data:[
+                            {value:y_data[0], name:x_data[0]},
+                            {value:y_data[1], name:x_data[1]},
+                            {value:y_data[2], name:x_data[2]},
+                            {value:y_data[3], name:x_data[3]},
+                            {value:y_data[4], name:x_data[4]},
+                            {value:y_data[5], name:x_data[5]},
+                            {value:y_data[6], name:x_data[6]},
+                            {value:y_data[7], name:x_data[7]},
+                            {value:y_data[8], name:x_data[8]},
+                            {value:y_data[9], name:x_data[9]},
+                            {value:y_data[10], name:x_data[10]},
+                            {value:y_data[11], name:x_data[11]},
+                            {value:y_data[12], name:x_data[12]},
+                            {value:y_data[13], name:x_data[13]},
+                            {value:y_data[14], name:x_data[14]},
+                            {value:y_data[15], name:x_data[15]},
+                            {value:y_data[16], name:x_data[16]},
+                            {value:y_data[17], name:x_data[17]}
+                        ]
+                    }
+                ]
+            };ec_farmland.setOption(init_ec_farmland_option);
+        }
+    })
+}
+function init_ec_otherland() {
+    $.ajax({
+        type: "GET",
+        url: "/api/vgsi/otherland",
+        dataType: "json",
+        success: function (data) {
+            var otherland_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (x in otherland_data) {
+                if (otherland_data[x].grouptype == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(otherland_data[x].grouptype);
+                }
+            }
+            for (y in otherland_data) {
+                y_data.push(otherland_data[y].otherland);
+            }
+            var ec_otherland = echarts.init(document.getElementById('ec_otherland'));
+            init_ec_otherland_option = {
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: x_data
+                },
+                series : [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius : '55%',
+                        center: ['70%', '60%'],
+                        data:[{value: y_data[0], name: x_data[0]},
+                            {value: y_data[1], name: x_data[1]},
+                            {value: y_data[2], name: x_data[2]},
+                            {value: y_data[3], name: x_data[3]},
+                            {value: y_data[4], name: x_data[4]},
+                            {value: y_data[5], name: x_data[5]},
+                            {value: y_data[6], name: x_data[6]},
+                            {value: y_data[7], name: x_data[7]},
+                            {value: y_data[8], name: x_data[8]},
+                            {value: y_data[9], name: x_data[9]},
+                            {value: y_data[10], name: x_data[10]},
+                            {value: y_data[11], name: x_data[11]},
+                            {value: y_data[12], name: x_data[12]},
+                            {value: y_data[13], name: x_data[13]},
+                            {value: y_data[14], name: x_data[14]},
+                            {value: y_data[15], name: x_data[15]},
+                            {value: y_data[16], name: x_data[16]},
+                            {value: y_data[17], name: x_data[17]}
 
+                        ],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+
+
+            ec_otherland.setOption(init_ec_otherland_option);
+        }
+    })
+}
+function init_cunzhangc() {
+    $.ajax({
+        type: "GET",
+        url: "/api/CunZhangC/st",
+        dataType: "json",
+        success: function (data) {
+            var czcgroup_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+
+            for (x in czcgroup_data) {
+                x_data.push(czcgroup_data[x].uname);
+            }
+            for (y in czcgroup_data) {
+                y_data.push(czcgroup_data[y].id);
+            }
+            var cunzhangc_data = echarts.init(document.getElementById('cunzhangc_data'));
+            option = {
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+
+                visualMap: {
+                    show: false,
+                    min: 80,
+                    max: 600,
+                    inRange: {
+                        colorLightness: [0.5, 1]
+                    }
+                },
+                series : [
+                    {
+                        name:'访问来源',
+                        type:'pie',
+                        radius : '55%',
+                        center: ['50%', '50%'],
+                        data:[
+                            {value:y_data[0], name:x_data[0]},
+                            {value:y_data[1], name:x_data[1]},
+                            {value:y_data[2], name:x_data[2]},
+                            {value:y_data[3], name:x_data[3]},
+                            {value:y_data[4], name:x_data[4]},
+                            {value:y_data[5], name:x_data[5]}
+                        ].sort(function (a, b) { return a.value - b.value; }),
+                        roseType: 'radius',
+                        label: {
+                            normal: {
+                                textStyle: {
+                                    color: 'rgba(24,15,58,0.85)'
+                                }
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                lineStyle: {
+                                    color: 'rgba(255,133,53,0.72)'
+                                },
+                                smooth: 0.2,
+                                length: 10,
+                                length2: 20
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: '#c23531',
+                                shadowBlur: 200,
+                                shadowColor: 'rgba(17,20,49,0.83)'
+                            }
+                        },
+
+                        animationType: 'scale',
+                        animationEasing: 'elasticOut',
+                        animationDelay: function (idx) {
+                            return Math.random() * 200;
+                        }
+                    }
+                ]
+            };
+            cunzhangc_data.setOption(option);
+        }
+    });
+}
+function init_fd_ftype(){
+    $.ajax({
+        type: "GET",
+        url: "/api/fdtype/type",
+        dataType: "json",
+        success: function (data) {
+            var ftype_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            var z_data = new Array();
+            for (x in ftype_data) {
+                x_data.push(ftype_data[x].fbid);
+            }
+            for (y in ftype_data) {
+                y_data.push(ftype_data[y].fbuid);
+            }
+            for (z in ftype_data) {
+                z_data.push(ftype_data[z].title);
+            }
+            var fd_ftype = echarts.init(document.getElementById('fd_ftype'));
+            fd_ftype_option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b}: {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data:['反馈','咨询']
+                },
+                series: [
+                    {
+                        name:'反馈信息',
+                        type:'pie',
+                        selectedMode: 'single',
+                        radius: [0, '40%'],
+
+                        label: {
+                            normal: {
+                                position: 'inner'
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                show: false
+                            }
+                        },
+                        data:[
+                            {value:z_data, name:'反馈信息总数'}
+                        ]
+                    },
+                    {
+                        name:'反馈信息',
+                        type:'pie',
+                        radius: ['50%', '65%'],
+                        data:[
+                            {value:x_data, name:'反馈'},
+                            {value:y_data, name:'咨询'}
+                        ]
+                    }
+                ]
+            };
+            fd_ftype.setOption(fd_ftype_option);
+        }
+
+    });
+}
 function init_ec_obygroup(){
     $.ajax({
         type: "GET",
