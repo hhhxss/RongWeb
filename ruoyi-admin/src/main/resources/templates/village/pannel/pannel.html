@@ -181,8 +181,88 @@
                     </div>
                 </div>
             </div>
-    </div>
+            <div class="col-sm-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>反馈信息类型可视化</h5>
+                        <div class="ibox-tools">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-superpowers"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a onclick="init_fd_ftype()">原始数据</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="fd_ftype"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>村长竞选票数统计可视化</h5>
+                        <div class="ibox-tools">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-superpowers"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
 
+                                <li><a onclick="init_cunzhangc()">原始数据</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="cunzhangc_data" ></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>各村组农用地小计可视化</h5>
+                        <div class="ibox-tools">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-superpowers"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a onclick="init_ec_farmland()">原始数据</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="ec_farmland" ></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>村组其他农用地可视化</h5>
+                        <div class="ibox-tools">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-superpowers"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a onclick="init_ec_otherland()">原始数据</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="ec_otherland"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-sm-12">
@@ -216,6 +296,25 @@
                     </div>
                     <div class="ibox-content">
                         <div class="echarts" id="kaihui" ></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>村镇角色类型统计可视化</h5>
+                        <div class="ibox-tools">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-superpowers"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a onclick="init_level()">原始数据</a>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="level_data"></div>
                     </div>
                 </div>
             </div>

@@ -12,10 +12,8 @@ function v_onload() {
     init_ec_otherland();
     //首页图表 三维村镇人口可视化
     init_3d_v_pm();
-
     //首页图表 村镇耕地信息可视化
     init_ec_obygroup();
-  
     //首页图标，村民林地信息可视化
     init_ec_gbygroup();
     //首页图标，实时政事类型可视化
@@ -28,6 +26,58 @@ function v_onload() {
     init_fd_ftype();
     //首页图表 村长竞选票数统计
     init_cunzhangc();
+    //首页图标，村镇角色类型可视化
+    init_level();
+}
+function init_level() {
+    $.ajax({
+        type: "GET",
+        url: "/api/level/roletype",
+        datatype: "json",
+        success: function (data) {
+            var level_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (x in level_data) {
+                x_data.push(level_data[x].roletype);
+            }
+            for (y in level_data) {
+                y_data.push(level_data[y].rid);
+            }
+            var level_data = echarts.init(document.getElementById('level_data'));
+            init_level_option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: x_data
+                },
+                series: [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: '55%',
+                        center: ['50%', '60%'],
+                        data: [
+                            {value: y_data[0], name: x_data[0]},
+                            {value: y_data[1], name: x_data[1]},
+                        ],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            level_data.setOption(init_level_option);
+        }
+    });
 }
 function init_ec_farmland() {
     $.ajax({

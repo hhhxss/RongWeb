@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.village.mapper.LevelMapper">
+
+    <resultMap type="Level" id="LevelResult">
+        <result property="rid"    column="rid"    />
+        <result property="rname"    column="rname"    />
+        <result property="roletype"    column="roletype"    />
+    </resultMap>
+
+    <sql id="selectLevelVo">
+        select rid, rname, roletype from village.tb_level
+    </sql>
+
+    <select id="selectLevelList" parameterType="Level" resultMap="LevelResult">
+    <include refid="selectLevelVo"/>
+    <where>
+        <if test="rid != null "> and rid = #{rid}</if>
+        <if test="rname != null  and rname != '' "> and rname = #{rname}</if>
+        <if test="roletype != null  and roletype != '' "> and roletype LIKE CONCAT(CONCAT('%', #{roletype}),'%')</if>
+        ORDER BY rid ASC
+    </where>
+    </select>>
+
+    <select id="selectLevelByRid" parameterType="Integer" resultMap="LevelResult">
+    <include refid="selectLevelVo"/>
+    where rid = #{rid}
+    </select>
+
+    <select id="selectLevelListByroletype" resultMap="LevelResult">
+    select roletype,count(roletype) as rid from village.tb_level GROUP BY roletype
+    </select>
+
+</mapper>
