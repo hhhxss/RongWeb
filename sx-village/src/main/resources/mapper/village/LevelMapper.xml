@@ -22,7 +22,7 @@
         <if test="roletype != null  and roletype != '' "> and roletype LIKE CONCAT(CONCAT('%', #{roletype}),'%')</if>
         ORDER BY rid ASC
     </where>
-    </select>>
+    </select>
 
     <select id="selectLevelByRid" parameterType="Integer" resultMap="LevelResult">
     <include refid="selectLevelVo"/>
