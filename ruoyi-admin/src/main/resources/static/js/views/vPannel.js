@@ -22,6 +22,8 @@ function v_onload() {
     init_ec_edulevel();
     //首页图表 村长竞选票数统计
     init_cunzhangc();
+    //首页图表 村务消息已读类型统计
+    init_wlog();
 }
 
 function init_ec_obygroup(){
@@ -805,6 +807,63 @@ function init_cunzhangc() {
             }
             var cunzhangc_data = echarts.init(document.getElementById('cunzhangc_data'));
             option = {
+
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: [x_data[0],x_data[1],x_data[2],x_data[3],x_data[4],x_data[5]]
+                },
+                series : [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data:[
+                            {value:y_data[0], name:x_data[0]},
+                            {value:y_data[1], name:x_data[1]},
+                            {value:y_data[2], name:x_data[2]},
+                            {value:y_data[3], name:x_data[3]},
+                            {value:y_data[4], name:x_data[4]},
+                            {value:y_data[5], name:x_data[5]}
+                        ],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(255,133,53,0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+
+            cunzhangc_data.setOption(option);
+        }
+    });
+}
+function init_wlog() {
+    $.ajax({
+        type: "GET",
+        url: "/api/Wlog/logtype",
+        dataType: "json",
+        success: function (data) {
+            var wgroup_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+
+            for (x in wgroup_data) {
+                x_data.push(wgroup_data[x].logtype);
+            }
+            for (y in wgroup_data) {
+                y_data.push(wgroup_data[y].uid);
+            }
+            var wlog_data = echarts.init(document.getElementById('wlog_data'));
+            option = {
                 tooltip : {
                     trigger: 'item',
                     formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -815,7 +874,7 @@ function init_cunzhangc() {
                     min: 80,
                     max: 600,
                     inRange: {
-                        colorLightness: [0.5, 1]
+                        colorLightness: [0.5, 1.5]
                     }
                 },
                 series : [
@@ -827,10 +886,7 @@ function init_cunzhangc() {
                         data:[
                             {value:y_data[0], name:x_data[0]},
                             {value:y_data[1], name:x_data[1]},
-                            {value:y_data[2], name:x_data[2]},
-                            {value:y_data[3], name:x_data[3]},
-                            {value:y_data[4], name:x_data[4]},
-                            {value:y_data[5], name:x_data[5]}
+                            {value:y_data[2], name:x_data[2]}
                         ].sort(function (a, b) { return a.value - b.value; }),
                         roseType: 'radius',
                         label: {
@@ -866,7 +922,7 @@ function init_cunzhangc() {
                     }
                 ]
             };
-            cunzhangc_data.setOption(option);
+            wlog_data.setOption(option);
         }
     });
 }
