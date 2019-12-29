@@ -18,6 +18,16 @@ function v_onload() {
     init_ec_gbygroup();
     //首页图标，实时政事类型可视化
     init_ss_tbygroup();
+    init_ec_assetcons();
+    init_ec_assetims();
+    init_ec_assetbus();
+    init_ec_assethom();
+    init_ec_assetpub();
+    init_ec_assettw();
+    init_ec_assetot();
+    init_ec_assetsch();
+    init_ec_assetwc();
+
     //首页图表，开慧村家庭类型变化可视化
     init_kaihuijiating();
     //首页图表 村镇村民教育程度可视化
@@ -580,6 +590,414 @@ function init_ec_edulevel() {
         }
     })
 }
+
+function init_ec_assetcons() {
+    $.ajax({
+        type: "GET",
+        url: "/api/asset/cons",
+        dataType: "json",
+        success: function (data) {
+            var abygroup_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for( x in abygroup_data){
+                if(abygroup_data[x].grouptype == ''){
+                    x_data.push('未知');
+                }else {
+                    x_data.push(abygroup_data[x].grouptype);
+                }
+            }
+            for (y in abygroup_data){
+                y_data.push(abygroup_data[y].constructionland);
+            }
+            var ec_assetcons = echarts.init(document.getElementById('ec_assetcons'));
+            option = {
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: x_data
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: y_data,
+                    type: 'line',
+                    areaStyle: {}
+                }]
+            };
+
+            ec_assetcons.setOption(option);
+        }
+    })
+}
+
+function init_ec_assetims() {
+    $.ajax({
+        type: "GET",
+        url: "/api/asset/ims",
+        dataType: "json",
+        success: function (data) {
+            var bbygroup_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for( x in bbygroup_data){
+                if(bbygroup_data[x].grouptype == ''){
+                    x_data.push('未知');
+                }else {
+                    x_data.push(bbygroup_data[x].grouptype);
+                }
+            }
+            for (y in bbygroup_data){
+                y_data.push(bbygroup_data[y].imsland);
+            }
+            var ec_assetims = echarts.init(document.getElementById('ec_assetims'));
+            option = {
+                color: ['#3398DB'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : x_data,
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'直接访问',
+                        type:'bar',
+                        barWidth: '60%',
+                        data:y_data
+                    }
+                ]
+            };
+
+            ec_assetims.setOption(option);
+        }
+    })
+}
+
+
+function init_ec_assetbus() {
+    $.ajax({
+        type: "GET",
+        url: "/api/asset/bus",
+        dataType: "json",
+        success: function (data) {
+            var buygroup_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for( x in buygroup_data){
+                if(buygroup_data[x].grouptype == ''){
+                    x_data.push('未知');
+                }else {
+                    x_data.push(buygroup_data[x].grouptype);
+                }
+            }
+            for (y in buygroup_data){
+                y_data.push(buygroup_data[y].businessland);
+            }
+            var ec_assetbus= echarts.init(document.getElementById('ec_assetbus'));
+            option = {
+                xAxis: {
+                    type: 'category',
+                    data: x_data
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: y_data,
+                    type: 'line',
+                    smooth: true
+                }]
+            };
+
+            ec_assetbus.setOption(option);
+        }
+    })
+}
+
+
+function init_ec_assethom() {
+    $.ajax({
+        type: "GET",
+        url: "/api/asset/hom",
+        dataType: "json",
+        success: function (data) {
+            var hoygroup_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for( x in hoygroup_data){
+                if(hoygroup_data[x].grouptype == ''){
+                    x_data.push('未知');
+                }else {
+                    x_data.push(hoygroup_data[x].grouptype);
+                }
+            }
+            for (y in hoygroup_data){
+                y_data.push(hoygroup_data[y].homestead);
+            }
+            var ec_assethom = echarts.init(document.getElementById('ec_assethom'));
+            option = {
+                xAxis: {
+                    type: 'category',
+                    data: x_data
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data:y_data,
+                    type: 'bar'
+                }]
+            };
+            ec_assethom.setOption(option);
+        }
+    })
+}
+
+function init_ec_assetpub() {
+    $.ajax({
+        type: "GET",
+        url: "/api/asset/pub",
+        dataType: "json",
+        success: function (data) {
+            var puygroup_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for( x in puygroup_data){
+                if(puygroup_data[x].grouptype == ''){
+                    x_data.push('未知');
+                }else {
+                    x_data.push(puygroup_data[x].grouptype);
+                }
+            }
+            for (y in puygroup_data){
+                y_data.push(puygroup_data[y].publicland);
+            }
+            var ec_assetpub= echarts.init(document.getElementById('ec_assetpub'));
+            option = {
+                color: ['#6ddb38'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : x_data,
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'直接访问',
+                        type:'bar',
+                        barWidth: '60%',
+                        data:y_data
+                    }
+                ]
+            };
+
+            ec_assetpub.setOption(option);
+        }
+    })
+}
+
+function init_ec_assettw() {
+    $.ajax({
+        type: "GET",
+        url: "/api/asset/tw",
+        dataType: "json",
+        success: function (data) {
+            var twygroup_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for( x in twygroup_data){
+                if(twygroup_data[x].grouptype == ''){
+                    x_data.push('未知');
+                }else {
+                    x_data.push(twygroup_data[x].grouptype);
+                }
+            }
+            for (y in twygroup_data){
+                y_data.push(twygroup_data[y].twland);
+            }
+            var ec_assettw= echarts.init(document.getElementById('ec_assettw'));
+            option = {
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: x_data
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data:y_data,
+                    type: 'line',
+                    areaStyle: {}
+                }]
+            };
+
+            ec_assettw.setOption(option);
+        }
+    })
+}
+
+
+function init_ec_assetot() {
+    $.ajax({
+        type: "GET",
+        url: "/api/asset/ot",
+        dataType: "json",
+        success: function (data) {
+            var otygroup_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for( x in otygroup_data){
+                if(otygroup_data[x].grouptype == ''){
+                    x_data.push('未知');
+                }else {
+                    x_data.push(otygroup_data[x].grouptype);
+                }
+            }
+            for (y in otygroup_data){
+                y_data.push(otygroup_data[y].otherland);
+            }
+            var ec_assetot= echarts.init(document.getElementById('ec_assetot'));
+            option = {
+                xAxis: {
+                    type: 'category',
+                    data: x_data
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: y_data,
+                    type: 'line'
+                }]
+            };
+
+            ec_assetot.setOption(option);
+        }
+    })
+}
+
+function init_ec_assetsch() {
+    $.ajax({
+        type: "GET",
+        url: "/api/asset/sch",
+        dataType: "json",
+        success: function (data) {
+            var scygroup_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for( x in scygroup_data){
+                if(scygroup_data[x].grouptype == ''){
+                    x_data.push('未知');
+                }else {
+                    x_data.push(scygroup_data[x].grouptype);
+                }
+            }
+            for (y in scygroup_data){
+                y_data.push(scygroup_data[y].schoolland);
+            }
+            var ec_assetsch = echarts.init(document.getElementById('ec_assetsch'));
+            option = {
+                xAxis: {
+                    type: 'category',
+                    data: x_data
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data:y_data,
+                    type: 'bar'
+                }]
+            };
+            ec_assetsch.setOption(option);
+        }
+    })
+}
+
+function init_ec_assetwc() {
+    $.ajax({
+        type: "GET",
+        url: "/api/asset/wc",
+        dataType: "json",
+        success: function (data) {
+            var wcygroup_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for( x in wcygroup_data){
+                if(wcygroup_data[x].grouptype == ''){
+                    x_data.push('未知');
+                }else {
+                    x_data.push(wcygroup_data[x].grouptype);
+                }
+            }
+            for (y in wcygroup_data){
+                y_data.push(wcygroup_data[y].wcland);
+            }
+            var ec_assetwc = echarts.init(document.getElementById('ec_assetwc'));
+            option = {
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: x_data
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: y_data,
+                    type: 'line',
+                    areaStyle: {}
+                }]
+            };
+
+            ec_assetwc.setOption(option);
+        }
+    })
+}
+
 
 function init_ss_tbygroup(){
     var ss_tbygroup = echarts.init(document.getElementById('ss_tbygroup'));

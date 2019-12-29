@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.village.mapper.AssetAssessmentMapper">
-    
+
     <resultMap type="AssetAssessment" id="AssetAssessmentResult">
         <result property="aaid"    column="aaid"    />
         <result property="aid"    column="aid"    />
@@ -16,61 +16,98 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="twland"    column="twland"    />
         <result property="otherland"    column="otherland"    />
     </resultMap>
-	
-	<sql id="selectAssetAssessmentVo">
+
+    <sql id="selectAssetAssessmentVo">
         select aaid, aid, grouptype, constructionland, imsland, 
-businessland, homestead, publicland, twland, otherland from asset_assessment
+businessland, homestead, publicland, twland, otherland from village.asset_assessment
     </sql>
-	
+
     <select id="selectAssetAssessmentList" parameterType="AssetAssessment" resultMap="AssetAssessmentResult">
         <include refid="selectAssetAssessmentVo"/>
-        <where>  
+        <where>
             <if test="aaid != null "> and aaid = #{aaid}</if>
-             <if test="aid != null  and aid != '' "> and aid = #{aid}</if>
-             <if test="grouptype != null  and grouptype != '' "> and grouptype = #{grouptype}</if>
-             <if test="constructionland != null  and constructionland != '' "> and constructionland = #{constructionland}</if>
-             <if test="imsland != null  and imsland != '' "> and imsland = #{imsland}</if>
-             <if test="businessland != null  and businessland != '' "> and businessland = #{businessland}</if>
-             <if test="homestead != null  and homestead != '' "> and homestead = #{homestead}</if>
-             <if test="publicland != null  and publicland != '' "> and publicland = #{publicland}</if>
-             <if test="twland != null  and twland != '' "> and twland = #{twland}</if>
-             <if test="otherland != null  and otherland != '' "> and otherland = #{otherland}</if>
-         </where>
+            <if test="aid != null  and aid != '' "> and aid = #{aid}</if>
+            <if test="grouptype != null  and grouptype != '' "> and grouptype = #{grouptype}</if>
+            <if test="constructionland != null  and constructionland != '' "> and constructionland = #{constructionland}</if>
+            <if test="imsland != null  and imsland != '' "> and imsland = #{imsland}</if>
+            <if test="businessland != null  and businessland != '' "> and businessland = #{businessland}</if>
+            <if test="homestead != null  and homestead != '' "> and homestead = #{homestead}</if>
+            <if test="publicland != null  and publicland != '' "> and publicland = #{publicland}</if>
+            <if test="twland != null  and twland != '' "> and twland = #{twland}</if>
+            <if test="otherland != null  and otherland != '' "> and otherland = #{otherland}</if>
+        </where>
     </select>
-    
+
     <select id="selectAssetAssessmentById" parameterType="Integer" resultMap="AssetAssessmentResult">
         <include refid="selectAssetAssessmentVo"/>
         where aaid = #{aaid}
     </select>
-        
+
+    <select id="selectAssetAssessmentBytype" resultMap="AssetAssessmentResult">
+        select grouptype,constructionland from village.asset_assessment;
+    </select>
+
+    <select id="selectAssetAssessmentGtype" resultMap="AssetAssessmentResult">
+        select grouptype,imsland from village.asset_assessment;
+    </select>
+
+    <select id="selectAssetAssessmentButype" resultMap="AssetAssessmentResult">
+        select grouptype,businessland from village.asset_assessment;
+    </select>
+
+    <select id="selectAssetAssessmentHotype" resultMap="AssetAssessmentResult">
+        select grouptype,homestead from village.asset_assessment;
+    </select>
+
+    <select id="selectAssetAssessmentPutype" resultMap="AssetAssessmentResult">
+        select grouptype,publicland from village.asset_assessment;
+    </select>
+
+    <select id="selectAssetAssessmentTwtype" resultMap="AssetAssessmentResult">
+        select grouptype,twland from village.asset_assessment;
+    </select>
+
+    <select id="selectAssetAssessmentOttype" resultMap="AssetAssessmentResult">
+        select grouptype,otherland from village.asset_assessment;
+    </select>
+
+    <select id="selectAssetAssessmentSctype" resultMap="AssetAssessmentResult">
+        select grouptype,schoolland from village.asset_assessment;
+    </select>
+
+    <select id="selectAssetAssessmentWctype" resultMap="AssetAssessmentResult">
+        select grouptype,wcland from village.asset_assessment;
+    </select>
+
+
     <insert id="insertAssetAssessment" parameterType="AssetAssessment">
         insert into asset_assessment
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="aaid != null  ">aaid,</if>
-			<if test="aid != null  and aid != ''  ">aid,</if>
-			<if test="grouptype != null  and grouptype != ''  ">grouptype,</if>
-			<if test="constructionland != null  and constructionland != ''  ">constructionland,</if>
-			<if test="imsland != null  and imsland != ''  ">imsland,</if>
-			<if test="businessland != null  and businessland != ''  ">businessland,</if>
-			<if test="homestead != null  and homestead != ''  ">homestead,</if>
-			<if test="publicland != null  and publicland != ''  ">publicland,</if>
-			<if test="twland != null  and twland != ''  ">twland,</if>
-			<if test="otherland != null  and otherland != ''  ">otherland,</if>
-         </trim>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="aaid != null  ">aaid,</if>
+            <if test="aid != null  and aid != ''  ">aid,</if>
+            <if test="grouptype != null  and grouptype != ''  ">grouptype,</if>
+            <if test="constructionland != null  and constructionland != ''  ">constructionland,</if>
+            <if test="imsland != null  and imsland != ''  ">imsland,</if>
+            <if test="businessland != null  and businessland != ''  ">businessland,</if>
+            <if test="homestead != null  and homestead != ''  ">homestead,</if>
+            <if test="publicland != null  and publicland != ''  ">publicland,</if>
+            <if test="twland != null  and twland != ''  ">twland,</if>
+            <if test="otherland != null  and otherland != ''  ">otherland,</if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="aaid != null  ">#{aaid},</if>
-			<if test="aid != null  and aid != ''  ">#{aid},</if>
-			<if test="grouptype != null  and grouptype != ''  ">#{grouptype},</if>
-			<if test="constructionland != null  and constructionland != ''  ">#{constructionland},</if>
-			<if test="imsland != null  and imsland != ''  ">#{imsland},</if>
-			<if test="businessland != null  and businessland != ''  ">#{businessland},</if>
-			<if test="homestead != null  and homestead != ''  ">#{homestead},</if>
-			<if test="publicland != null  and publicland != ''  ">#{publicland},</if>
-			<if test="twland != null  and twland != ''  ">#{twland},</if>
-			<if test="otherland != null  and otherland != ''  ">#{otherland},</if>
-         </trim>
+            <if test="aaid != null  ">#{aaid},</if>
+            <if test="aid != null  and aid != ''  ">#{aid},</if>
+            <if test="grouptype != null  and grouptype != ''  ">#{grouptype},</if>
+            <if test="constructionland != null  and constructionland != ''  ">#{constructionland},</if>
+            <if test="imsland != null  and imsland != ''  ">#{imsland},</if>
+            <if test="businessland != null  and businessland != ''  ">#{businessland},</if>
+            <if test="homestead != null  and homestead != ''  ">#{homestead},</if>
+            <if test="publicland != null  and publicland != ''  ">#{publicland},</if>
+            <if test="twland != null  and twland != ''  ">#{twland},</if>
+            <if test="otherland != null  and otherland != ''  ">#{otherland},</if>
+        </trim>
     </insert>
-	 
+
     <update id="updateAssetAssessment" parameterType="AssetAssessment">
         update asset_assessment
         <trim prefix="SET" suffixOverrides=",">
@@ -87,15 +124,15 @@ businessland, homestead, publicland, twland, otherland from asset_assessment
         where aaid = #{aaid}
     </update>
 
-	<delete id="deleteAssetAssessmentById" parameterType="Integer">
+    <delete id="deleteAssetAssessmentById" parameterType="Integer">
         delete from asset_assessment where aaid = #{aaid}
     </delete>
-	
+
     <delete id="deleteAssetAssessmentByIds" parameterType="String">
-        delete from asset_assessment where aaid in 
+        delete from asset_assessment where aaid in
         <foreach item="aaid" collection="array" open="(" separator="," close=")">
             #{aaid}
         </foreach>
     </delete>
-    
+
 </mapper>
