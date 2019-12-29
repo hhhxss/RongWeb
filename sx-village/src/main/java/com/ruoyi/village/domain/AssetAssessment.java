@@ -35,6 +35,9 @@ public class AssetAssessment extends BaseEntity
 	/** 其他建设用地 */
 	private String otherland;
 
+	private String schoolland;
+	private String wcland;
+
 	public void setAaid(Integer aaid) 
 	{
 		this.aaid = aaid;
@@ -125,6 +128,12 @@ public class AssetAssessment extends BaseEntity
 	{
 		return otherland;
 	}
+	public void setSchoolland(String schoolland) {this.schoolland = schoolland; }
+
+	public  String getSchoolland() {return schoolland;}
+	public void setWcland(String wcland) {this.wcland = wcland; }
+
+	public  String getWcland() {return wcland;}
 
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -138,6 +147,8 @@ public class AssetAssessment extends BaseEntity
             .append("publicland", getPublicland())
             .append("twland", getTwland())
             .append("otherland", getOtherland())
+			.append("schoolland", getSchoolland())
+			.append("wcland", getWcland())
             .toString();
     }
 }

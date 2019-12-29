@@ -8,4 +8,5 @@ public interface IRiverDataService {
     public RiverData selectRiverDataById(Integer id);
     public List<RiverData> selectRiverDataList(RiverData RiverData);
     public List<RiverData> selectRiverDataByrid();
+    public List<RiverData> select();
 }

@@ -28,7 +28,7 @@
     <link th:href="@{/ajax/libs/jquery-layout/jquery.layout-latest.css}" rel="stylesheet"/>
     <link th:href="@{/ajax/libs/jquery-ztree/3.5/css/metro/zTreeStyle.css}" rel="stylesheet"/>
 </head>
-<body class="gray-bg" onload="e_onload()">
+<body class="gray-bg" onload="e_onload();select();$.table.search()">
 <div class="row  border-bottom  dashboard-header">
     <div class="wrapper wrapper-content">
         <div class="row">
@@ -52,11 +52,72 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-xs-12 select-table table-striped">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <table id="bootstrap-table" data-mobile-responsive="true"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 <div th:include="include :: footer"></div>
 <script th:src="@{/ajax/libs/jquery-layout/jquery.layout-latest.js}"></script>
 <script th:src="@{/ajax/libs/jquery-ztree/3.5/js/jquery.ztree.all-3.5.js}"></script>
+<script th:inline="javascript">
+    //分页查询
+    function select() {
+        var options = {
+            url: "/iot/engpannel/list",
+            search: false,
+            columns: [
+                {
+                    field: 'mid',
+                    title: '菜单ID',
+                    visible: true
+                },
+                {
+                    field: 'parentmid',
+                    title: '上级ID',
+                    sortable: true
+                },
+                {
+                    field: 'mlevel',
+                    title: '菜单标准',
+                    sortable: true
+                },
+                {
+                    field: 'mname',
+                    title: '菜单名称',
+                    sortable: true
+                },{
+                    field: 'murl',
+                    title: '存放位置',
+                    visible: true
+                },
+                {
+                    field: 'micon',
+                    title: '菜单图标',
+                    sortable: true
+                },
+                {
+                    field: 'isopen',
+                    title: '是否公开',
+                    sortable: true
+                },
+                {
+                    field: 'isenabled',
+                    title: '是否可用  ',
+                    sortable: true
+                }
+            ]
+        };
+        $.table.init(options);
+    }
+</script>
 <!--jquery图表float插件-->
 <script th:src="@{/js/plugins/flot/jquery.flot.js}"></script>
 <script th:src="@{/js/plugins/flot/jquery.flot.tooltip.min.js}"></script>

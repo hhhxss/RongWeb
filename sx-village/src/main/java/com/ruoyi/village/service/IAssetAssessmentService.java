@@ -50,5 +50,14 @@ public interface IAssetAssessmentService
      * @return 结果
      */
 	public int deleteAssetAssessmentByIds(String ids);
-	
+
+	public List<AssetAssessment> selectAssetAssessmentBytype();
+	public List<AssetAssessment> selectAssetAssessmentGtype();
+    public List<AssetAssessment> selectAssetAssessmentButype();
+    public List<AssetAssessment> selectAssetAssessmentHotype();
+    public List<AssetAssessment> selectAssetAssessmentPutype();
+    public List<AssetAssessment> selectAssetAssessmentTwtype();
+    public List<AssetAssessment> selectAssetAssessmentOttype();
+	public List<AssetAssessment> selectAssetAssessmentSctype();
+	public List<AssetAssessment> selectAssetAssessmentWctype();
 }

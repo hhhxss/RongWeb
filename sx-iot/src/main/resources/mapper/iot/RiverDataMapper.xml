@@ -30,6 +30,17 @@
         </where>
 
     </select>
+    <select id="select" resultMap="RiverDataResult">
+        select id,rname,rid,type,data,time from iotdata.river_data
+        <where>
+            <if test="id != null  and id != '' "> and id = #{id}</if>
+            <if test="rname != null  and rname != '' "> and rname = #{rname}</if>
+            <if test="type != null  and type != '' "> and type = #{type}</if>
+            <if test="data != null  and data != '' "> and data = #{data}</if>
+            <if test="time != null  and time != '' "> and time = #{time}</if>
+
+        </where>
+    </select>
 
     <select id="selectRiverDataById" parameterType="Integer" resultMap="RiverDataResult">
         <include refid="selectRiverDataVo"/>

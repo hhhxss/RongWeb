@@ -12,8 +12,73 @@ function m_onload(){
     init_anshan();
     //首页图表 路口镇温度走势可视化
     init_lukou();
+    //首页图表 各水库水位走势可视化
+    init_water();
 }
-
+function init_water() {
+    $.ajax({
+        type: "GET",
+        url: "/api/waterdata/rname",
+        dataType: "json",
+        success: function (data) {
+            var water_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (x in water_data) {
+                x_data.push(water_data[x].rname);
+            }
+            for (y in water_data) {
+                y_data.push(water_data[y].data);
+            }
+            var water_data = echarts.init(document.getElementById('water_data'));
+            init_water_option={
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b}: {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data:x_data
+                },
+                series: [
+                    {
+                        name:'访问来源',
+                        type:'pie',
+                        radius: ['50%', '70%'],
+                        avoidLabelOverlap: false,
+                        label: {
+                            normal: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                show: true,
+                                textStyle: {
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
+                                }
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                show: false
+                            }
+                        },
+                        data:[
+                            {value:y_data[0], name:'乌江水库'},
+                            {value:y_data[1], name:'付安水库'},
+                            {value:y_data[2], name:'关山水库'},
+                            {value:y_data[3], name:'北山水库'},
+                            {value:y_data[4], name:'响水坝水库'}
+                        ]
+                    }
+                ]
+            };
+            water_data.setOption(init_water_option);
+        }
+    });
+}
 function init_lukou() {
     $.ajax({
         type: "GET",

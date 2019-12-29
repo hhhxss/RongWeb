@@ -200,4 +200,10 @@
 			<if test="to_name != null  and to_name != ''  ">#{to_name},</if>
 		</trim>
 	</insert>
+
+	<select id="selectPolicyinfoBytitle" resultMap="PolicyinfoResult">
+		select  title,count(title) as poinid
+		from village.tb_policyinfo
+		GROUP BY title
+	</select>
 </mapper>
