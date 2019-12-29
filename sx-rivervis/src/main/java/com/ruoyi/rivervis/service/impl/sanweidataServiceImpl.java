@@ -30,4 +30,9 @@ public class sanweidataServiceImpl implements IsanweidataService {
     public List<sanweidata> selectsanweidataListflow() {
         return sanweidataMapper.selectsanweidataListflow();
     }
+
+    @Override
+    public List<sanweidata> select() {
+        return sanweidataMapper.select();
+    }
 }
