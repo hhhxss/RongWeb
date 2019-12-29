@@ -113,4 +113,13 @@ public class ProreApplyServiceImpl implements IProreApplyService
 		return proreApplyMapper.selectProreApplyIsrely();
 	}
 
+	/**
+	 * 节目是否审听以及是否通过
+	 * @author xcl
+	 * @date 2019/12/27
+	 */
+	@Override
+	public List<ProreApply> selectProreApplyListen(){
+		return proreApplyMapper.selectProreApplyListen();
+	}
 }

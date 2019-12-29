@@ -71,7 +71,18 @@
 <!--                        <li ><a class="menuItem" th:href="@{/broad/camera}">摄像头测试</a></li>-->
 <!--                        &lt;!&ndash;<li ><a class="menuItem" th:href="@{/broad/chat}">聊天窗口</a></li>&ndash;&gt;-->
 <!--                    </ul>-->
-<!--                </li>-->
+<!--                </li>--
+                <!--                <li class="active">-->
+                <!--                    <a href="index.html"><i class="fa fa-home"></i> <span class="nav-label">控制台</span> <span class="fa arrow"></span></a>-->
+                <!--                    <ul class="nav nav-second-level">-->
+                <!--                        <li ><a class="menuItem" th:href="@{/system/main}">核心</a></li>-->
+                <!--                        <li ><a class="menuItem" th:href="@{/broad/pannel}">广播数据</a></li>-->
+                <!--                        <li ><a class="menuItem" th:href="@{/village/pannel}">社区数据</a></li>-->
+                <!--                        <li ><a class="menuItem" th:href="@{/river/pannel}">山洪数据</a></li>-->
+                <!--                        <li ><a class="menuItem" th:href="@{/broad/camera}">摄像头测试</a></li>-->
+                <!--                        &lt;!&ndash;<li ><a class="menuItem" th:href="@{/broad/chat}">聊天窗口</a></li>&ndash;&gt;-->
+                <!--                    </ul>-->
+                <!--                </li>-->
                 <li th:each="menu : ${menus}">
                     <a th:class="@{${menu.url != '' && menu.url != '#'} ? ${menu.target}}" th:href="@{${menu.url == ''} ? |#| : ${menu.url}}">
                         <i class="fa fa-bar-chart-o" th:class="${menu.icon}"></i>

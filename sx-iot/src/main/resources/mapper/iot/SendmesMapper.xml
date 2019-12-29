@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.iot.mapper.SendmesMapper">
+
+    <resultMap type="Sendmes" id="SendmesResult">
+        <result property="smid"    column="smid"    />
+        <result property="smobile"    column="smobile"    />
+        <result property="scontent"    column="scontent"    />
+        <result property="issend"    column="issend"    />
+        <result property="sendtime"    column="sendtime"    />
+        <result property="tid"    column="tid"    />
+        <result property="spelanguage"    column="spelanguage"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectSendmesVo">
+        select smid, smobile, scontent,issend,sendtime,tid,spelanguage,remark from iotdata.sendmessages
+    </sql>
+
+    <select id="selectSendmesList" parameterType="Sendmes" resultMap="SendmesResult">
+        <include refid="selectSendmesVo"/>
+        <where>
+            <if test="smid != null "> and smid = #{smid}</if>
+            <if test="smobile != null  and smobile != '' "> and smobile LIKE CONCAT(CONCAT('%', #{smobile}),'%')</if>
+            <if test="scontent != null  and scontent != '' "> and scontent = #{scontent}</if>
+            <if test="issend != null  and issend != '' "> and issend LIKE CONCAT(CONCAT('%', #{issend}),'%')</if>
+            <if test="sendtime != null  and sendtime != '' "> and sendtime LIKE CONCAT(CONCAT('%', #{sendtime}),'%')</if>
+            <if test="tid != null "> and tid = #{tid}</if>
+            <if test="spelanguage != null and spelanguage != ''"> and spelanguage LIKE CONCAT(CONCAT('%', #{spelanguage}),'%')</if>
+            <if test="remark != null "> and remark = #{remark}</if>
+        </where>
+        ORDER BY smid ASC
+    </select>
+
+    <select id="selectSendmesById" parameterType="Integer" resultMap="SendmesResult">
+        <include refid="selectSendmesVo"/>
+        where smid = #{smid}
+    </select>
+
+    <select id="selectSendmesByremark" resultMap="SendmesResult">
+        select remark,
+               count(remark) as smid
+        from iotdata.sendmessages
+        group by remark
+        order by count(remark) DESC
+    </select>
+
+</mapper>

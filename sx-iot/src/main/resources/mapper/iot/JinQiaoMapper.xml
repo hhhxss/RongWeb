@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.iot.mapper.JinQiaoMapper">
+
+    <resultMap type="JinQiao" id="JinQiaoResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="rid"    column="rid"    />
+        <result property="rname"    column="rname"    />
+        <result property="data"    column="data"    />
+        <result property="time"    column="time"    />
+    </resultMap>
+
+    <sql id="selectJinQiaoVo">
+         select id,type,rid,rname,data,time from iotdata.river_data
+    </sql>
+
+    <select id="selectJinQiaoList" parameterType="JinQiao" resultMap="JinQiaoResult">
+        <include refid="selectJinQiaoVo"/>
+        <where>
+            <if test="id != null "> and id = #{id}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="rid != null "> and rid = #{rid}</if>
+            <if test="rname != null  and rname != '' "> and rname = #{rname}</if>
+            <if test="data != null  and data != '' "> and data = #{data}</if>
+            <if test="time != null "> and time = #{time}</if>
+        </where>
+        ORDER BY id ASC
+    </select>
+
+    <select id="selectJinQiaoBytime" resultMap="JinQiaoResult">
+         select time,data
+         from
+         iotdata.temp_data
+         where rname='金桥镇'
+         ORDER BY time ASC
+    </select>
+
+</mapper>

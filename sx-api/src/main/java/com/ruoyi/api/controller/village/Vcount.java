@@ -51,7 +51,7 @@ public class Vcount {
         * 党员统计数据api
         * @author 张超 teavamc
         * @date 2019/1/25
-        * @param []
+        * @param :[]
         * @return com.ruoyi.api.domain.RongApiRes
         */
     @GetMapping("/pm")
@@ -65,7 +65,7 @@ public class Vcount {
         * （快排）按照地区统计党员数据：地区、总数、男性、女性
         * @author 张超 teavamc
         * @date 2019/2/13
-        * @param []
+        * @param
         * @return com.ruoyi.api.domain.RongApiRes
         */
     @GetMapping("/pmSort")
@@ -81,7 +81,7 @@ public class Vcount {
         * 对List<Pmcount>数据，比较psum属性进行快排
         * @author 张超 teavamc
         * @date 2019/2/13
-        * @param [list, start, end]
+        * @param: [list, start, end]
         * @return void
         */
     public void pmQuickSort(List<Pmcount> list,int start,int end){
@@ -110,7 +110,7 @@ public class Vcount {
         * 村民统计数据接api
         * @author 张超 teavamc
         * @date 2019/1/25
-        * @param []
+        * @param: []
         * @return com.ruoyi.api.domain.RongApiRes
         */
     @GetMapping("/m")
@@ -151,7 +151,7 @@ public class Vcount {
         * （快排）按照地区统计村民数据：地区、总数、男性、女性
         * @author 张超 teavamc
         * @date 2019/2/13
-        * @param []
+        * @param :[]
         * @return com.ruoyi.api.domain.RongApiRes
         */
     @GetMapping("/mSort")
@@ -167,7 +167,7 @@ public class Vcount {
         * 对List<Mcount>数据中的msum属性进行快排
         * @author 张超 teavamc
         * @date 2019/2/13
-        * @param [list, start, end]
+        * @param: [list, start, end]
         * @return void
         */
     public void mQuickSort(List<Mcount> list,int start,int end){
@@ -195,7 +195,7 @@ public class Vcount {
         * 统计村民和党员总数/男/女
         * @author 张超 teavamc
         * @date 2019/1/30
-        * @param []
+        * @param: []
         * @return com.ruoyi.api.domain.RongApiRes
         */
     @GetMapping("/p_m")
@@ -395,5 +395,14 @@ public class Vcount {
             res = villagerInfoService.countbyagePart(pre);
         }
         return RongApiService.get_bean(res);
+    }
+
+    @CrossOrigin
+    @GetMapping("/edulevel")
+    @ApiOperation(value ="村民教育程度")
+    public RongApiRes selectListByScategory() {
+        List pre = villagerInfoService.selectVillagerInfoByedulevel();
+        RongApiRes test = RongApiService.get_list(pre);
+        return test;
     }
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.rivervis.mapper.warnsetMapper">
+
+    <resultMap type="warnset" id="warnsetResult">
+        <result property="wid"    column="wid"    />
+        <result property="aid"    column="aid"    />
+        <result property="aname"    column="aname"    />
+        <result property="leveal"    column="leveal"    />
+        <result property="data"    column="data"    />
+        <result property="content"    column="content"    />
+    </resultMap>
+
+    <sql id="selectwarnsetVo">
+        select wid,aid,aname,leveal,data,content from warnset
+    </sql>
+
+    <select id="selectwarnsetList" parameterType="warnset" resultMap="warnsetResult">
+        <include refid="selectwarnsetVo"/>
+        <where>
+            <if test="wid != null "> and wid = #{wid}</if>
+            <if test="aid != null "> and aid = #{aid}</if>
+            <if test="aname != null  and aname != '' "> and aname LIKE CONCAT(CONCAT('%', #{aname}),'%')</if>
+            <if test="leveal != null  and leveal != '' "> and leveal = #{leveal}</if>
+            <if test="data != null  and data != '' "> and data LIKE CONCAT(CONCAT('%', #{data}),'%')</if>
+            <if test="content != null  and content != '' "> and content LIKE CONCAT(CONCAT('%', #{content}),'%')</if>
+
+        </where>
+        ORDER BY wid ASC
+    </select>
+
+    <select id="selectwarnsetById" parameterType="Integer" resultMap="warnsetResult">
+        <include refid="selectwarnsetVo"/>
+        where wid = #{wid}
+    </select>
+
+    <select id="selectwarnsetByaname" parameterType="Integer" resultMap="warnsetResult">
+        <include refid="selectwarnsetVo"/>
+        select aname,data
+        from rivervis.warnset
+
+    </select>
+
+</mapper>
