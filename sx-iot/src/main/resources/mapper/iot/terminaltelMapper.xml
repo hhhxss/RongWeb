@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.iot.mapper.terminaltelMapper">
+
+    <resultMap type="terminaltel" id="terminaltelResult">
+        <result property="telid" column="telid"/>
+        <result property="tid" column="tid"/>
+        <result property="Tel" column="Tel"/>
+        <result property="IsUse" column="IsUse"/>
+    </resultMap>
+
+    <select id="select" resultMap="terminaltelResult">
+        select telid,tid,Tel,IsUse from iotdata.terminaltels
+        <where>
+            <if test="telid != null  and telid != '' "> and telid = #{telid}</if>
+            <if test="tid != null  and tid != '' "> and tid = #{tid}</if>
+            <if test="Tel != null  and Tel != '' "> and Tel = #{Tel}</if>
+            <if test="IsUse != null  and IsUse != '' "> and IsUse = #{IsUse}</if>
+        </where>
+    </select>
+
+</mapper>
