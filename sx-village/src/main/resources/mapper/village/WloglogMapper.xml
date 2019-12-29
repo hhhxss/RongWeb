@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.village.mapper.WloglogMapper">
+
+    <resultMap type="Wloglog" id="WloglogResult">
+        <result property="uid"    column="uid"    />
+        <result property="logname"    column="logname"    />
+    </resultMap>
+
+    <sql id="selectWloglogVo">
+         select uid,logname from village.tb_wlog
+    </sql>
+
+    <select id="selectWloglogList" parameterType="Wloglog" resultMap="WloglogResult">
+        <include refid="selectWloglogVo"/>
+        <where>
+            <if test="uid != null "> and uid = #{uid}</if>
+            <if test="logname != null  and logname != '' "> and logtype = #{logtype}</if>
+
+        </where>
+        ORDER BY uid ASC
+    </select>
+
+    <select id="selectWloglogBylogname" resultMap="WloglogResult">
+         select logname,
+         count(logname) as uid
+         from village.tb_wlog
+         group by logname
+    </select>
+
+</mapper>

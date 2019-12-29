@@ -24,6 +24,8 @@ function v_onload() {
     init_cunzhangc();
     //首页图表 村务消息已读类型统计
     init_wlog();
+    //首页图表 村民上网网页访问类型统计
+    init_wloglog();
 }
 
 function init_ec_obygroup(){
@@ -923,6 +925,67 @@ function init_wlog() {
                 ]
             };
             wlog_data.setOption(option);
+        }
+    });
+}
+function init_wloglog() {
+    $.ajax({
+        type: "GET",
+        url: "/api/Wloglog/logname",
+        dataType: "json",
+        success: function (data) {
+            var wlgroup_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+
+            for (x in wlgroup_data) {
+                x_data.push(wlgroup_data[x].logname);
+            }
+            for (y in wlgroup_data) {
+                y_data.push(wlgroup_data[y].uid);
+            }
+            var wloglog_data = echarts.init(document.getElementById('wloglog_data'));
+
+            option = {
+                color: ['#3398DB'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : x_data,
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'数量',
+                        type:'bar',
+                        barWidth: '60%',
+                        data:y_data
+                    }
+                ]
+            };
+
+
+            wloglog_data.setOption(option);
         }
     });
 }
