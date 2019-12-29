@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.rivervis.mapper.RainDataMapper">
+
+    <resultMap type="RainData" id="RainDataResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="rid"    column="rid"    />
+        <result property="rname"    column="rname"    />
+        <result property="data"    column="data"    />
+        <result property="time"    column="time"    />
+        <result property="timeM"    column="timeM"    />
+        <result property="timeD"    column="timeD"    />
+    </resultMap>
+
+    <sql id="selectRainDataVo">
+        select id, type, rid, rname, data, time, timeM, timeD from rivervis.rain_data_kaihui
+    </sql>
+
+    <select id="selectRainDataList" parameterType="RainData" resultMap="RainDataResult">
+        <include refid="selectRainDataVo"/>
+        <where>
+            <if test="id != null "> and id = #{id}</if>
+            <if test="type != null  and type != '' "> and type LIKE CONCAT(CONCAT('%', #{type}),'%')</if>
+            <if test="rid != null "> and rid = #{rid}</if>
+            <if test="rname != null  and rname != '' "> and rname = #{rname}</if>
+            <if test="data != null  and data != '' "> and data LIKE CONCAT(CONCAT('%', #{data}),'%')</if>
+            <if test="time != null  and time != '' "> and time LIKE CONCAT(CONCAT('%', #{time}),'%')</if>
+            <if test="timeM != null and timeM != ''"> and timeM LIKE CONCAT(CONCAT('%', #{timeM}),'%')</if>
+            <if test="timeD != null  and timeD != '' "> and timeD LIKE CONCAT(CONCAT('%', #{timeD}),'%')</if>
+        </where>
+        ORDER BY id ASC
+    </select>
+
+    <select id="selectRainDataById" parameterType="Integer" resultMap="RainDataResult">
+        <include refid="selectRainDataVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectRainDataBytime" resultMap="RainDataResult">
+        select data,time
+        from rivervis.rain_data_kaihui
+        order by time ASC
+    </select>
+
+</mapper>

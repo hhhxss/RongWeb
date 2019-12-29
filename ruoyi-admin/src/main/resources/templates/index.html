@@ -71,7 +71,7 @@
 <!--                        <li ><a class="menuItem" th:href="@{/broad/camera}">摄像头测试</a></li>-->
 <!--                        &lt;!&ndash;<li ><a class="menuItem" th:href="@{/broad/chat}">聊天窗口</a></li>&ndash;&gt;-->
 <!--                    </ul>-->
-<!--                </li>-->
+
                 <li th:each="menu : ${menus}">
                     <a th:class="@{${menu.url != '' && menu.url != '#'} ? ${menu.target}}" th:href="@{${menu.url == ''} ? |#| : ${menu.url}}">
                         <i class="fa fa-bar-chart-o" th:class="${menu.icon}"></i>

@@ -26,7 +26,8 @@ public interface IVillagegroupStatisticsInfoService
      * @return 村组统计集合
      */
 	public List<VillagegroupStatisticsInfo> selectVillagegroupStatisticsInfoList(VillagegroupStatisticsInfo villagegroupStatisticsInfo);
-	
+	public List<VillagegroupStatisticsInfo> selectVillagegrouparea();
+	public List<VillagegroupStatisticsInfo> selectVillagegroupGtype();
 	/**
      * 新增村组统计
      * 

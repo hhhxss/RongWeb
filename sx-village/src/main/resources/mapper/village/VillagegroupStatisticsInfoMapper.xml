@@ -101,5 +101,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{vgsid}
         </foreach>
     </delete>
-    
+
+    <select id="selectVillagegroupGtype" resultMap="VillagegroupStatisticsInfoResult">
+    select grouptype,area
+    from village.villagegroup_statistics_info
+    </select>
 </mapper>

@@ -4,10 +4,6 @@ function met_onload(){
     init_io_vraindata();
     //首页图表 金桥镇雨量变化可视化
     init_io_jqrain();
-
-}
-function met_onload(){
-    init_kaihui_analysis()
 }
 function init_kaihui_analysis() {
     var kaihui_analysis = echarts.init(document.getElementById('kaihui_analysis'));
@@ -35,9 +31,6 @@ function init_kaihui_analysis() {
                 }
             }
             option = {
-                title: {
-                    text: '堆叠区域图'
-                },
                 tooltip : {
                     trigger: 'axis',
                     axisPointer: {
@@ -109,17 +102,17 @@ function init_io_vraindata() {
         success: function (data) {
             var vrain_data = data.data;
             var x_data = new Array();
-            //var y_data = new Array();
+            var y_data = new Array();
             for( x in vrain_data){
-                if(vrain_data[x].parea == ''){
+                if(vrain_data[x].rname == ''){
                     x_data.push('未知');
                 }else {
                     x_data.push(vrain_data[x].rname);
                 }
             }
-            // for (y in vrain_data){
-            //     y_data.push(vrain_data[y].rainavg);
-            // }
+            for (y in vrain_data){
+                y_data.push(vrain_data[y].id);
+            }
 
             var io_vraindata = echarts.init(document.getElementById('io_vraindata'));
             io_vraindata_option = {
@@ -155,7 +148,7 @@ function init_io_vraindata() {
                         name:'村镇雨量',
                         type:'bar',
                         barWidth: '60%',
-                        data:[16.55, 17.06, 17.09, 16.30, 16.54, 16.46, 16.15,16.83,23.33,16.40,15.60,17.47,15.49,16.19,16.51,16.19,16.62,16.94,5.38]
+                        data: y_data
                     }
                 ]
             };
@@ -236,7 +229,6 @@ function init_io_jqrain() {
                 ]
             };
             io_jqrain.setOption(io_jqrain_option);
-
         }
     })
 }        

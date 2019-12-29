@@ -148,6 +148,4 @@ public class AreaController extends BaseController
 		List<Map<String, Object>> tree = areaService.selectAreaTree(new Area());
 		return tree;
 	}
-
-
 }

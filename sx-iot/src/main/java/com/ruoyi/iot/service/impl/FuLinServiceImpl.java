@@ -26,13 +26,13 @@ public class FuLinServiceImpl implements IFuLinService
 
 
     @Override
-    @DataSource(value = DataSourceType.SXRIVERVIS)
+    @DataSource(value = DataSourceType.SXINFOM)
     public FuLin selectFuLinById(Integer id) {
         return fulinMapper.selectFuLinById(id);
     }
 
     @Override
-    @DataSource(value = DataSourceType.SXRIVERVIS)
+    @DataSource(value = DataSourceType.SXINFOM)
     public List<FuLin> selectFuLinList(FuLin fulin) {
         return fulinMapper.selectFuLinList(fulin);
     }

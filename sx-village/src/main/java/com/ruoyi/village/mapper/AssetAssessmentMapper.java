@@ -58,5 +58,21 @@ public interface AssetAssessmentMapper
      * @return 结果
      */
 	public int deleteAssetAssessmentByIds(String[] aaids);
-	
+
+	public List<AssetAssessment> selectAssetAssessmentBytype();
+
+	public List<AssetAssessment> selectAssetAssessmentGtype();
+
+    public List<AssetAssessment> selectAssetAssessmentButype();
+
+    public List<AssetAssessment> selectAssetAssessmentHotype();
+
+    public List<AssetAssessment> selectAssetAssessmentPutype();
+
+    public List<AssetAssessment> selectAssetAssessmentTwtype();
+
+    public List<AssetAssessment> selectAssetAssessmentOttype();
+	public List<AssetAssessment> selectAssetAssessmentSctype();
+	public List<AssetAssessment> selectAssetAssessmentWctype();
+
 }
