@@ -462,6 +462,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-sm-6">
                 <div class="ibox float-e-margins">
@@ -486,22 +487,87 @@
             <div class="col-sm-6">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>村镇公告主题统计可视化</h5>
+
+                        <h5>村长竞选票数统计可视化</h5>
                         <div class="ibox-tools">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <i class="fa fa-superpowers"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-user">
-                                <li><a onclick="init_policy()">原始数据</a>
+
+                                <li><a onclick="init_cunzhangc()">原始数据</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="ibox-content">
-                        <div class="echarts" id="policy_data"></div>
+                        <div class="echarts" id="cunzhangc_data" ></div>
                     </div>
                 </div>
             </div>
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>村务消息已读类型统计</h5>
+                        <div class="ibox-tools">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-superpowers"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+
+                                <li><a onclick="init_wlog()">原始数据</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="wlog_data" ></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>村民上网网页访问类型统计</h5>
+                        <div class="ibox-tools">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-superpowers"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+
+                                <li><a onclick="init_wloglog()">原始数据</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="wloglog_data" ></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>村务功能类型</h5>
+                        <div class="ibox-tools">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-superpowers"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+
+                                <li><a onclick="init_wcmenu()">原始数据</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="wcmenu_data" ></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                       
 
         </div>
         <div class="row">
@@ -524,6 +590,25 @@
                     </div>
                 </div>
             </div>
+          <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>村镇公告主题统计可视化</h5>
+                        <div class="ibox-tools">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-superpowers"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                               <li><a onclick="init_policy()">原始数据</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                         <div class="echarts" id="policy_data"></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row">
@@ -540,7 +625,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 <div th:include="include :: footer"></div>
