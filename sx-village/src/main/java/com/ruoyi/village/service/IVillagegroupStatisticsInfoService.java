@@ -51,5 +51,5 @@ public interface IVillagegroupStatisticsInfoService
      * @return 结果
      */
 	public int deleteVillagegroupStatisticsInfoByIds(String ids);
-	
+
 }

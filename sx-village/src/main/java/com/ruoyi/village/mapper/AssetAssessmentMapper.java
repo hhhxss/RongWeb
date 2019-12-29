@@ -34,26 +34,26 @@ public interface AssetAssessmentMapper
      * @return 结果
      */
 	public int insertAssetAssessment(AssetAssessment assetAssessment);
-	
+
 	/**
      * 修改资产清查
-     * 
+     *
      * @param assetAssessment 资产清查信息
      * @return 结果
      */
 	public int updateAssetAssessment(AssetAssessment assetAssessment);
-	
+
 	/**
      * 删除资产清查
-     * 
+     *
      * @param aaid 资产清查ID
      * @return 结果
      */
 	public int deleteAssetAssessmentById(Integer aaid);
-	
+
 	/**
      * 批量删除资产清查
-     * 
+     *
      * @param aaids 需要删除的数据ID
      * @return 结果
      */
