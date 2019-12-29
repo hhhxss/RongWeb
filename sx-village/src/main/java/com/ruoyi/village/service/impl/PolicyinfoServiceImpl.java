@@ -87,4 +87,10 @@ public class PolicyinfoServiceImpl implements IPolicyinfoService {
         public int insertInfoCM(Comment comment) {
             return policyinfoMapper.insertInfoCM(comment);
         }
-    }
+
+        @Override
+        @DataSource(value = DataSourceType.SXVILLAGE)
+        public List<Policyinfo> selectPolicyinfoBytitle() {
+            return policyinfoMapper.selectPolicyinfoBytitle();
+        }
+}

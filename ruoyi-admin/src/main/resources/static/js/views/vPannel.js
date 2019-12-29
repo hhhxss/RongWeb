@@ -28,6 +28,65 @@ function v_onload() {
     init_cunzhangc();
     //首页图标，村镇角色类型可视化
     init_level();
+    //首页图表 村镇公告主题内容可视化
+    init_policy();
+}
+function init_policy() {
+    $.ajax({
+        type: "GET",
+        url: "/api/policy/title",
+        datatype: "json",
+        success: function (data) {
+            var policy_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (x in policy_data) {
+                x_data.push(policy_data[x].title);
+            }
+            for (y in policy_data) {
+                y_data.push(policy_data[y].poinid);
+            }
+            var policy_data = echarts.init(document.getElementById('policy_data'));
+            init_policy_option = {
+                color: ['#3398DB'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : x_data,
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'直接访问',
+                        type:'bar',
+                        barWidth: '60%',
+                        data:y_data
+                    }
+                ]
+            };
+            policy_data.setOption(init_policy_option);
+        }
+    });
 }
 function init_level() {
     $.ajax({
