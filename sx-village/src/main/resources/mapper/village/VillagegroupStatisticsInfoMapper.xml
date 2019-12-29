@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectVillagegroupStatisticsInfoVo"/>
         where vgsid = #{vgsid}
     </select>
-        
+
     <insert id="insertVillagegroupStatisticsInfo" parameterType="VillagegroupStatisticsInfo">
         insert into villagegroup_statistics_info
 		<trim prefix="(" suffix=")" suffixOverrides=",">

@@ -4,6 +4,8 @@ import com.ruoyi.broad.domain.BroadCount;
 import com.ruoyi.broad.service.IBcountService;
 import com.ruoyi.common.page.TableDataInfo;
 import com.ruoyi.framework.web.base.BaseController;
+import com.ruoyi.iot.domain.menus;
+import com.ruoyi.iot.service.ImenusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,12 +23,22 @@ import java.util.List;
  **/
 @Controller
 @RequestMapping("/iot/engpannel")
-public class IotengPannelController
+public class IotengPannelController extends BaseController
 {
     private String prefix = "iot/engpannel";
+    @Autowired
+    private ImenusService menusService;
+
 
     @GetMapping()
     public String engpannel() {
         return prefix + "/engpannel";
+    }
+    @PostMapping("/list")
+    @ResponseBody
+    public TableDataInfo list() {
+        startPage();
+        List<menus> list = menusService.select();
+        return getDataTable(list);
     }
 }
