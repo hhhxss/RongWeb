@@ -60,4 +60,9 @@ public class terminalsdataServiceImpl implements IterminalsdataService{
     public List<terminalsdata> selectterminalsdataByele() {
         return terminalsdataMapper.selectterminalsdataByele();
     }
+
+    @Override
+    public List<terminalsdata> select() {
+        return terminalsdataMapper.select();
+    }
 }

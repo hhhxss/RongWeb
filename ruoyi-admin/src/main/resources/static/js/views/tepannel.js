@@ -82,7 +82,85 @@ function init_mountain_dt() { var mountain_dt = echarts.init(document.getElement
         }
     });
 
+    //山洪水位及流量三维可视化
+    init_mountain_dt();
+
 }
+
+function init_mountain_dt() {
+    var mountain_dt = echarts.init(document.getElementById('mountain_dt'));
+    $.ajax({
+        type: "GET",
+        url: "/api/mountain/list",
+        datatype: "JSON",
+        success: function (data_mou) {
+            var pp_data = data_mou.data;
+            var x_data = new Array();
+            var y_data = new Array();
+
+            for (i in pp_data) {
+                if (pp_data[i].time == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(pp_data[i].waterlevel);
+                    y_data.push(pp_data[i].flow);
+                    /*var y = new Object();
+                     y.name = bdsygroup_data[i].scategory;
+                     y.value = parseInt(bdsygroup_data[i].bcount);
+                     y_data.push(y);*/
+                }
+            }
+
+            var data =[x_data,x_data,y_data];
+// Parametric curve
+
+            console.log(data.length);
+
+            mountainoption = {
+                title: {
+                    text: '三维可旋转图'
+                },
+                tooltip: {},
+                backgroundColor: '#fff',
+                visualMap: {
+                    show: true,
+                    dimension: 2,
+                    min: 0,
+                    max: 30,
+                    inRange: {
+                        color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+                    }
+                },
+                xAxis3D: {
+                    type: 'value'
+                },
+                yAxis3D: {
+                    type: 'value'
+                },
+                zAxis3D: {
+                    type: 'value'
+                },
+                grid3D: {
+                    viewControl: {
+                        projection: 'orthographic',
+                        autoRotate: true
+                    }
+                },
+                series: [{
+                    type: 'line3D',
+                    data: data,
+                    lineStyle: {
+                        width: 4
+                    }
+                }]
+            };
+            mountain_dt.setOption( mountainoption);
+
+        }
+    });
+
+}
+
 function init_tel_elebygroup(){
     $.ajax({
         type: "GET",
@@ -144,9 +222,6 @@ function init_tel_tempbygroup() {
             }
             var tel_bygroup = echarts.init(document.getElementById('tel_bygroup'));
             option = {
-                title: {
-                    text: 'Step Line'
-                },
                 tooltip: {
                     trigger: 'axis'
                 },

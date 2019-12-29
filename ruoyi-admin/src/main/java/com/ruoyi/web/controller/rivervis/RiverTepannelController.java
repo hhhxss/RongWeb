@@ -1,5 +1,9 @@
 package com.ruoyi.web.controller.rivervis;
 
+import com.ruoyi.broad.domain.BroadCount;
+import com.ruoyi.common.page.TableDataInfo;
+import com.ruoyi.framework.web.base.BaseController;
+import com.ruoyi.rivervis.domain.terminalsdata;
 import com.ruoyi.common.page.TableDataInfo;
 import com.ruoyi.framework.web.base.BaseController;
 import com.ruoyi.rivervis.domain.sanweidata;
@@ -10,6 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.ruoyi.rivervis.service.IterminalsdataService;
+
 
 import java.util.List;
 
@@ -24,7 +31,11 @@ import java.util.List;
 public class RiverTepannelController extends BaseController{
     private String prefix = "rivervis/tepannel";
     @Autowired
+
+    private IterminalsdataService iterminalsdataService;
+
     private IsanweidataService sanweidataService;
+
 
     @GetMapping()
     public String pannel() {
@@ -32,6 +43,14 @@ public class RiverTepannelController extends BaseController{
     }
 
     @PostMapping("/list")
+    @ResponseBody
+    public TableDataInfo list() {
+        startPage();
+
+        List<terminalsdata> list = iterminalsdataService.select();
+        return getDataTable(list);
+    }
+   @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list() {
         startPage();

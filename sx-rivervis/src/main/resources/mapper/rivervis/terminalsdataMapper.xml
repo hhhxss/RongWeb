@@ -70,4 +70,26 @@
         from rivervis.terminalsdata
         order by id
     </select>
+
+    <select id="select" resultMap="terminalsdataResult">
+        select id, tid, tname,aid,userid,address,note,manager,managertel,createdtime,isuse,phone,hum,temp,ele from rivervis.terminalsdata
+    <where>
+        <if test="id != null "> and id = #{id}</if>
+        <if test="tid != null "> and tid = #{tid}</if>
+        <if test="tname != null  and tname != '' "> and tname LIKE CONCAT(CONCAT('%', #{tname}),'%')</if>
+        <if test="aid != null "> and aid = #{aid}</if>
+        <if test="userid != null "> and userid = #{userid}</if>
+        <if test="address != null  and address != '' "> and address = #{address}</if>
+        <if test="note != null  and note != '' "> and note LIKE CONCAT(CONCAT('%', #{note}),'%')</if>
+        <if test="manager != null  and manager != '' "> and manager LIKE CONCAT(CONCAT('%', #{manager}),'%')</if>
+        <if test="managertel != null and managertel != ''"> and managertel LIKE CONCAT(CONCAT('%', #{managertel}),'%')</if>
+        <if test="createdtime != null  and createdtime != '' "> and createdtime LIKE CONCAT(CONCAT('%', #{createdtime}),'%')</if>
+        <if test="isuse != null  and isuse != '' "> and isuse LIKE CONCAT(CONCAT('%', #{isuse}),'%')</if>
+        <if test="phone != null  and phone != '' "> and phone LIKE CONCAT(CONCAT('%', #{phone}),'%')</if>
+        <if test="hum != null  and hum != '' "> and hum LIKE CONCAT(CONCAT('%', #{hum}),'%')</if>
+        <if test="temp != null "> and temp = #{temp}</if>
+        <if test="ele != null "> and ele = #{ele}</if>
+    </where>
+    </select>
+
 </mapper>
