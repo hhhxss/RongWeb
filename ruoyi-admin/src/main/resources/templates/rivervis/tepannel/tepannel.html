@@ -28,7 +28,7 @@
     <link th:href="@{/ajax/libs/jquery-layout/jquery.layout-latest.css}" rel="stylesheet"/>
     <link th:href="@{/ajax/libs/jquery-ztree/3.5/css/metro/zTreeStyle.css}" rel="stylesheet"/>
 </head>
-<body class="gray-bg" onload="te_onload()">
+<body class="gray-bg" onload="te_onload();select();$.table.search()">
 <div class="row  border-bottom  dashboard-header">
     <div class="wrapper wrapper-content">
         <div class="row">
@@ -92,6 +92,37 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>山洪水位及流量三维可视化</h5>
+                        <div class="ibox-tools">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-superpowers"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a onclick="init_mountain_dt()">原始数据</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="mountain_dt"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 select-table table-striped">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <table id="bootstrap-table" data-mobile-responsive="true"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
     </div>
 </div>
 
@@ -99,7 +130,87 @@
 <div th:include="include :: footer"></div>
 <script th:src="@{/ajax/libs/jquery-layout/jquery.layout-latest.js}"></script>
 <script th:src="@{/ajax/libs/jquery-ztree/3.5/js/jquery.ztree.all-3.5.js}"></script>
-
+<script th:inline="javascript">
+    //分页查询
+    function select() {
+        var options = {
+            url: "/rivervis/tepannel/list",
+            search: false,
+            columns: [
+                {
+                    field: 'tid',
+                    title: '终端设备IMEI',
+                    visible: true
+                },
+                {
+                    field: 'tname',
+                    title: '终端设备名称',
+                    sortable: true
+                },
+                {
+                    field: 'aid',
+                    title: '所属分组ID',
+                    sortable: true
+                },
+                {
+                    field: 'userid',
+                    title: '所属用户编号',
+                    sortable: true
+                },
+                {
+                    field: 'address',
+                    title: '安装地址',
+                    visible: true
+                },
+                {
+                    field: 'note',
+                    title: '备注',
+                    sortable: true
+                },
+                {
+                    field: 'manager',
+                    title: '终端管理员名称',
+                    sortable: true
+                },
+                {
+                    field: 'managertel',
+                    title: '终端管理员电话',
+                    sortable: true
+                },
+                {
+                    field: 'createdtime',
+                    title: '创建时间',
+                    sortable: true
+                },
+                {
+                    field: 'isuse',
+                    title: '是否可用',
+                    sortable: true
+                },
+                {
+                    field: 'phone',
+                    title: '终端手机号码',
+                    sortable: true
+                },
+                {
+                    field: 'hum',
+                    title: '湿度',
+                    visible: true
+                },
+                {
+                    field: 'temp',
+                    title: '温度',
+                    sortable: true
+                },
+                {
+                    field: 'ele',
+                    title: '电压',
+                    sortable: true
+                }]
+        };
+        $.table.init(options);
+    }
+</script>
 <!--jquery图表float插件-->
 <script th:src="@{/js/plugins/flot/jquery.flot.js}"></script>
 <script th:src="@{/js/plugins/flot/jquery.flot.tooltip.min.js}"></script>
