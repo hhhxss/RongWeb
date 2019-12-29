@@ -1,9 +1,18 @@
 function r_onload() {
 //首页图表 山洪全部可视化
     init_rvis();
+
+    //首页图标 山洪终端信息可视化
+    init_terdata();
 }
 
-
+function init_terdata(){
+    $.ajax({
+        type: "GET",
+        url: "/api/rivervis/commentCount",
+        dataType: "json",
+    })
+}
 function init_rvis() {
     $.ajax({
         type: "GET",
