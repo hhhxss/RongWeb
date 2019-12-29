@@ -66,4 +66,5 @@ public interface IPolicyinfoService {
     public List<Comment> selectinforecommentList(int coid);
     //新增评论
     public int insertInfoCM(Comment comment);
+    public List<Policyinfo> selectPolicyinfoBytitle();
 }
