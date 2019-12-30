@@ -26,7 +26,7 @@ public interface VillagegroupStatisticsInfoMapper
      * @return 村组统计集合
      */
 	public List<VillagegroupStatisticsInfo> selectVillagegroupStatisticsInfoList(VillagegroupStatisticsInfo villagegroupStatisticsInfo);
-	public List<VillagegroupStatisticsInfo> selectVillagegrouparea();
+	public List<VillagegroupStatisticsInfo> selectVillagegroupfd();
 	public List<VillagegroupStatisticsInfo> selectVillagegroupGtype();
 	public List<VillagegroupStatisticsInfo> selectVillagegroupfarmland();
 	public List<VillagegroupStatisticsInfo> selectVillagegroupplowland();

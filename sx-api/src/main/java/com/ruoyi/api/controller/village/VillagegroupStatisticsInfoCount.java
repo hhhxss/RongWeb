@@ -72,5 +72,44 @@ public class VillagegroupStatisticsInfoCount {
         RongApiRes test=RongApiService.get_list(pre);
         return test;
     }
-
+    @CrossOrigin
+    @GetMapping("/plowland")
+    @ApiOperation(value = "查询村组耕地" )
+    public RongApiRes selectVillagegroupStatisticsInfoplowland(){
+        List pre=villagegroupStatisticsInfoService.selectVillagegroupplowland();
+        RongApiRes test=RongApiService.get_list(pre);
+        return test;
+    }
+    @CrossOrigin
+    @GetMapping("/orchard")
+    @ApiOperation(value = "查询村组园地" )
+    public RongApiRes selectVillagegroupStatisticsInfoorchard(){
+        List pre=villagegroupStatisticsInfoService.selectVillagegrouporchard();
+        RongApiRes test=RongApiService.get_list(pre);
+        return test;
+    }
+    @CrossOrigin
+    @GetMapping("/fland")
+    @ApiOperation(value = "各农用地集中展示" )
+    public RongApiRes selectVillagegroupStatisticsInfofland(){
+        List pre=villagegroupStatisticsInfoService.selectVillagegroupfland();
+        RongApiRes test=RongApiService.get_list(pre);
+        return test;
+    }
+    @CrossOrigin
+    @GetMapping("/aqarea")
+    @ApiOperation(value = "查询村组耕地" )
+    public RongApiRes selectVillagegroupStatisticsInfoaqarea(){
+        List pre=villagegroupStatisticsInfoService.selectVillagegroupaqarea();
+        RongApiRes test=RongApiService.get_list(pre);
+        return test;
+    }
+    @CrossOrigin
+    @GetMapping("/fd")
+    @ApiOperation(value = "查询村组耕地" )
+    public RongApiRes selectVillagegroupStatisticsInfofd(){
+        List pre=villagegroupStatisticsInfoService.selectVillagegroupfd();
+        RongApiRes test=RongApiService.get_list(pre);
+        return test;
+    }
 }

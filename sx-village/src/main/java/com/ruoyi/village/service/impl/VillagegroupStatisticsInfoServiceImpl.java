@@ -50,8 +50,8 @@ public class VillagegroupStatisticsInfoServiceImpl implements IVillagegroupStati
 	}
 
 	@Override
-	public List<VillagegroupStatisticsInfo> selectVillagegrouparea() {
-		return villagegroupStatisticsInfoMapper.selectVillagegrouparea();
+	public List<VillagegroupStatisticsInfo> selectVillagegroupfd() {
+		return villagegroupStatisticsInfoMapper.selectVillagegroupfd();
 	}
 
 	@Override
@@ -86,6 +86,7 @@ public class VillagegroupStatisticsInfoServiceImpl implements IVillagegroupStati
 	public List<VillagegroupStatisticsInfo> selectVillagegroupotherland() {
 		return villagegroupStatisticsInfoMapper.selectVillagegroupotherland();
 	}
+
 	/**
     /**
      * 新增村组统计

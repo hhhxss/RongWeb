@@ -10,8 +10,18 @@ function v_onload() {
     init_ec_farmland();
     //首页图表 村组其他农用地可视化
     init_ec_otherland();
-    //首页图表 村组林地信息可视化
+    //首页图表 村组林地可视化
     init_ec_forest();
+    //首页图表 村组耕地信息可视化
+    init_ec_plowland();
+    //首页图表 村组园地信息可视化
+    init_ec_orchard();
+    //首页图表 村组农田水利设施可视化
+    init_ec_fland();
+    //首页图表 村组养殖水面可视化
+    init_ec_aqarea();
+    //首页图表 村组农田水利设施可视化
+    init_ec_fd();
     //首页图表 三维村镇人口可视化
     init_3d_v_pm();
 
@@ -568,6 +578,12 @@ function init_ec_vilgroup() {
             }
             var ec_vilgroup = echarts.init(document.getElementById('ec_vilgroup'));
             init_ec_vilgroup_option = {
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
                 color: ['#69ade8'],
                 xAxis: {
                     type: 'category',
@@ -789,7 +805,328 @@ function init_ec_forest() {
         }
     })
 }
+function init_ec_plowland() {
+    $.ajax({
+        type: "GET",
+        url: "/api/vgsi/plowland",
+        dataType: "json",
+        success: function (data) {
+            var plowland_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (x in plowland_data) {
+                if (plowland_data[x].grouptype == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(plowland_data[x].grouptype);
+                }
+            }
+            for (y in plowland_data) {
+                y_data.push(plowland_data[y].plowland);
+            }
+            var ec_plowland = echarts.init(document.getElementById('ec_plowland'));
+            init_ec_plowland_option = {
+                tooltip : {
+                    trigger: 'axis'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: x_data
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: y_data,
+                    type: 'line'
+                }]
+            };
 
+            ec_plowland.setOption(init_ec_plowland_option);
+        }
+    })
+}
+
+function init_ec_orchard() {
+    $.ajax({
+        type: "GET",
+        url: "/api/vgsi/orchard",
+        dataType: "json",
+        success: function (data) {
+            var orchard_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            for (x in orchard_data) {
+                if (orchard_data[x].grouptype == '') {
+                    x_data.push('未知');
+                } else {
+                    x_data.push(orchard_data[x].grouptype);
+                }
+            }
+            for (y in orchard_data) {
+                y_data.push(orchard_data[y].orchard);
+            }
+            var ec_orchard = echarts.init(document.getElementById('ec_orchard'));
+            init_ec_orchard_option = {
+                color: ['#6bff6e'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : x_data,
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'园地',
+                        type:'bar',
+                        barWidth: '60%',
+                        data:y_data
+                    }
+                ]
+            };
+            ec_orchard.setOption(init_ec_orchard_option);
+        }
+    })
+}
+function init_ec_fland() {
+    $.ajax({
+        type: "GET",
+        url: "/api/vgsi/fland",
+        dataType: "json",
+        success: function (data) {
+            var fland_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            var z_data = new Array();
+            var s_data = new Array();
+            var t_data = new Array();
+            for (x in fland_data) {
+                x_data.push(fland_data[x].grouptype);
+            }
+            for (y in fland_data) {
+                y_data.push(fland_data[y].plowland);
+            }
+            for (z in fland_data) {
+                z_data.push(fland_data[z].orchard);
+            }
+            for (s in fland_data) {
+                s_data.push(fland_data[s].forest);
+            }
+            for (t in fland_data) {
+                t_data.push(fland_data[t].aqarea);
+            }
+            var ec_fland = echarts.init(document.getElementById('ec_fland'));
+            init_ec_fland_option = {
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                legend: {
+                    data: ['耕地','园地','林地','养殖水面']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis:  {
+                    type: 'value'
+                },
+                yAxis: {
+                    type: 'category',
+                    data: x_data
+                },
+                series: [
+                    {
+                        name: '耕地',
+                        type: 'bar',
+                        stack: '总量',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'insideRight'
+                            }
+                        },
+                        data: y_data
+                    },
+                    {
+                        name: '园地',
+                        type: 'bar',
+                        stack: '总量',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'insideRight'
+                            }
+                        },
+                        data: z_data
+                    },
+                    {
+                        name: '林地',
+                        type: 'bar',
+                        stack: '总量',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'insideRight'
+                            }
+                        },
+                        data: s_data
+                    },
+                    {
+                        name: '养殖水面',
+                        type: 'bar',
+                        stack: '总量',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'insideRight'
+                            }
+                        },
+                        data: t_data
+                    },
+
+                ]
+            };
+            ec_fland.setOption(init_ec_fland_option);
+        }
+    })
+}
+function init_ec_aqarea() {
+    $.ajax({
+        type: "GET",
+        url: "/api/vgsi/aqarea",
+        dataType: "json",
+        success: function (data) {
+            var aqarea_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            var ec_aqarea = echarts.init(document.getElementById('ec_aqarea'));
+            for (x in aqarea_data) {
+                x_data.push(aqarea_data[x].grouptype);
+            }
+            for (y in aqarea_data) {
+                y_data.push(aqarea_data[y].aqarea);
+            }
+            init_ec_aqarea_option = {
+                color: ['#3fe6ff'],
+                tooltip : {
+                    trigger: 'axis'
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data:x_data
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: y_data,
+                    type: 'line',
+                    areaStyle: {}
+                }]
+            };
+            ec_aqarea.setOption(init_ec_aqarea_option);
+        }
+    })
+}
+
+function init_ec_fd() {
+    $.ajax({
+        type: "GET",
+        url: "/api/vgsi/fd",
+        dataType: "json",
+        success: function (data) {
+            var fd_data = data.data;
+            var x_data = new Array();
+            var y_data = new Array();
+            var ec_fd = echarts.init(document.getElementById('ec_fd'));
+            for (x in fd_data) {
+                x_data.push(fd_data[x].grouptype);
+            }
+            for (y in fd_data) {
+                y_data.push(fd_data[y].fland);
+            }
+            init_ec_fd_option = {
+                color: ['#ffcf14'],
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        crossStyle: {
+                            color: '#999'
+                        }
+                    }
+                },
+                toolbox: {
+                    feature: {
+                        dataView: {show: true, readOnly: false},
+                        magicType: {show: true, type: ['line', 'bar']},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                legend: {
+                    data:['农田水利设施用地']
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: x_data,
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: '面积',
+                        min: 0,
+                        max: 60,
+                        interval: 10,
+                        axisLabel: {
+                            formatter: '{value} m2'
+                        }
+                    },
+
+                ],
+                series: [
+                    {
+                        name:'农田水利设施用地',
+                        type:'bar',
+                        data:y_data
+                    },
+                ]
+            };
+            ec_fd.setOption(init_ec_fd_option);
+        }
+    })
+}
 function init_3d_v_pm() {
     var pre_data;
     var area_group = new Array();

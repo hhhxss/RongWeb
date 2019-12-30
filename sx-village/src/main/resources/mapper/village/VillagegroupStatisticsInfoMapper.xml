@@ -119,5 +119,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     select grouptype,forest
     from village.villagegroup_statistics_info
     </select>
-
+    <select id="selectVillagegroupplowland" resultMap="VillagegroupStatisticsInfoResult">
+    select grouptype,plowland
+    from village.villagegroup_statistics_info
+    </select>
+    <select id="selectVillagegrouporchard" resultMap="VillagegroupStatisticsInfoResult">
+    select grouptype,orchard
+    from village.villagegroup_statistics_info
+    </select>
+    <select id="selectVillagegroupfland" resultMap="VillagegroupStatisticsInfoResult">
+    select grouptype,plowland,orchard,forest,aqarea
+    from village.villagegroup_statistics_info
+    </select>
+    <select id="selectVillagegroupaqarea" resultMap="VillagegroupStatisticsInfoResult">
+    select grouptype,aqarea
+    from village.villagegroup_statistics_info
+    </select>
+    <select id="selectVillagegroupfd" resultMap="VillagegroupStatisticsInfoResult">
+    select grouptype,fland
+    from village.villagegroup_statistics_info
+    </select>
 </mapper>
