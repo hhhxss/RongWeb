@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.broad.mapper.TerminalsMapper">
+
+    <resultMap type="Terminals" id="TerminalsResult">
+        <result property="tid"    column="tid"    />
+        <result property="tname"    column="tname"    />
+        <result property="manager"    column="manager"    />
+        <result property="managertel"    column="managertel"    />
+        <result property="createdtime"    column="createdtime"    />
+        <result property="isuse"    column="isuse"    />
+        <result property="terminaltype"    column="terminaltype"    />
+    </resultMap>
+
+    <sql id="selectTerminalsVo">
+        select tid,tname,manager,managertel,createdtime,isuse,terminaltype from broad.terminals
+    </sql>
+
+    <select id="selectTerminalsList" parameterType="Terminals" resultMap="TerminalsResult">
+        <include refid="selectTerminalsVo"/>
+        <where>
+            <if test="tid != null  and tid != '' "> and tid LIKE CONCAT(CONCAT('%', #{tid}),'%') </if>
+            <if test="tname != null  and tname != '' ">and tname LIKE CONCAT(CONCAT('%', #{tname}),'%')</if>
+            <if test="manager != null  and manager != '' "> and manager LIKE CONCAT(CONCAT('%', #{manager}),'%')</if>
+            <if test="managertel != null  and managertel != '' "> and managertel LIKE CONCAT(CONCAT('%', #{managertel}),'%')</if>
+            <if test="createdtime != null  and createdtime != '' "> and createdtime LIKE CONCAT(CONCAT('%', #{createdtime}),'%')</if>
+            <if test="isuse != null  and isuse != '' "> and isuse LIKE CONCAT(CONCAT('%', #{isuse}),'%')</if>
+            <if test="terminaltype != null  and terminaltype != '' "> and terminaltype LIKE CONCAT(CONCAT('%', #{terminaltype}),'%')</if>
+        </where>
+        ORDER BY tid DESC
+    </select>
+
+    <select id="selectTerminalsById" parameterType="String" resultMap="TerminalsResult">
+        select tid,tname,manager,managertel,createdtime,isuse,terminaltype from broad.terminals
+        where tid = #{tid}
+    </select>
+
+    <update id="updateTerminals" parameterType="Terminals">
+        update terminals
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tid != null  and tid != ''  ">tid = #{tid},</if>
+            <if test="tname != null  and tname != ''  ">tname = #{tname},</if>
+            <if test="manager != null  and manager != ''  ">manager = #{manager},</if>
+            <if test="managertel != null  and managertel != ''  ">managertel = #{managertel},</if>
+            <if test="createdtime != null  and createdtime != ''  ">createdtime = #{createdtime},</if>
+            <if test="isuse != null  and isuse != ''  ">isuse = #{isuse},</if>
+            <if test="terminaltype != null  and terminaltype != ''  ">terminaltype = #{terminaltype},</if>
+        </trim>
+        where tid = #{tid}
+    </update>
+
+    <delete id="deleteTerminalsById" parameterType="String">
+        delete from broad.terminals where tid = #{tid}
+    </delete>
+
+    <delete id="deleteTerminalsByIds" parameterType="String">
+        delete from broad.terminals where tid in
+        <foreach item="tid" collection="array" open="(" separator="," close=")">
+            #{tid}
+        </foreach>
+    </delete>
+
+    <!-- 新增终端用户信息 -->
+    <!--<insert id="insertBroaduser" parameterType="String" >
+        insert into userinfo (
+        userid,
+        username,
+        uname,
+        uphone,
+        aid
+        ) values (
+        "11",#{username},#{uname},#{uphone},#{aid}
+        )
+    </insert>-->
+    <insert id="insertTerminals" parameterType="Terminals">
+        insert into broad.terminals (
+            tid,
+            tname,
+            manager,
+            managertel,
+            createdtime,
+            isuse,
+            terminaltype
+        ) values (
+                     REPLACE(UUID(),"-",""),#{tid},#{tname},#{manager},#{managertel},#{createdtime},#{isuse},#{terminaltype}
+                 )
+
+    </insert>
+</mapper>
