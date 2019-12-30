@@ -123,7 +123,36 @@
             </div>
         </div>
         </div>
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>山洪水位及流量三维可视化</h5>
+                    <div class="ibox-tools">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-superpowers"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a onclick="init_mountain_dt()">原始数据</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="echarts" id="mountain_dt"></div>
+                </div>
+            </div>
+        </div>
     </div>
+    <div class="row">
+        <div class="col-xs-12 select-table table-striped">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <table id="bootstrap-table" data-mobile-responsive="true"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 
@@ -205,6 +234,46 @@
                 {
                     field: 'ele',
                     title: '电压',
+                    sortable: true
+                }]
+        };
+        $.table.init(options);
+    }
+                  //分页查询
+    function select() {
+        var options = {
+            url: "/rivervis/tepannel/list",
+            search: false,
+            columns: [{
+                    field: 'id',
+                    title: '序号',
+                    visible: true
+                },
+                {
+                    field: 'waterlevel',
+                    title: '水位',
+                    sortable: true
+                },
+                {
+                    field: 'flow',
+                    title: '水流量',
+                    sortable: true
+                },
+                {
+                    field: 'terraindata',
+                    title: '地形数据',
+                    visible: true
+                },
+                {
+                    field: 'address',
+                    title: '地址',
+                    sortable: true
+                },
+
+
+                {
+                    field: 'time',
+                    title: '时间',
                     sortable: true
                 }]
         };

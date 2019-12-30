@@ -28,7 +28,7 @@
     <link th:href="@{/ajax/libs/jquery-layout/jquery.layout-latest.css}" rel="stylesheet"/>
     <link th:href="@{/ajax/libs/jquery-ztree/3.5/css/metro/zTreeStyle.css}" rel="stylesheet"/>
 </head>
-<body class="gray-bg" onload="m_onload()">
+<body class="gray-bg" onload="m_onload();select();$.table.search()">
 <div class="row  border-bottom  dashboard-header">
     <div class="wrapper wrapper-content">
         <div class="row">
@@ -155,6 +155,27 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>各水库水位走势可视化 </h5>
+                        <div class="ibox-tools">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-superpowers"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a onclick="init_water()">原始数据</a>
+                                    <li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="echarts" id="water_data" ></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
@@ -170,7 +191,18 @@
                         </div>
                     </div>
                     <div class="ibox-content">
-                        <div class="echarts" id="area_water" ></div>
+
+                        <div class="echarts" id="area_water" style="height:400px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 select-table table-striped">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <table id="bootstrap-table" data-mobile-responsive="true"></table>
+
                     </div>
                 </div>
             </div>
@@ -180,6 +212,47 @@
 <div th:include="include :: footer"></div>
 <script th:src="@{/ajax/libs/jquery-layout/jquery.layout-latest.js}"></script>
 <script th:src="@{/ajax/libs/jquery-ztree/3.5/js/jquery.ztree.all-3.5.js}"></script>
+<script th:inline="javascript">
+    //分页查询
+    function select() {
+        var options = {
+            url: "/iot/milpannel/list",
+            search: false,
+            columns: [
+                {
+                    field: 'id',
+                    title: '数据编号',
+                    visible: true
+                },
+                {
+                    field: 'type',
+                    title: '数据类型',
+                    sortable: true
+                },
+                {
+                    field: 'rid',
+                    title: '地域编号',
+                    sortable: true
+                },
+                {
+                    field: 'rname',
+                    title: '地域名称',
+                    sortable: true
+                },{
+                    field: 'data',
+                    title: '数据大小',
+                    visible: true
+                },
+                {
+                    field: 'time',
+                    title: '采集日期时间',
+                    sortable: true
+                }
+            ]
+        };
+        $.table.init(options);
+    }
+</script>
 <!--jquery图表float插件-->
 <script th:src="@{/js/plugins/flot/jquery.flot.js}"></script>
 <script th:src="@{/js/plugins/flot/jquery.flot.tooltip.min.js}"></script>

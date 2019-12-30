@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.iot.mapper.menusMapper">
+
+    <resultMap type="menus" id="menusResult">
+        <result property="mid" column="mid"/>
+        <result property="parentmid" column="parentmid"/>
+        <result property="mlevel" column="mlevel"/>
+        <result property="mname" column="mname"/>
+        <result property="murl" column="murl"/>
+        <result property="micon" column="micon"/>
+        <result property="isopen" column="isopen"/>
+        <result property="isenabled" column="isenabled"/>
+    </resultMap>
+
+    <select id="select" resultMap="menusResult">
+        select mid,parentmid,mlevel,mname,murl,micon,isopen,isenabled from iotdata.menu
+        <where>
+            <if test="mid != null  and mid != '' "> and mid = #{mid}</if>
+            <if test="parentmid != null  and parentmid != '' "> and parentmid = #{parentmid}</if>
+            <if test="mlevel != null  and mlevel != '' "> and mlevel = #{mlevel}</if>
+            <if test="mname != null  and mname != '' "> and mname = #{mname}</if>
+            <if test="murl != null  and murl != '' "> and murl = #{murl}</if>
+            <if test="micon != null  and micon != '' "> and micon = #{micon}</if>
+            <if test="isopen != null  and isopen != '' "> and isopen = #{isopen}</if>
+            <if test="isenabled != null  and isenabled != '' "> and isenabled = #{isenabled}</if>
+        </where>
+    </select>
+
+</mapper>

@@ -31,4 +31,9 @@ public class RiverDataImpl implements IRiverDataService {
     public List<RiverData> selectRiverDataByrid() {
         return RiverDataMapper.selectRiverDataByrid();
     }
+
+    @Override
+    public List<RiverData> select() {
+        return RiverDataMapper.select();
+    }
 }
