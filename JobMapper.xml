@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.village.mapper.JobMapper">
+
+    <resultMap type="Job" id="JobResult">
+        <result property="jid"    column="jid"    />
+        <result property="jtype"    column="jtype"    />
+    </resultMap>
+
+    <sql id="selectJobVo">
+        select jid, jtype from village.tb_job
+    </sql>
+
+    <select id="selectJobList" parameterType="Job" resultMap="JobResult">
+        <include refid="selectJobVo"/>
+        <where>
+            <if test="jid != null "> and jid = #{jid}</if>
+            <if test="jtype != null  and jtype != '' "> and jtype LIKE CONCAT(CONCAT('%', #{jtype}),'%')</if>
+            ORDER BY jid ASC
+        </where>
+    </select>
+
+    <select id="selectJobByJid" parameterType="Integer" resultMap="JobResult">
+        <include refid="selectJobVo"/>
+        where jid = #{jid}
+    </select>
+
+    <select id="selectJobListByjtype" resultMap="JobResult">
+         select jtype,count(jtype) as jid from village.tb_job GROUP BY jtype
+</select>
+
+</mapper>
