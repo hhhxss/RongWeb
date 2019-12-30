@@ -31,4 +31,6 @@ public interface terminalsdataMapper {
     public List<terminalsdata> selectterminalsdataBytemp();
 
     public List<terminalsdata> selectterminalsdataByele();
+
+    public List<terminalsdata> select();
 }

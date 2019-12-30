@@ -4,6 +4,8 @@ import com.ruoyi.broad.domain.BroadCount;
 import com.ruoyi.broad.service.IBcountService;
 import com.ruoyi.common.page.TableDataInfo;
 import com.ruoyi.framework.web.base.BaseController;
+import com.ruoyi.iot.domain.RiverData;
+import com.ruoyi.iot.service.IRiverDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +25,18 @@ import java.util.List;
 @RequestMapping("/iot/milpannel")
 public class IotmilPannelController extends BaseController{
     private String prefix = "iot/milpannel";
-
+    @Autowired
+    private IRiverDataService RiverDataService;
     @GetMapping()
     public String milpannel() {
         return prefix + "/milpannel";
+    }
+    @PostMapping("/list")
+    @ResponseBody
+    public TableDataInfo list() {
+        startPage();
+        List<RiverData> list = RiverDataService.select();
+        return getDataTable(list);
     }
 }
 

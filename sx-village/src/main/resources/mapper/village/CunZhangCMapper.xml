@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.village.mapper.CunZhangCMapper">
+
+    <resultMap type="CunZhangC" id="CunZhangCResult">
+        <result property="id"    column="id"    />
+        <result property="uname"    column="uname"    />
+    </resultMap>
+
+    <sql id="selectCunZhangCVo">
+         select id,uname from village.tb_partywork
+    </sql>
+
+    <select id="selectCunZhangCList" parameterType="CunZhangC" resultMap="CunZhangCResult">
+        <include refid="selectCunZhangCVo"/>
+        <where>
+            <if test="id != null "> and id = #{id}</if>
+            <if test="uname != null  and uname != '' "> and uname = #{uname}</if>
+
+        </where>
+        ORDER BY id ASC
+    </select>
+
+    <select id="selectCunZhangCByuname" resultMap="CunZhangCResult">
+         select uname ,count(uname) as id
+         from village.tb_partywork
+         GROUP BY uname
+    </select>
+
+</mapper>

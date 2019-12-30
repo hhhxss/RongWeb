@@ -98,5 +98,5 @@ public class VillagegroupStatisticsInfoServiceImpl implements IVillagegroupStati
 	{
 		return villagegroupStatisticsInfoMapper.deleteVillagegroupStatisticsInfoByIds(Convert.toStrArray(ids));
 	}
-	
+
 }
