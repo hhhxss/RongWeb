@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.broad.mapper.TertrafficMapper">
+
+    <resultMap type="Tertraffic" id="TertrafficResult">
+        <result property="ttid"    column="ttid"    />
+        <result property="tid"    column="tid"    />
+        <result property="usetraffic"    column="usetraffic"    />
+        <result property="lasttime"    column="lasttime"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectTertrafficVo">
+            select ttid,tid,usetraffic,lasttime,remark from broad.terminal_traffic
+        </sql>
+
+    <select id="selectTertrafficUsetraffic" resultMap="TertrafficResult">
+        select usetraffic,lasttime
+        from broad.terminal_traffic
+        order by lasttime
+    </select>
+
+</mapper>
